@@ -76,12 +76,12 @@ public class kategorilerDAO {
         }
     }
 
-    public void update(kategoriler kategoriler) throws InstantiationException, IllegalAccessException, SQLException {
+    public void update(kategoriler kat) throws InstantiationException, IllegalAccessException, SQLException {
         DBConnection db = new DBConnection();
         Connection conn = db.connect();
         try {
             Statement st = conn.createStatement();
-            st.executeUpdate("update kategoriler set name = '"+kategoriler.getKategori_ad()+"'where kategori_id= "+kategoriler.getKategori_id());
+            st.executeUpdate("update kategoriler set kategori_ad = '"+kat.getKategori_ad()+"'where kategori_id= "+kat.getKategori_id());
         } catch (SQLException ex) {
             Logger.getLogger(kategorilerDAO.class.getName()).log(Level.SEVERE, null, ex);
 

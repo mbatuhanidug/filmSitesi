@@ -46,10 +46,15 @@
                 </div>
                 <div class = "col-md-6">
                     <h:form>
-                        <h:inputHidden value="#{kategorilerController.kategoriler.kategori_id}"/>
-                        Kategori Adı : <h:inputText value="#{kategorilerController.kategoriler.kategori_ad}"/><br/>
-                        <h:commandButton rendered = "#{kategorilerController.kategoriler.kategori_ad != null}" styleClass="btn btn-sm btn-warning" value =" Update " action="#{kategorilerController.update}"/>
-                        <h:commandButton rendered = "#{kategorilerController.kategoriler.kategori_ad == null}" styleClass="btn btn-sm btn-primary" value =" Create " action="#{kategorilerController.create}"/>
+                        <div class = "form-group">
+                            <h:inputHidden value="#{kategorilerController.kategoriler.kategori_id}"/>
+                            <label for="inputName" >Kategori Adı </label>
+                            <h:inputText styleClass="form-control" value = "#{kategorilerController.kategoriler.kategori_ad}"/>
+                        </div>
+                        <div class = "form-group">
+                            <h:commandButton  styleClass="btn btn-sm btn-warning" value =" Update " action="#{kategorilerController.update}"/>
+                            <h:commandButton  styleClass="btn btn-sm btn-primary" value =" Create " action="#{kategorilerController.create}"/>
+                        </div>
                     </h:form>    
                 </div>    
             </div>
