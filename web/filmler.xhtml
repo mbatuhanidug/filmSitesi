@@ -5,21 +5,21 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>FİLMLER</title>
+        <h:outputStylesheet library="css" name="bootstrap.css"/>
+        <h:outputScript library = "js" name = "bootstrap.js"/>
     </h:head>
     <h:body>
         <div class="container">  
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <h:form>
                         <ul class="navbar-nav">
-
                             <li class="nav-item active">
-                                <h:commandLink styleClass="nav-link" action = "filmler" value = "Film"/> 
+                                <h:commandLink styleClass="nav-link" action = "filmler" value = "Filmler"/> 
                             </li>
                             <li class="nav-item">
                                 <h:commandLink styleClass="nav-link" action = "kategoriler" value = "Kategori"/> 
                             </li>
-
                         </ul>
                     </h:form>
                 </div>
@@ -29,37 +29,64 @@
             <div class="row">
                 <div class="col-md-6">
                     <h:form>
-                        <h:dataTable value = "#{filmlerController.flist}" var = "film">
+                        <h:dataTable styleClass="table table-striped" value = "#{filmlerController.flist}" var = "film">
                             <h:column>
                                 <f:facet name = "header">ID</f:facet>
                                     #{film.film_id}
                             </h:column>
                             <h:column>
                                 <f:facet name = "header">FİLM</f:facet>
-                                    #{film.film_isim}
+                                    <h:commandLink action="#{filmlerController.updateForm(film)}" value="#{film.film_isim}"/> 
                             </h:column>  
                             <h:column>
-                                <f:facet name = "header">ÖZET</f:facet>
-                                    #{film.film_tanimi}
+                                <f:facet name = "header">FİLM TANIMI</f:facet>
+                                    <h:commandLink action="#{filmlerController.updateForm(film)}" value="#{film.film_tanimi}"/> 
                             </h:column>
                             <h:column>
                                 <f:facet name = "header">ÇIKIŞ YILI</f:facet>
-                                    #{film.cikis_yili}
+                                <h:commandLink action="#{filmlerController.updateForm(film)}" value="#{film.cikis_yili}"/> 
                             </h:column>  
                             <h:column>
                                 <f:facet name = "header">YÖNETMEN</f:facet>
-                                    #{film.yonetmen}
+                                <h:commandLink action="#{filmlerController.updateForm(film)}" value="#{film.yonetmen}"/> 
                             </h:column>  
                             <h:column>
                                 <f:facet name = "header">KATEGORİ</f:facet>
-                                    #{film.kategori}
-                            </h:column> 
+                                <h:commandLink action="#{filmlerController.updateForm(film)}" value="#{film.kategori.kategori_id}"/> 
+                            </h:column>
+                            <h:column>
+                                <f:facet name ="header">Delete</f:facet>
+                                <h:commandButton styleClass="btn btn-sm btn-danger" action="#{filmlerController.delete(film)}" value = "Delete"/>
+                            </h:column>
                         </h:dataTable>
                     </h:form>
                 </div>
-                <div class = "col-md-5">
+                <div class = "col-md-10">
                     <h:form>
-                        empty
+                        <h:inputHidden value="#{filmlerController.filmler.film_id}"/>
+                        <label for="inputName" >Film İsmi </label>
+                        <h:inputText styleClass="form-control" value = "#{filmlerController.filmler.film_isim}"/>
+                        <br></br>
+                        <label for="inputName" >Film Tanımı </label>
+                        <h:inputText styleClass="form-control" value = "#{filmlerController.filmler.film_tanimi}"/>
+                        <br></br>
+                        <label for="inputName" >Film Çıkış Yılı </label>
+                        <h:inputText styleClass="form-control" value = "#{filmlerController.filmler.cikis_yili}"/>
+                        <br></br>
+                        <label for="inputName" >Filmin Yönetmeni</label>
+                        <h:inputText styleClass="form-control" value = "#{filmlerController.filmler.yonetmen}"/>
+                        <br></br>
+                        <label for="selectKategori" >Kategori Adı</label>
+                        <h:selectOneMenu styleClass="custom-select" id="selectKategori" value="#{filmlerController.selectedKategori}">
+                            <f:selectItems value="#{filmlerController.klist}" var="kategoriler" itemValue="#{kategoriler.kategori_id}" itemLabel="#{kategoriler.kategori_ad} "/>
+                        </h:selectOneMenu>                   
+                        <br>
+                            
+                        </br>
+                        <div class = "form-group">
+                            <h:commandButton  styleClass="btn btn-sm btn-warning" value =" Update " action="#{filmlerController.update}"/> <br> </br>
+                            <h:commandButton  styleClass="btn btn-sm btn-primary" value =" Create " action="#{filmlerController.create}"/>
+                        </div>
                     </h:form>
                 </div>
             </div>

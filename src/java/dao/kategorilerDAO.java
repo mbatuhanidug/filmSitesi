@@ -21,7 +21,7 @@ public class kategorilerDAO {
         
         try{
             Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("select * from kategoriler where kategori_id ="+id);
+            ResultSet rs = st.executeQuery("select*from kategoriler where kategori_id = "+id);
             rs.next();
             
             k= new kategoriler();
