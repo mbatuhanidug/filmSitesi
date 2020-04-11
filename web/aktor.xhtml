@@ -27,7 +27,6 @@
                             <li class="nav-item">
                                 <h:commandLink styleClass="nav-link" action = "puanlar" value = "Puanlar"/> 
                             </li>
-
                             <li class="nav-item">
                                 <h:commandLink styleClass="nav-link" action = "aktor" value = "Aktörler"/> 
                             </li>
@@ -36,31 +35,34 @@
                 </div>
             </nav>
         </div>
-        <div class="col-md-6">
-            <h:form>
-                <h:dataTable styleClass="table table-striped" value = "#{aktorController.alist}" var = "akt">
-                    <h:column>
-                        <f:facet name = "header">ID</f:facet>
-                            #{akt.aktor_id}
-                    </h:column>
-                    <h:column>
-                        <f:facet name = "header">Ad</f:facet>
-                        <h:commandLink action="#{aktorController.updateForm(akt)}" value="#{akt.aktor_ad}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name = "header">Soyad</f:facet>
-                        <h:commandLink action="#{aktorController.updateForm(akt)}" value="#{akt.aktor_soyad}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name ="header">Delete</f:facet>
-                        <h:commandButton styleClass="btn btn-sm btn-danger" action="#{aktorController.delete(akt)}" value = "Delete"/>
-                    </h:column>
-                </h:dataTable>
-            </h:form>
-        </div>
-        <div class="container">  
+        <div class="container"> 
             <div class="row">
-                <div class = "col-md-6">
+                <div class="col-md-6">
+                    <h:form>
+                        <h:dataTable styleClass="table table-striped" value = "#{aktorController.alist}" var = "akt">
+                            <h:column>
+                                <f:facet name = "header">ID</f:facet>
+                                    #{akt.aktor_id}
+                            </h:column>
+                            <h:column>
+                                <f:facet name = "header">Ad</f:facet>
+                                <h:commandLink action="#{aktorController.updateForm(akt)}" value="#{akt.aktor_ad}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name = "header">Soyad</f:facet>
+                                <h:commandLink action="#{aktorController.updateForm(akt)}" value="#{akt.aktor_soyad}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name ="header">Delete</f:facet>
+                                <h:commandButton styleClass="btn btn-sm btn-danger" action="#{aktorController.delete(akt)}" value = "Delete"/>
+                            </h:column>
+                        </h:dataTable>
+                    </h:form>
+                </div>
+                <div class = "col-md-4">
+                    <br />
+                    <br />
+                    <br />
                     <h:form>
                         <div class = "form-group">
                             <h:inputHidden value="#{aktorController.aktor.aktor_id}"/>
@@ -78,7 +80,6 @@
                 </div>
             </div>
         </div>
-
     </h:body>
 </html>
 
