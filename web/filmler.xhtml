@@ -20,6 +20,12 @@
                             <li class="nav-item">
                                 <h:commandLink styleClass="nav-link" action = "kategoriler" value = "Kategori"/> 
                             </li>
+                            <li class="nav-item">
+                                <h:commandLink styleClass="nav-link" action = "yorumlar" value = "Yorumlar"/> 
+                            </li>
+                            <li class="nav-item">
+                                <h:commandLink styleClass="nav-link" action = "puanlar" value = "Puanlar"/> 
+                            </li>
                         </ul>
                     </h:form>
                 </div>
@@ -36,11 +42,11 @@
                             </h:column>
                             <h:column>
                                 <f:facet name = "header">FİLM</f:facet>
-                                    <h:commandLink action="#{filmlerController.updateForm(film)}" value="#{film.film_isim}"/> 
+                                <h:commandLink action="#{filmlerController.updateForm(film)}" value="#{film.film_isim}"/> 
                             </h:column>  
                             <h:column>
                                 <f:facet name = "header">FİLM TANIMI</f:facet>
-                                    <h:commandLink action="#{filmlerController.updateForm(film)}" value="#{film.film_tanimi}"/> 
+                                <h:commandLink action="#{filmlerController.updateForm(film)}" value="#{film.film_tanimi}"/> 
                             </h:column>
                             <h:column>
                                 <f:facet name = "header">ÇIKIŞ YILI</f:facet>
@@ -61,7 +67,11 @@
                         </h:dataTable>
                     </h:form>
                 </div>
-                <div class = "col-md-10">
+                <div class = "col-md-1"></div>
+                <div class = "col-md-5">
+                    <br />
+                    <br />
+                    <br />
                     <h:form>
                         <h:inputHidden value="#{filmlerController.filmler.film_id}"/>
                         <label for="inputName" >Film İsmi </label>
@@ -81,7 +91,7 @@
                             <f:selectItems value="#{filmlerController.klist}" var="kategoriler" itemValue="#{kategoriler.kategori_id}" itemLabel="#{kategoriler.kategori_ad} "/>
                         </h:selectOneMenu>                   
                         <br>
-                            
+
                         </br>
                         <div class = "form-group">
                             <h:commandButton  styleClass="btn btn-sm btn-warning" value =" Update " action="#{filmlerController.update}"/> <br> </br>

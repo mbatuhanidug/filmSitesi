@@ -11,7 +11,7 @@ public class DBConnection {
 
         try {
             Class.forName("org.postgresql.Driver").newInstance();
-            conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/film", "postgres", "134962");
+            conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/film", "postgres", "123");
             System.out.println("Veritabanı bağlantısı başarılı!!!");
         } catch (ClassNotFoundException ex) {
             System.out.println("Veritabanı bağlantısı başarısız: " + ex.getMessage());
