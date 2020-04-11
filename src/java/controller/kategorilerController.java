@@ -6,7 +6,8 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.SessionScoped;
+
 import javax.inject.Named;
 
 @Named
