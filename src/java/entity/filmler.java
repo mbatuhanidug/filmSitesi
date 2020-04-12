@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.List;
+
 public class filmler {
     private int film_id;
     private String film_isim;
@@ -8,7 +10,7 @@ public class filmler {
     private String yonetmen;
  
     private kategoriler kategori;
-
+    private List<aktor> filmAktor; 
     public filmler() {
     }
 
@@ -70,6 +72,16 @@ public class filmler {
     public void setKategori(kategoriler kategori) {
         this.kategori = kategori;
     }
+
+    public List<aktor> getFilmAktor() {
+        return filmAktor;
+    }
+
+    public void setFilmAktor(List<aktor> filmAktor) {
+        this.filmAktor = filmAktor;
+    }
+    
+    
 
     @Override
     public String toString() {

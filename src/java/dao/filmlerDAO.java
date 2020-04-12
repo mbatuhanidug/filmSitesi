@@ -14,6 +14,7 @@ import util.DBConnection;
 public class filmlerDAO {
 
     private kategorilerDAO kdao;
+    private aktorDAO adao;
 
     public List<filmler> findAll() throws InstantiationException, IllegalAccessException, SQLException {
         List<filmler> flist = new ArrayList();
@@ -32,6 +33,8 @@ public class filmlerDAO {
                 tmp.setFilm_tanimi(rs.getString("film_tanimi"));
                 tmp.setCikis_yili(rs.getInt("cikis_yili"));
                 tmp.setYonetmen(rs.getString("yonetmen"));
+                
+                tmp.setFilmAktor(this.getAdao().getFilmAktor(tmp.getFilm_id()));
 
                 tmp.setKategori(this.getKdao().find(rs.getInt("kategori_id")));
 
@@ -49,6 +52,15 @@ public class filmlerDAO {
         }
         return kdao;
     }
+
+    public aktorDAO getAdao() {
+        if(this.adao == null){
+           this.adao = new aktorDAO(); 
+        }
+        return adao;
+    }
+    
+    
 
     public void create(filmler filmler, int selectedKategori) throws InstantiationException, IllegalAccessException, SQLException {
         DBConnection db = new DBConnection();
