@@ -11,6 +11,10 @@ public class filmler {
  
     private kategoriler kategori;
     private List<aktor> filmAktor; 
+    
+    private List<yorumlar> yorum_film;
+    
+    
     public filmler() {
     }
 
@@ -79,6 +83,14 @@ public class filmler {
 
     public void setFilmAktor(List<aktor> filmAktor) {
         this.filmAktor = filmAktor;
+    }
+
+    public List<yorumlar> getYorum_film() {
+        return yorum_film;
+    }
+
+    public void setYorum_film(List<yorumlar> yorum_film) {
+        this.yorum_film = yorum_film;
     }
     
     

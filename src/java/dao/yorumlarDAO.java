@@ -41,6 +41,25 @@ public class yorumlarDAO {
         return y;
     }
     
+    public List<yorumlar> getYorum_Film(int film_id) throws InstantiationException, IllegalAccessException, SQLException {
+        List<yorumlar> yorum_film = new ArrayList<>();
+
+        DBConnection db = new DBConnection();
+        Connection conn = db.connect();
+
+        try {
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery("select * from yorum_bulunur where film_id ="+film_id);
+            
+            while(rs.next()){
+                yorum_film.add(this.find(rs.getInt("yorum_id")));
+            }
+        } catch(SQLException ex){
+            Logger.getLogger(aktorDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return yorum_film;
+    }
     
     public List<yorumlar> getYorumlar() throws InstantiationException, IllegalAccessException, SQLException {
         List<yorumlar> ylist = new ArrayList();

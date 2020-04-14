@@ -12,7 +12,8 @@ import java.util.logging.Logger;
 import util.DBConnection;
 
 public class filmlerDAO {
-
+    
+    private yorumlarDAO ydao;
     private kategorilerDAO kdao;
     private aktorDAO adao;
 
@@ -37,6 +38,8 @@ public class filmlerDAO {
                 tmp.setFilmAktor(this.getAdao().getFilmAktor(tmp.getFilm_id()));
 
                 tmp.setKategori(this.getKdao().find(rs.getInt("kategori_id")));
+                
+                tmp.setYorum_film(this.getYdao().getYorum_Film(tmp.getFilm_id()));
 
                 flist.add(tmp);
             }
@@ -45,7 +48,14 @@ public class filmlerDAO {
         }
         return flist;
     }
-
+    
+    public yorumlarDAO getYdao() {
+        if (this.ydao == null) {
+            this.ydao = new yorumlarDAO();
+        }
+        return ydao;
+    }
+    
     public kategorilerDAO getKdao() {
         if (this.kdao == null) {
             this.kdao = new kategorilerDAO();

@@ -38,7 +38,35 @@
         </div>
         <div class="container">
             <div class="row">
-                <div class="col-md-6">
+                <div class = "col-md-5">
+                    <h:form>
+                        <h:inputHidden value="#{filmlerController.filmler.film_id}"/>
+                        <label for="inputName" >Film İsmi </label>
+                        <h:inputText styleClass="form-control" value = "#{filmlerController.filmler.film_isim}"/>
+                        <br></br>
+                        <label for="inputName" >Film Tanımı </label>
+                        <h:inputText styleClass="form-control" value = "#{filmlerController.filmler.film_tanimi}"/>
+                        <br></br>
+                        <label for="inputName" >Film Çıkış Yılı </label>
+                        <h:inputText styleClass="form-control" value = "#{filmlerController.filmler.cikis_yili}"/>
+                        <br></br>
+                        <label for="inputName" >Filmin Yönetmeni</label>
+                        <h:inputText styleClass="form-control" value = "#{filmlerController.filmler.yonetmen}"/>
+                        <br></br>
+                        <label for="selectKategori" >Kategori Adı</label>
+                        <h:selectOneMenu styleClass="custom-select" id="selectKategori" value="#{filmlerController.selectedKategori}">
+                            <f:selectItems value="#{filmlerController.klist}" var="kategoriler" itemValue="#{kategoriler.kategori_id}" itemLabel="#{kategoriler.kategori_ad} "/>
+                        </h:selectOneMenu>                   
+                        <br>
+
+                        </br>
+                        <div class = "form-group">
+                            <h:commandButton  styleClass="btn btn-sm btn-warning" value =" Update " action="#{filmlerController.update}"/> <br> </br>
+                            <h:commandButton  styleClass="btn btn-sm btn-primary" value =" Create " action="#{filmlerController.create}"/>
+                        </div>
+                    </h:form>
+                </div>
+                <div class="col-md-15">
                     <h:form>
                         <h:dataTable styleClass="table table-striped" value = "#{filmlerController.flist}" var = "film">
                             <h:column>
@@ -74,42 +102,19 @@
                                 </ul>
                             </h:column>
                             <h:column>
+                                <f:facet name = "header">YORUMLAR</f:facet>
+                                <ul>
+                                    <ui:repeat value="#{film.yorum_film}" var="yorum">
+                                        #{yorum.yorum_id}.ID- 
+                                    </ui:repeat>    
+                                    yorumlar sayfasından bu filme ait yorumları takip edebilirsiniz
+                                </ul>
+                            </h:column>
+                            <h:column>
                                 <f:facet name ="header">Delete</f:facet>
                                 <h:commandButton styleClass="btn btn-sm btn-danger" action="#{filmlerController.delete(film)}" value = "Delete"/>
                             </h:column>
                         </h:dataTable>
-                    </h:form>
-                </div>
-                <div class = "col-md-6"></div>
-                <div class = "col-md-5">
-                    <br />
-                    <br />
-                    <br />
-                    <h:form>
-                        <h:inputHidden value="#{filmlerController.filmler.film_id}"/>
-                        <label for="inputName" >Film İsmi </label>
-                        <h:inputText styleClass="form-control" value = "#{filmlerController.filmler.film_isim}"/>
-                        <br></br>
-                        <label for="inputName" >Film Tanımı </label>
-                        <h:inputText styleClass="form-control" value = "#{filmlerController.filmler.film_tanimi}"/>
-                        <br></br>
-                        <label for="inputName" >Film Çıkış Yılı </label>
-                        <h:inputText styleClass="form-control" value = "#{filmlerController.filmler.cikis_yili}"/>
-                        <br></br>
-                        <label for="inputName" >Filmin Yönetmeni</label>
-                        <h:inputText styleClass="form-control" value = "#{filmlerController.filmler.yonetmen}"/>
-                        <br></br>
-                        <label for="selectKategori" >Kategori Adı</label>
-                        <h:selectOneMenu styleClass="custom-select" id="selectKategori" value="#{filmlerController.selectedKategori}">
-                            <f:selectItems value="#{filmlerController.klist}" var="kategoriler" itemValue="#{kategoriler.kategori_id}" itemLabel="#{kategoriler.kategori_ad} "/>
-                        </h:selectOneMenu>                   
-                        <br>
-
-                        </br>
-                        <div class = "form-group">
-                            <h:commandButton  styleClass="btn btn-sm btn-warning" value =" Update " action="#{filmlerController.update}"/> <br> </br>
-                            <h:commandButton  styleClass="btn btn-sm btn-primary" value =" Create " action="#{filmlerController.create}"/>
-                        </div>
                     </h:form>
                 </div>
             </div>

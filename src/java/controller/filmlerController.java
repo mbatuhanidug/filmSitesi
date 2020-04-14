@@ -2,8 +2,10 @@ package controller;
 
 import dao.filmlerDAO;
 import dao.kategorilerDAO;
+import dao.yorumlarDAO;
 import entity.filmler;
 import entity.kategoriler;
+import entity.yorumlar;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.List;
@@ -23,6 +25,9 @@ public class filmlerController implements Serializable {
     
     private kategorilerDAO kdao;
     private int selectedKategori;
+    
+    private List<yorumlar> ylist;
+    private yorumlarDAO ydao;
     
     public String delete(filmler film) throws InstantiationException, SQLException, IllegalAccessException{
         this.getFilmDAO().delete(film);
@@ -94,5 +99,20 @@ public class filmlerController implements Serializable {
     public void setKlist(List<kategoriler> klist) {
         this.klist = klist;
     }
+    
+    public List<yorumlar> getYlist() throws InstantiationException, IllegalAccessException, SQLException {
+        this.ylist = this.getYdao().getYorumlar();
+        return ylist;
+    }
 
+    public void setYlist(List<yorumlar> ylist) {
+        this.ylist = ylist;
+    }
+    
+    public yorumlarDAO getYdao() {
+        if (this.ydao == null) {
+            this.ydao = new yorumlarDAO();
+        }
+        return ydao;
+    }
 }
