@@ -12,10 +12,11 @@ import java.util.logging.Logger;
 import util.DBConnection;
 
 public class filmlerDAO {
-    
+
     private yorumlarDAO ydao;
     private kategorilerDAO kdao;
     private aktorDAO adao;
+    private puanlarDAO pdao;
 
     public List<filmler> findAll() throws InstantiationException, IllegalAccessException, SQLException {
         List<filmler> flist = new ArrayList();
@@ -34,12 +35,14 @@ public class filmlerDAO {
                 tmp.setFilm_tanimi(rs.getString("film_tanimi"));
                 tmp.setCikis_yili(rs.getInt("cikis_yili"));
                 tmp.setYonetmen(rs.getString("yonetmen"));
-                
+
                 tmp.setFilmAktor(this.getAdao().getFilmAktor(tmp.getFilm_id()));
 
                 tmp.setKategori(this.getKdao().find(rs.getInt("kategori_id")));
-                
+
                 tmp.setYorum_film(this.getYdao().getYorum_Film(tmp.getFilm_id()));
+
+                tmp.setPuan_film(this.getPdao().getPuan_Film(tmp.getFilm_id()));
 
                 flist.add(tmp);
             }
@@ -48,14 +51,21 @@ public class filmlerDAO {
         }
         return flist;
     }
-    
+
+    public puanlarDAO getPdao() {
+        if (this.pdao == null) {
+            this.pdao = new puanlarDAO();
+        }
+        return pdao;
+    }
+
     public yorumlarDAO getYdao() {
         if (this.ydao == null) {
             this.ydao = new yorumlarDAO();
         }
         return ydao;
     }
-    
+
     public kategorilerDAO getKdao() {
         if (this.kdao == null) {
             this.kdao = new kategorilerDAO();
@@ -64,13 +74,11 @@ public class filmlerDAO {
     }
 
     public aktorDAO getAdao() {
-        if(this.adao == null){
-           this.adao = new aktorDAO(); 
+        if (this.adao == null) {
+            this.adao = new aktorDAO();
         }
         return adao;
     }
-    
-    
 
     public void create(filmler filmler, int selectedKategori) throws InstantiationException, IllegalAccessException, SQLException {
         DBConnection db = new DBConnection();
@@ -89,19 +97,19 @@ public class filmlerDAO {
         Connection conn = db.connect();
         try {
             Statement st = conn.createStatement();
-            st.executeUpdate("update filmler set film_isim = '"+film.getFilm_isim()+"',film_tanimi ='"+film.getFilm_tanimi()+"', cikis_yili = "+film.getCikis_yili()+",yonetmen='"+film.getYonetmen()+"' where film_id= "+film.getFilm_id());
+            st.executeUpdate("update filmler set film_isim = '" + film.getFilm_isim() + "',film_tanimi ='" + film.getFilm_tanimi() + "', cikis_yili = " + film.getCikis_yili() + ",yonetmen='" + film.getYonetmen() + "' where film_id= " + film.getFilm_id());
         } catch (SQLException ex) {
             Logger.getLogger(filmlerDAO.class.getName()).log(Level.SEVERE, null, ex);
 
         }
     }
 
-    public void delete(filmler film)  throws InstantiationException, SQLException, IllegalAccessException{
+    public void delete(filmler film) throws InstantiationException, SQLException, IllegalAccessException {
         DBConnection db = new DBConnection();
         Connection conn = db.connect();
         try {
             Statement st = conn.createStatement();
-            st.executeUpdate("delete from filmler where film_isim = '"+film.getFilm_isim()+"'");
+            st.executeUpdate("delete from filmler where film_isim = '" + film.getFilm_isim() + "'");
         } catch (SQLException ex) {
             Logger.getLogger(kategorilerDAO.class.getName()).log(Level.SEVERE, null, ex);
 

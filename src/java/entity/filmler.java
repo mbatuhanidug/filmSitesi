@@ -14,6 +14,8 @@ public class filmler {
     
     private List<yorumlar> yorum_film;
     
+    private List<puanlar> puan_film;
+    
     
     public filmler() {
     }
@@ -94,6 +96,13 @@ public class filmler {
     }
     
     
+    public List<puanlar> getPuan_film() {
+        return puan_film;
+    }
+
+    public void setPuan_film(List<puanlar> puan_film) {
+        this.puan_film = puan_film;
+    }
 
     @Override
     public String toString() {

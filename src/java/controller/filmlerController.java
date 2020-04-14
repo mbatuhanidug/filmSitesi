@@ -2,9 +2,11 @@ package controller;
 
 import dao.filmlerDAO;
 import dao.kategorilerDAO;
+import dao.puanlarDAO;
 import dao.yorumlarDAO;
 import entity.filmler;
 import entity.kategoriler;
+import entity.puanlar;
 import entity.yorumlar;
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -28,6 +30,9 @@ public class filmlerController implements Serializable {
     
     private List<yorumlar> ylist;
     private yorumlarDAO ydao;
+    
+    private List<puanlar> plist;
+    private puanlarDAO pdao;
     
     public String delete(filmler film) throws InstantiationException, SQLException, IllegalAccessException{
         this.getFilmDAO().delete(film);
@@ -114,5 +119,21 @@ public class filmlerController implements Serializable {
             this.ydao = new yorumlarDAO();
         }
         return ydao;
+    }
+    
+    public List<puanlar> getPlist() throws InstantiationException, IllegalAccessException, SQLException {
+        this.plist = this.getPdao().getPuanlar();
+        return plist;
+    }
+
+    public void setPlist(List<puanlar> plist) {
+        this.plist = plist;
+    }
+
+    public puanlarDAO getPdao() {
+        if (this.pdao == null) {
+            this.pdao = new puanlarDAO();
+        }
+        return pdao;
     }
 }

@@ -66,7 +66,7 @@
                         </div>
                     </h:form>
                 </div>
-                <div class="col-md-15">
+                <div class="col-md-20">
                     <h:form>
                         <h:dataTable styleClass="table table-striped" value = "#{filmlerController.flist}" var = "film">
                             <h:column>
@@ -108,6 +108,15 @@
                                         #{yorum.yorum_id}.ID- 
                                     </ui:repeat>    
                                     yorumlar sayfasından bu filme ait yorumları takip edebilirsiniz
+                                </ul>
+                            </h:column>
+                            <h:column>
+                                <f:facet name = "header">PUANLAR</f:facet>
+                                <ul>
+                                    <ui:repeat value="#{film.puan_film}" var="puan">
+                                        #{puan.puan_id}.ID- 
+                                    </ui:repeat>    
+                                    puanlar sayfasından, bu filme ait puanlar takip edebilirsiniz
                                 </ul>
                             </h:column>
                             <h:column>

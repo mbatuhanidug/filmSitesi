@@ -58,6 +58,26 @@ public class puanlarDAO {
         }
         return p;
     }
+    
+    public List<puanlar> getPuan_Film(int film_id) throws InstantiationException, IllegalAccessException, SQLException {
+        List<puanlar> puan_film = new ArrayList<>();
+
+        DBConnection db = new DBConnection();
+        Connection conn = db.connect();
+
+        try {
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery("select * from puan_bulunur where film_id ="+film_id);
+            
+            while(rs.next()){
+                puan_film.add(this.find(rs.getInt("puan_id")));
+            }
+        } catch(SQLException ex){
+            Logger.getLogger(aktorDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return puan_film;
+    }
 
     public void create(puanlar puanlar) throws InstantiationException, IllegalAccessException, SQLException {
 
