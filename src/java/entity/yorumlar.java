@@ -1,9 +1,5 @@
 package entity;
 
-/**
- *
- * @author asus
- */
 public class yorumlar {
 
     private int yorum_id;

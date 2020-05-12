@@ -1,5 +1,6 @@
 package entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class filmler {
@@ -75,6 +76,9 @@ public class filmler {
     }
 
     public List<aktor> getFilmAktor() {
+        if(this.filmAktor == null){
+            this.filmAktor = new ArrayList<>();
+        }
         return filmAktor;
     }
 

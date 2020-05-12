@@ -12,7 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import util.DBConnection;
 
-public class aktorDAO {
+public class aktorDAO extends superDAO{
 
     PreparedStatement pst = null;
     ResultSet rs = null;
@@ -21,9 +21,8 @@ public class aktorDAO {
 
         aktor a = null;
 
-        try {
-            DBConnection db = DBConnection.getInstance();
-            pst = db.getConnection().prepareStatement("select * from aktor where aktor_id =");
+        try {          
+            pst = this.getConnection().prepareStatement("select * from aktor where aktor_id =");
             pst.setInt(1, id);
             rs = pst.executeQuery();
             if (rs.next()) {
@@ -42,10 +41,8 @@ public class aktorDAO {
 
     public List<aktor> getAktor() {
         List<aktor> alist = new ArrayList();
-
-        try {
-            DBConnection db = DBConnection.getInstance();
-            pst = db.getConnection().prepareStatement("select * from aktor");
+        try {           
+            pst = this.getConnection().prepareStatement("select * from aktor");
             rs = pst.executeQuery();
             while (rs.next()) {
                 aktor tmp = new aktor(rs.getInt("aktor_id"), rs.getString("aktor_ad"), rs.getString("aktor_soyad"));
@@ -60,8 +57,8 @@ public class aktorDAO {
     public void create(aktor aktor) {
 
         try {
-            DBConnection db = DBConnection.getInstance();
-            pst = db.getConnection().prepareStatement("insert into aktor (aktor_ad,aktor_soyad) values(?,?)");
+           
+            pst = this.getConnection().prepareStatement("insert into aktor (aktor_ad,aktor_soyad) values(?,?)");
             pst.setString(1, aktor.getAktor_ad());
             pst.setString(2, aktor.getAktor_soyad());
             pst.executeUpdate();
@@ -75,8 +72,8 @@ public class aktorDAO {
     public void delete(aktor akt) {
 
         try {
-            DBConnection db = DBConnection.getInstance();
-            pst = db.getConnection().prepareStatement("delete from aktor where aktor_ad = ?");
+           
+            pst = this.getConnection().prepareStatement("delete from aktor where aktor_ad = ?");
             pst.setString(1, akt.getAktor_ad());
             pst.executeUpdate();
             pst.close();
@@ -89,8 +86,8 @@ public class aktorDAO {
     public void update(aktor akt) {
 
         try {
-            DBConnection db = DBConnection.getInstance();
-            pst = db.getConnection().prepareStatement("update aktor set aktor_ad = ?, aktor_soyad=? where aktor_id = ?");
+            
+            pst = this.getConnection().prepareStatement("update aktor set aktor_ad = ?, aktor_soyad=? where aktor_id = ?");
             pst.setString(1, akt.getAktor_ad());
             pst.setString(2, akt.getAktor_soyad());
             pst.setInt(3, akt.getAktor_id());
@@ -106,8 +103,8 @@ public class aktorDAO {
         List<aktor> filmAktor = new ArrayList<>();
 
         try {
-            DBConnection db = DBConnection.getInstance();
-            PreparedStatement pst1 = db.getConnection().prepareStatement("select * from film_aktor where film_id = ?");
+            
+            PreparedStatement pst1 = this.getConnection().prepareStatement("select * from film_aktor where film_id = ?");
             pst1.setInt(1, film_id);
             ResultSet rs1 = pst1.executeQuery();
 

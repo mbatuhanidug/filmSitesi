@@ -1,18 +1,15 @@
 package dao;
 
 import entity.kategoriler;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import util.DBConnection;
 
-public class kategorilerDAO {
+public class kategorilerDAO extends superDAO{
 
     PreparedStatement pst;
     ResultSet rs = null;
@@ -21,9 +18,8 @@ public class kategorilerDAO {
         
        
         kategoriler k = null;
-        try {
-            DBConnection db = DBConnection.getInstance();
-            pst = db.getConnection().prepareStatement("select * from kategoriler where kategori_id = ?");
+        try {      
+            pst = this.getConnection().prepareStatement("select * from kategoriler where kategori_id = ?");
             pst.setInt(1, id);
             rs = pst.executeQuery();
             if (rs.next()) {
@@ -34,18 +30,15 @@ public class kategorilerDAO {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-
         return k;
-
     }
 
     public List<kategoriler> getKategori()   {
         
         List<kategoriler> klist = new ArrayList();
         
-        try {
-            DBConnection db = DBConnection.getInstance();
-            pst = db.getConnection().prepareStatement("Select * from kategoriler");
+        try {  
+            pst = this.getConnection().prepareStatement("Select * from kategoriler");
             rs = pst.executeQuery();
             while (rs.next()) {
                 kategoriler tmp = new kategoriler();
@@ -60,10 +53,8 @@ public class kategorilerDAO {
     }
 
     public void create(kategoriler kategoriler) {
-       
-        try {
-             DBConnection db = DBConnection.getInstance();
-            pst = db.getConnection().prepareStatement("insert into kategoriler (kategori_ad) values (?)");
+        try {     
+            pst = this.getConnection().prepareStatement("insert into kategoriler (kategori_ad) values (?)");
             pst.setString(1, kategoriler.getKategori_ad());
             pst.executeQuery();
         } catch (SQLException ex) {
@@ -74,8 +65,8 @@ public class kategorilerDAO {
     public void delete(kategoriler kat) {
        
         try {
-            DBConnection db = DBConnection.getInstance();
-            pst = db.getConnection().prepareStatement("delete from kategoriler where kategori_ad = ?");
+           
+            pst = this.getConnection().prepareStatement("delete from kategoriler where kategori_ad = ?");
             pst.setString(1, kat.getKategori_ad());
             pst.executeUpdate();
             pst.close();
@@ -88,8 +79,8 @@ public class kategorilerDAO {
     public void update(kategoriler kat)  {
          
         try {
-           DBConnection db = DBConnection.getInstance();
-            pst = db.getConnection().prepareStatement("update kategoriler set kategori_ad = ? where kategori_id = ?");
+          
+            pst = this.getConnection().prepareStatement("update kategoriler set kategori_ad = ? where kategori_id = ?");
             pst.setString(1, kat.getKategori_ad());
             pst.setInt(2, kat.getKategori_id());
             pst.executeUpdate();

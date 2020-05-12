@@ -7,21 +7,18 @@ package dao;
 
 import entity.aktor;
 import entity.filmler;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import util.DBConnection;
 
 /**
  *
  * @author mrtbthn
  */
-public class filmlerDAO {
+public class filmlerDAO extends superDAO{
 
     PreparedStatement pst = null;
     ResultSet rs = null;
@@ -32,8 +29,8 @@ public class filmlerDAO {
     public void insert(filmler film)  {
         
         try {
-            DBConnection db = DBConnection.getInstance();
-            pst = db.getConnection().prepareStatement("insert into filmler (film_isim,film_tanimi,cikis_yili,yonetmen,kategori_id)"
+            
+            pst = this.getConnection().prepareStatement("insert into filmler (film_isim,film_tanimi,cikis_yili,yonetmen,kategori_id)"
                     + " values (?,?,?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
             pst.setString(1, film.getFilm_isim());
             pst.setString(2, film.getFilm_tanimi());
@@ -42,7 +39,7 @@ public class filmlerDAO {
             pst.setInt(5, film.getKategori().getKategori_id());
 
             pst.executeUpdate();
-//******************************************************Film tablosuna insert işlem
+//******************************************************Film_aktor tablosuna insert işlemi
             int f_id = 0;
             ResultSet gk = pst.getGeneratedKeys();
 
@@ -52,7 +49,7 @@ public class filmlerDAO {
 
             for (aktor ak : film.getFilmAktor()) {
 
-                pst = db.getConnection().prepareStatement("INSERT INTO  film_aktor (film_id,aktor_id) values (?,?)");
+                pst = this.getConnection().prepareStatement("INSERT INTO  film_aktor (film_id,aktor_id) values (?,?)");
                 pst.setInt(1, f_id);
                 pst.setInt(2, ak.getAktor_id());
                 pst.executeUpdate();
@@ -65,8 +62,8 @@ public class filmlerDAO {
     public void delete(filmler film)  { 
         
         try {
-            DBConnection db = DBConnection.getInstance();
-            pst = db.getConnection().prepareStatement("DELETE FROM filmler WHERE film_id=?");
+           
+            pst = this.getConnection().prepareStatement("DELETE FROM filmler WHERE film_id=?");
             pst.setInt(1, film.getFilm_id());
             pst.executeUpdate();
 
@@ -81,8 +78,8 @@ public class filmlerDAO {
        
         List<filmler> flist = new ArrayList();
         try {
-             DBConnection db = DBConnection.getInstance();
-            pst = db.getConnection().prepareStatement("SELECT * FROM filmler ORDER BY film_id ASC");
+            
+            pst = this.getConnection().prepareStatement("SELECT * FROM filmler ORDER BY film_id ASC");
             rs = pst.executeQuery();
             while (rs.next()) {
                 filmler temp = new filmler();
@@ -109,8 +106,8 @@ public class filmlerDAO {
 
         
         try {
-             DBConnection db = DBConnection.getInstance();
-            pst = db.getConnection().prepareStatement("UPDATE filmler SET film_isim=?,film_tanimi=?,cikis_yili=?,"
+           
+            pst = this.getConnection().prepareStatement("UPDATE filmler SET film_isim=?,film_tanimi=?,cikis_yili=?,"
                     + "yonetmen=?,kategori_id=? where film_id=?");
             pst.setString(1, f.getFilm_isim());
             pst.setString(2, f.getFilm_tanimi());
@@ -122,13 +119,13 @@ public class filmlerDAO {
             pst.executeUpdate();
 
             //Önce 3. tablodan servisleri siliyoruz.
-            pst = db.getConnection().prepareStatement("DELETE FROM film_aktor where film_id=?");
+            pst = this.getConnection().prepareStatement("DELETE FROM film_aktor where film_id=?");
             pst.setInt(1, f.getFilm_id());
             pst.executeUpdate();
             //Burada tekrar ekliyoruz.
             for (aktor ak : f.getFilmAktor()) {
 
-                pst = db.getConnection().prepareStatement("INSERT INTO  film_aktor (film_id,aktor_id) values (?,?)");
+                pst = this.getConnection().prepareStatement("INSERT INTO  film_aktor (film_id,aktor_id) values (?,?)");
                 pst.setInt(1, f.getFilm_id());
                 pst.setInt(2, ak.getAktor_id());
                 pst.executeUpdate();
@@ -144,8 +141,8 @@ public class filmlerDAO {
 
         filmler temp = null;
         try {
-            DBConnection db = DBConnection.getInstance();
-            pst = db.getConnection().prepareStatement("SELECT * FROM filmler WHERE film_id=?");
+           
+            pst = this.getConnection().prepareStatement("SELECT * FROM filmler WHERE film_id=?");
             pst.setInt(1, id);
             rs = pst.executeQuery();
             if (rs.next()) {
