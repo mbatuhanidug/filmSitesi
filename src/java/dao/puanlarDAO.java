@@ -62,7 +62,7 @@ public class puanlarDAO extends superDAO{
         try {
             pst = this.getConnection().prepareStatement("insert into puanlar (puan_degeri) values (?)");
             pst.setInt(1, puanlar.getPuanDegeri());
-            pst.executeQuery();
+            pst.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(kategorilerDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -3,8 +3,6 @@ package controller;
 import dao.aktorDAO;
 import entity.aktor;
 import java.io.Serializable;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
 

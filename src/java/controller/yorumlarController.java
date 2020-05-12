@@ -4,7 +4,6 @@ package controller;
 import dao.yorumlarDAO;
 import entity.yorumlar;
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
 
@@ -21,27 +20,32 @@ public class yorumlarController implements Serializable {
     private yorumlar yorumlar;
     
     
-    public String updateForm(yorumlar yorumlar) {
+    public void updateForm(yorumlar yorumlar) {
         this.yorumlar = yorumlar;
-        return "index";
+        
+    }
+    
+    public void clearForm() {
+        this.yorumlar = new yorumlar();
     }
 
-    public String update() throws InstantiationException, IllegalAccessException, SQLException {
+    public void update()  {
         this.getYdao().update(this.yorumlar);
-        return "index";
+        this.clearForm();
+        
     }
 
-    public String delete(yorumlar yorum) throws InstantiationException, SQLException, IllegalAccessException {
-        this.getYdao().delete(yorum);
-        return "index";
+    public void delete( )  {
+        this.getYdao().delete(yorumlar);
+        this.clearForm();
     }
 
-    public String create() throws InstantiationException, IllegalAccessException, SQLException {
+    public void create()  {
         this.getYdao().create(this.yorumlar);
-        return "index";
+        this.clearForm();
     }
 
-    public List<yorumlar> getYlist() throws InstantiationException, IllegalAccessException, SQLException {
+    public List<yorumlar> getYlist()  {
         this.ylist = this.getYdao().getYorumlar();
         return ylist;
     }

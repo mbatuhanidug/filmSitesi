@@ -5,7 +5,10 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>YORUMLAR</title>
-        <h:outputStylesheet library="css" name="bootstrap.css"/>
+        <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+        <h:outputStylesheet library="font-awesome" name="css/font-awesome.css"/>
+        <h:outputStylesheet library="css" name="sb-admin.min.css"/>
+        <h:outputStylesheet library="css" name="admin.css"/>
         <h:outputScript library = "js" name = "bootstrap.js"/>
     </h:head>
     <h:body>
@@ -35,10 +38,10 @@
                 </div>
             </nav>
         </div>
-        <div class="container">  
+        <div id ="content">  
             <div class="row">
                 <div class="col-md-6">
-                    <h:form>
+                    <h:form id = "puanlar-table">
                         <h:dataTable styleClass="table table-striped" value = "#{puanlarController.plist}" var = "puan">
                             <h:column>
                                 <f:facet name = "header">ID</f:facet>
@@ -46,29 +49,50 @@
                             </h:column>
                             <h:column>
                                 <f:facet name = "header">PUAN DEGERI</f:facet>
-                                <h:commandLink action="#{puanlarController.updateForm(puan)}" value="#{puan.puanDegeri}"/>
+                                    #{puan.puanDegeri}
                             </h:column>
                             <h:column>
-                                <f:facet name ="header">sil</f:facet>
-                                <h:commandButton styleClass="btn btn-sm btn-danger" action="#{puanlarController.delete(puan)}" value = "Delete"/>
+                                <f:facet name ="header">SEÇ</f:facet>
+                                <h:commandButton styleClass="btn btn-sm btn-info" action="#{puanlarController.updateForm(puan)}" value = "SEÇ">
+                                    <f:ajax render = "puanlar-table puanlar-form" execute = "@this"/>
+                                </h:commandButton>    
                             </h:column>
                         </h:dataTable>
                     </h:form>
                 </div>
                 <div class = "col-md-2">
-                    <h:form>
+                    <h:form id = "puanlar-form">
+                        <h:messages styleClass="alert alert-danger alert" />
                         <div class = "form-group">
-                            <h:inputHidden value="#{puanlarController.puanlar.puan_id}"/>
-                            <label >PUAN DEGERI GIRIN </label>
-                            <h:inputText styleClass="form-control" value = "#{puanlarController.puanlar.puanDegeri}"/>
-                        </div>
-                        <div class = "form-group">
-                            <h:commandButton  styleClass="btn btn-sm btn-warning" value =" Update " action="#{puanlarController.update}"/>
-                            <h:commandButton  styleClass="btn btn-sm btn-primary" value =" Create " action="#{puanlarController.create}"/>
+                            <div class = "form-group">
+                                <h:inputHidden value="#{puanlarController.puanlar.puan_id}"/>
+                                <label for="inputName" >PUAN DEĞERİ GİRİN </label>
+                                <h:inputText styleClass ="form-control"   value="#{puanlarController.puanlar.puanDegeri}"/>
+                            </div>
+
+                            <div class = "form-group">
+                                <div class = "form-group">
+                                    <h:commandButton rendered="#{puanlarController.puanlar.puan_id != 0}" styleClass="btn btn-info" value="Güncelle" action="#{puanlarController.update}">                       
+                                        <f:ajax execute="puanlar-form" render="puanlar-table puanlar-form"/>
+                                    </h:commandButton>
+                                    <h:commandButton rendered="#{puanlarController.puanlar.puan_id  ==0}" styleClass="btn btn-primary" value="Ekle" action="#{puanlarController.create}">
+                                        <f:ajax execute="puanlar-form" render="puanlar-table puanlar-form"/>
+                                    </h:commandButton>
+                                    <h:commandButton rendered="#{puanlarController.puanlar.puan_id != 0}" styleClass="btn btn-secondary" value="Formu Temizle" action="#{puanlarController.clearForm}">
+                                        <f:ajax execute="@this" render="puanlar-table puanlar-form"/>
+                                    </h:commandButton>
+                                    <h:commandButton  rendered="#{puanlarController.puanlar.puan_id != 0}" styleClass="btn btn-sm btn-danger" value="SİL" action="#{puanlarController.delete}">
+                                        <f:ajax render="puanlar-table puanlar-form" execute="@this" />
+                                    </h:commandButton>
+                                </div>
+                            </div>
                         </div>
                     </h:form>    
-                </div> 
-            </div> 
+                </div>
+            </div>
         </div>
+        <h:outputScript library="js" name="jquery-3.3.1.min.js"/>
+        <h:outputScript library="js" name="bootstrap.bundle.min.js"/>
+        <h:outputScript library="js" name="sb-admin.min.js"/>
     </h:body>
 </html>
