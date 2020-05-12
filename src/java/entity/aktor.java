@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.Objects;
+
 
 public class aktor {
     private int aktor_id;
@@ -43,5 +45,32 @@ public class aktor {
     public String toString() {
         return "aktor{" + "aktor_id=" + aktor_id + ", aktor_ad=" + aktor_ad + ", aktor_soyad=" + aktor_soyad + '}';
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + this.aktor_id;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final aktor other = (aktor) obj;
+        if (this.aktor_id != other.aktor_id) {
+            return false;
+        }
+        return true;
+    }
+
+    
     
 }

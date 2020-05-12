@@ -7,6 +7,7 @@ package dao;
 
 import entity.yorumlar;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -22,56 +23,42 @@ import util.DBConnection;
  */
 public class yorumlarDAO {
 
+    PreparedStatement pst;
+    ResultSet rs = null;
 
-    public yorumlar find(int id) throws InstantiationException, IllegalAccessException, SQLException {
+    public yorumlar find(int id) throws SQLException {
 
-        DBConnection db = new DBConnection();
-        Connection conn = db.connect();
+        DBConnection db = DBConnection.getInstance();
         yorumlar y = null;
 
         try {
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("select * from yorumlar where yorum_id =" + id);
-            rs.next();
-            y = new yorumlar();
-            y.setYorum_id(rs.getInt("yorum_id"));
+            pst = db.getConnection().prepareStatement("select * from yorumlar where yorum_id = ?");
+            pst.setInt(1, id);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                y = new yorumlar();
+                y.setYorum_id(rs.getInt("yorum_id"));
+                y.setYorumMetni(rs.getString("yorum_metni"));
+            }
+
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
         return y;
     }
-    
-    public List<yorumlar> getYorum_Film(int film_id) throws InstantiationException, IllegalAccessException, SQLException {
-        List<yorumlar> yorum_film = new ArrayList<>();
 
-        DBConnection db = new DBConnection();
-        Connection conn = db.connect();
-
-        try {
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("select * from yorum_bulunur where film_id ="+film_id);
-            
-            while(rs.next()){
-                yorum_film.add(this.find(rs.getInt("yorum_id")));
-            }
-        } catch(SQLException ex){
-            Logger.getLogger(aktorDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return yorum_film;
-    }
-    
-    public List<yorumlar> getYorumlar() throws InstantiationException, IllegalAccessException, SQLException {
+    public List<yorumlar> getYorumlar() throws SQLException {
         List<yorumlar> ylist = new ArrayList();
 
-        DBConnection db = new DBConnection();
-        Connection conn = db.connect();
+        DBConnection db = DBConnection.getInstance();
 
         try {
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("select * from yorumlar");
+            pst= db.getConnection().prepareStatement("select * from yorumlar");
+            rs = pst.executeQuery();
             while (rs.next()) {
-                yorumlar tmp = new yorumlar(rs.getInt("yorum_id"), rs.getString("yorum_metni"));
+                yorumlar tmp = new yorumlar();
+                tmp.setYorum_id(rs.getInt("yorum_id"));
+                tmp.setYorumMetni(rs.getString("yorum_metni"));
                 ylist.add(tmp);
             }
         } catch (SQLException ex) {
@@ -80,40 +67,43 @@ public class yorumlarDAO {
         return ylist;
     }
 
-    public void create(yorumlar yorumlar) throws InstantiationException, IllegalAccessException, SQLException {
+    public void create(yorumlar yorumlar) throws SQLException {
 
-        DBConnection db = new DBConnection();
-        Connection conn = db.connect();
+        DBConnection db = DBConnection.getInstance();
 
         try {
-            Statement st = conn.createStatement();
-            st.executeUpdate("insert into yorumlar (yorum_metni) values ('" + yorumlar.getYorumMetni() + "')");
+            pst = db.getConnection().prepareStatement("insert into yorumlar (yorum_metni) values (?)");
+            pst.setString(1, yorumlar.getYorumMetni());
+            pst.executeUpdate();
+            
         } catch (SQLException ex) {
             Logger.getLogger(kategorilerDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public void delete(yorumlar yorumlar) throws InstantiationException, SQLException, IllegalAccessException {
+    public void delete(yorumlar yorumlar) throws SQLException {
 
-        DBConnection db = new DBConnection();
-        Connection conn = db.connect();
-
+        DBConnection db = DBConnection.getInstance();
         try {
-            Statement st = conn.createStatement();
-            st.executeUpdate("delete from yorumlar where yorum_metni = '" + yorumlar.getYorumMetni() + "'");
+            pst = db.getConnection().prepareStatement("delete from yorumlar where yorum_metni = ?");
+            pst.setString(1, yorumlar.getYorumMetni());
+            pst.executeUpdate();
+            pst.close();
         } catch (SQLException ex) {
             Logger.getLogger(kategorilerDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public void update(yorumlar yorumlar) throws InstantiationException, IllegalAccessException, SQLException {
+    public void update(yorumlar yorumlar) throws SQLException {
 
-        DBConnection db = new DBConnection();
-        Connection conn = db.connect();
+        DBConnection db = DBConnection.getInstance();
 
         try {
-            Statement st = conn.createStatement();
-            st.executeUpdate("update yorumlar set yorum_metni = '" + yorumlar.getYorumMetni() + "'where yorum_id= " + yorumlar.getYorum_id());
+            pst = db.getConnection().prepareStatement("update yorumlar set yorum_metni=? where yorum_id=? ");
+            pst.setString(1, yorumlar.getYorumMetni());
+            pst.setInt(2, yorumlar.getYorum_id());
+            pst.executeUpdate();
+            
         } catch (SQLException ex) {
             Logger.getLogger(kategorilerDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

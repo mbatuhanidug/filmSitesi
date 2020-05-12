@@ -35,26 +35,28 @@
                 </div>
             </nav>
         </div>
-        <div class="container"> 
+        <div id="content"> 
             <div class="row">
                 <div class="col-md-6">
-                    <h:form>
+                    <h:form id = "aktor-table">
                         <h:dataTable styleClass="table table-striped" value = "#{aktorController.alist}" var = "akt">
                             <h:column>
                                 <f:facet name = "header">ID</f:facet>
                                     #{akt.aktor_id}
                             </h:column>
                             <h:column>
-                                <f:facet name = "header">Ad</f:facet>
-                                <h:commandLink action="#{aktorController.updateForm(akt)}" value="#{akt.aktor_ad}"/>
+                                <f:facet name = "header">Aktor Adı</f:facet>
+                                    #{akt.aktor_ad}
                             </h:column>
                             <h:column>
-                                <f:facet name = "header">Soyad</f:facet>
-                                <h:commandLink action="#{aktorController.updateForm(akt)}" value="#{akt.aktor_soyad}"/>
+                                <f:facet name = "header">Aktor Soyadı</f:facet>
+                                    #{akt.aktor_soyad}
                             </h:column>
                             <h:column>
-                                <f:facet name ="header">Delete</f:facet>
-                                <h:commandButton styleClass="btn btn-sm btn-danger" action="#{aktorController.delete(akt)}" value = "Delete"/>
+                                <f:facet name ="header">SEÇ</f:facet>
+                                <h:commandButton styleClass="btn btn-sm btn-info" action="#{aktorController.updateForm(akt)}" value="SEÇ">
+                                    <f:ajax render="aktor-table aktor-form" execute="@this" />
+                                </h:commandButton>    
                             </h:column>
                         </h:dataTable>
                     </h:form>
@@ -63,23 +65,41 @@
                     <br />
                     <br />
                     <br />
-                    <h:form>
+                    <h:form id = "aktor-form">
+                        <h:messages styleClass="alert alert-danger alert" />
                         <div class = "form-group">
-                            <h:inputHidden value="#{aktorController.aktor.aktor_id}"/>
-                            <label for="inputName" >Aktör Adı </label>
-                            <h:inputText styleClass="form-control" value = "#{aktorController.aktor.aktor_ad}"/>
-                            <br></br>
-                            <label for="inputName" >Aktör Soyadı </label>
-                            <h:inputText styleClass="form-control" value = "#{aktorController.aktor.aktor_soyad}"/>
-                        </div>
-                        <div class = "form-group">
-                            <h:commandButton  styleClass="btn btn-sm btn-warning" value =" Update " action="#{aktorController.update}"/>
-                            <h:commandButton  styleClass="btn btn-sm btn-primary" value =" Create " action="#{aktorController.create}"/>
+                            <div class = "form-group">
+                                <h:inputHidden value="#{aktorController.aktor.aktor_ad}"/> 
+                                <label for="inputName" >Aktör İsmi </label>
+                                <h:inputText styleClass="form-control" value = "#{aktorController.aktor.aktor_ad}"/>
+                                <br></br>
+                                <label for="inputName" >Aktör Soyadı </label>
+                                <h:inputText styleClass="form-control" value = "#{aktorController.aktor.aktor_soyad}"/>
+                            </div>
+                            <div class="form-group">
+                                <div class="btn-group">
+                                    <h:commandButton rendered="#{aktorController.aktor.aktor_id != 0}" styleClass="btn btn-info" value="Güncelle" action="#{aktorController.update}">                       
+                                        <f:ajax execute="aktor-form" render="aktor-form aktor-table"/>
+                                    </h:commandButton>
+                                    <h:commandButton rendered="#{aktorController.aktor.aktor_id  ==0}" styleClass="btn btn-primary" value="Ekle" action="#{aktorController.create}">
+                                        <f:ajax execute="aktor-form" render="aktor-form aktor-table"/>
+                                    </h:commandButton>
+                                    <h:commandButton rendered="#{aktorController.aktor.aktor_id != 0}" styleClass="btn btn-secondary" value="Formu Temizle" action="#{aktorController.clearForm}">
+                                        <f:ajax execute="@this" render="aktor-form aktor-table"/>
+                                    </h:commandButton>
+                                    <h:commandButton  rendered="#{aktorController.aktor.aktor_id != 0}" styleClass="btn btn-sm btn-danger" value="SİL" action="#{aktorController.delete}">
+                                        <f:ajax render="film-form film-table" execute="@this" />
+                                    </h:commandButton>
+                                </div> 
+                            </div> 
                         </div>
                     </h:form>    
                 </div>
             </div>
         </div>
+        <h:outputScript library="js" name="jquery-3.3.1.min.js"/>
+        <h:outputScript library="js" name="bootstrap.bundle.min.js"/>
+        <h:outputScript library="js" name="sb-admin.min.js"/>
     </h:body>
 </html>
 

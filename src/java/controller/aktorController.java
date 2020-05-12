@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
 
-
-
 import javax.inject.Named;
 
 @Named
@@ -18,30 +16,36 @@ public class aktorController implements Serializable {
 
     private List<aktor> alist;
     private aktorDAO adao;
-
     private aktor aktor;
 
-    public String updateForm(aktor akt) {
+    public void updateForm(aktor akt) {
         this.aktor = akt;
-        return "index";
+
     }
 
-    public String update() throws InstantiationException, IllegalAccessException, SQLException {
-        this.getAdao().update(this.aktor);
-        return "index";
+    public void clearForm() {
+        this.aktor = new aktor();
     }
 
-    public String delete(aktor akt) throws InstantiationException, SQLException, IllegalAccessException {
-        this.getAdao().delete(akt);
-        return "index";
+    public void update() throws SQLException {
+        this.getAdao().update(aktor);
+        this.clearForm();
     }
 
-    public String create() throws InstantiationException, IllegalAccessException, SQLException {
-        this.getAdao().create(this.aktor);
-        return "index";
+    public void delete() throws SQLException {
+        this.getAdao().delete(aktor);
     }
 
-    public List<aktor> getAlist() throws InstantiationException, IllegalAccessException, SQLException {
+    public void create() throws SQLException {
+        this.getAdao().create(aktor);
+        this.clearForm();
+    }
+
+    public void deleteConfirm(aktor aktor) {
+        this.aktor = aktor;
+    }
+
+    public List<aktor> getAlist() throws SQLException {
         this.alist = this.getAdao().getAktor();
         return alist;
     }

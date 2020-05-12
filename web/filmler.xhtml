@@ -2,14 +2,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>FİLMLER</title>
-        <h:outputStylesheet library="css" name="bootstrap.css"/>
-        <h:outputScript library = "js" name = "bootstrap.js"/>
+        <title>Anasayfa</title>
+        <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+        <h:outputStylesheet library="font-awesome" name="css/font-awesome.css"/>
+        <h:outputStylesheet library="css" name="sb-admin.min.css"/>
+        <h:outputStylesheet library="css" name="admin.css"/>
+
     </h:head>
-    <h:body>
+    <h:body class="fixed-nav sticky-footer" id="page-top">
         <div class="container">  
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div class="collapse navbar-collapse" id="navbarNav">
@@ -36,98 +39,102 @@
                 </div>
             </nav>
         </div>
-        <div class="container">
-            <div class="row">
-                <div class = "col-md-5">
-                    <h:form>
-                        <h:inputHidden value="#{filmlerController.filmler.film_id}"/>
-                        <label for="inputName" >Film İsmi </label>
-                        <h:inputText styleClass="form-control" value = "#{filmlerController.filmler.film_isim}"/>
-                        <br></br>
-                        <label for="inputName" >Film Tanımı </label>
-                        <h:inputText styleClass="form-control" value = "#{filmlerController.filmler.film_tanimi}"/>
-                        <br></br>
-                        <label for="inputName" >Film Çıkış Yılı </label>
-                        <h:inputText styleClass="form-control" value = "#{filmlerController.filmler.cikis_yili}"/>
-                        <br></br>
-                        <label for="inputName" >Filmin Yönetmeni</label>
-                        <h:inputText styleClass="form-control" value = "#{filmlerController.filmler.yonetmen}"/>
-                        <br></br>
-                        <label for="selectKategori" >Kategori Adı</label>
-                        <h:selectOneMenu styleClass="custom-select" id="selectKategori" value="#{filmlerController.selectedKategori}">
-                            <f:selectItems value="#{filmlerController.klist}" var="kategoriler" itemValue="#{kategoriler.kategori_id}" itemLabel="#{kategoriler.kategori_ad} "/>
-                        </h:selectOneMenu>                   
-                        <br>
 
-                        </br>
-                        <div class = "form-group">
-                            <h:commandButton  styleClass="btn btn-sm btn-warning" value =" Update " action="#{filmlerController.update}"/> <br> </br>
-                            <h:commandButton  styleClass="btn btn-sm btn-primary" value =" Create " action="#{filmlerController.create}"/>
-                        </div>
-                    </h:form>
-                </div>
-                <div class="col-md-20">
-                    <h:form>
-                        <h:dataTable styleClass="table table-striped" value = "#{filmlerController.flist}" var = "film">
+        <div id="content">
+
+            <div class="row">
+                <div class="col-md 9">   
+                    <h:form id="film-table">
+                        <h:dataTable  styleClass="table table-striped table-hover" value="#{filmlerController.flist}" var="film">
                             <h:column>
-                                <f:facet name = "header">ID</f:facet>
+                                <f:facet name="header">ID</f:facet>
                                     #{film.film_id}
                             </h:column>
                             <h:column>
-                                <f:facet name = "header">FİLM</f:facet>
-                                <h:commandLink action="#{filmlerController.updateForm(film)}" value="#{film.film_isim}"/> 
-                            </h:column>  
-                            <h:column>
-                                <f:facet name = "header">FİLM TANIMI</f:facet>
-                                <h:commandLink action="#{filmlerController.updateForm(film)}" value="#{film.film_tanimi}"/> 
+                                <f:facet name="header">Film</f:facet>
+                                    #{film.film_isim}
                             </h:column>
                             <h:column>
-                                <f:facet name = "header">ÇIKIŞ YILI</f:facet>
-                                <h:commandLink action="#{filmlerController.updateForm(film)}" value="#{film.cikis_yili}"/> 
-                            </h:column>  
-                            <h:column>
-                                <f:facet name = "header">YÖNETMEN</f:facet>
-                                <h:commandLink action="#{filmlerController.updateForm(film)}" value="#{film.yonetmen}"/> 
-                            </h:column>  
-                            <h:column>
-                                <f:facet name = "header">KATEGORİ</f:facet>
-                                <h:commandLink action="#{filmlerController.updateForm(film)}" value="#{film.kategori.kategori_id}"/> 
+                                <f:facet name="header">Film Tanımı</f:facet>
+                                    #{film.film_tanimi}
                             </h:column>
                             <h:column>
-                                <f:facet name = "header">AKTORLER</f:facet>
-                                <ul>
-                                    <ui:repeat value="#{film.filmAktor}" var="aktor">
-                                        <li>#{aktor.aktor_ad} #{aktor.aktor_soyad}</li>
-                                    </ui:repeat>    
-                                </ul>
+                                <f:facet name="header">Çıkış Yılı</f:facet>
+                                    #{film.cikis_yili}
                             </h:column>
                             <h:column>
-                                <f:facet name = "header">YORUMLAR</f:facet>
-                                <ul>
-                                    <ui:repeat value="#{film.yorum_film}" var="yorum">
-                                        #{yorum.yorum_id}.ID- 
-                                    </ui:repeat>    
-                                    yorumlar sayfasından bu filme ait yorumları takip edebilirsiniz
-                                </ul>
+                                <f:facet name="header">Kategori</f:facet>
+                                    #{film.kategori.kategori_ad}
                             </h:column>
                             <h:column>
-                                <f:facet name = "header">PUANLAR</f:facet>
-                                <ul>
-                                    <ui:repeat value="#{film.puan_film}" var="puan">
-                                        #{puan.puan_id}.ID- 
-                                    </ui:repeat>    
-                                    puanlar sayfasından, bu filme ait puanlar takip edebilirsiniz
-                                </ul>
+                                <f:facet name="header">Yonetmen</f:facet>
+                                    #{film.yonetmen}
                             </h:column>
                             <h:column>
-                                <f:facet name ="header">Delete</f:facet>
-                                <h:commandButton styleClass="btn btn-sm btn-danger" action="#{filmlerController.delete(film)}" value = "Delete"/>
+                                <f:facet name="header">Aktörler</f:facet>
+                                    #{film.filmAktor}
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">SEÇ</f:facet>
+                                <h:commandButton styleClass="btn btn-sm btn-info" value="SEÇ" action="#{filmlerController.updateForm(film)}">
+                                    <f:ajax render="film-table film-form" execute="@this" />
+                                </h:commandButton>
                             </h:column>
                         </h:dataTable>
                     </h:form>
                 </div>
+                <div class="col-md 3">
+                    <h:form id="film-form">
+                        <h:messages styleClass="alert alert-danger alert" />
+                        <div class="form-group">
+                            <div class="form-group">
+                                <h:inputHidden value="#{filmlerController.filmler.film_id}"/> 
+                                <label for="inputName" >Film İsmi </label>
+                                <h:inputText styleClass="form-control" value = "#{filmlerController.filmler.film_isim}"/>
+
+                                <label for="inputName" >Film Tanımı </label>
+                                <h:inputText styleClass="form-control" value = "#{filmlerController.filmler.film_tanimi}"/>
+
+                                <label for="inputName" >Film Çıkış Yılı </label>
+                                <h:inputText styleClass="form-control" value = "#{filmlerController.filmler.cikis_yili}"/>
+
+                                <label for="inputName" >Filmin Yönetmeni</label>
+                                <h:inputText styleClass="form-control" value = "#{filmlerController.filmler.yonetmen}"/>
+
+                                <label for="selectKategori" >Kategori Adı</label>
+                                <h:selectOneMenu styleClass="custom-select" id="selectKategori" value="#{filmlerController.filmler.kategori}" converter="kategorilerConverter">
+                                    <f:selectItems value="#{filmlerController.kategorilerController.klist}" var="kategoriler" itemValue="#{kategoriler}" itemLabel="#{kategoriler.kategori_ad} "/>
+                                </h:selectOneMenu>  
+
+                                <label for = "filmAktor">Aktörler</label>
+                                <h:selectManyMenu style="height: 200px" styleClass="custom-select" value="#{filmlerController.filmler.filmAktor}" converter="aktorlerConverter">
+                                    <f:selectItems value="#{filmlerController.aktorController.alist}" var="aktor" itemValue="#{aktor}" itemLabel="#{aktor.aktor_ad} #{aktor.aktor_soyad}"/>
+                                </h:selectManyMenu>
+                            </div>
+                            <div class="form-group">
+                                <div class="btn-group">
+                                    <h:commandButton rendered="#{filmlerController.filmler.film_id != 0}" styleClass="btn btn-info" value="Güncelle" action="#{filmlerController.update}">                       
+                                        <f:ajax execute="film-form" render="film-form film-table"/>
+                                    </h:commandButton>    
+                                    <h:commandButton rendered="#{filmlerController.filmler.film_id  ==0}" styleClass="btn btn-primary" value="Ekle" action="#{filmlerController.create}">
+                                        <f:ajax execute="film-form" render="film-form film-table"/>
+                                    </h:commandButton>
+                                    <h:commandButton rendered="#{filmlerController.filmler.film_id != 0}" styleClass="btn btn-secondary" value="Formu Temizle" action="#{filmlerController.clearForm}">
+                                        <f:ajax execute="@this" render="film-form film-table"/>
+                                    </h:commandButton>
+                                    <h:commandButton  rendered="#{filmlerController.filmler.film_id != 0}" styleClass="btn btn-sm btn-danger" value="SİL" action="#{filmlerController.delete}">
+                                        <f:ajax render="film-form film-table" execute="@this" />
+                                    </h:commandButton>
+                                </div>
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
             </div>
         </div>
+        <h:outputScript library="js" name="jquery-3.3.1.min.js"/>
+        <h:outputScript library="js" name="bootstrap.bundle.min.js"/>
+        <h:outputScript library="js" name="sb-admin.min.js"/>
     </h:body>
 </html>
 

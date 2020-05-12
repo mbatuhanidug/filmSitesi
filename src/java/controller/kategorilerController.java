@@ -26,22 +26,22 @@ public class kategorilerController implements Serializable {
         return "index";
     }
     
-    public String update() throws InstantiationException, IllegalAccessException, SQLException{
+    public String update()throws SQLException  {
         this.getKdao().update(this.kategoriler);
         return "index";
     }
     
-    public String delete(kategoriler kat) throws InstantiationException, SQLException, IllegalAccessException{ 
+    public String delete(kategoriler kat)throws SQLException { 
         this.getKdao().delete(kat);
         return "index"; 
     }
     
-    public String create() throws InstantiationException, IllegalAccessException, SQLException{ 
+    public String create() throws SQLException { 
         this.getKdao().create(this.kategoriler); 
         return "index";   
     }
 
-    public List<kategoriler> getKlist() throws InstantiationException, IllegalAccessException, SQLException  {
+    public List<kategoriler> getKlist() throws SQLException  {
         this.klist = this.getKdao().getKategori();
         return klist;
     }

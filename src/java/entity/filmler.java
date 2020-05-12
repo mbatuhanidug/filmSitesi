@@ -3,20 +3,16 @@ package entity;
 import java.util.List;
 
 public class filmler {
+
     private int film_id;
     private String film_isim;
     private String film_tanimi;
     private int cikis_yili;
     private String yonetmen;
- 
+
     private kategoriler kategori;
-    private List<aktor> filmAktor; 
-    
-    private List<yorumlar> yorum_film;
-    
-    private List<puanlar> puan_film;
-    
-    
+    private List<aktor> filmAktor;
+
     public filmler() {
     }
 
@@ -26,7 +22,7 @@ public class filmler {
         this.film_tanimi = film_tanimi;
         this.cikis_yili = cikis_yili;
         this.yonetmen = yonetmen;
-    
+
         this.kategori = kategori;
     }
 
@@ -70,7 +66,6 @@ public class filmler {
         this.yonetmen = yonetmen;
     }
 
-
     public kategoriler getKategori() {
         return kategori;
     }
@@ -87,26 +82,34 @@ public class filmler {
         this.filmAktor = filmAktor;
     }
 
-    public List<yorumlar> getYorum_film() {
-        return yorum_film;
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 37 * hash + this.film_id;
+        return hash;
     }
 
-    public void setYorum_film(List<yorumlar> yorum_film) {
-        this.yorum_film = yorum_film;
-    }
-    
-    
-    public List<puanlar> getPuan_film() {
-        return puan_film;
-    }
-
-    public void setPuan_film(List<puanlar> puan_film) {
-        this.puan_film = puan_film;
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final filmler other = (filmler) obj;
+        if (this.film_id != other.film_id) {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public String toString() {
-        return "filmler{" + "film_id=" + film_id + ", film_isim=" + film_isim + ", film_tanimi=" + film_tanimi + ", cikis_yili=" + cikis_yili + ", yonetmen=" + yonetmen + ", kategori=" + kategori +'}';
+        return "filmler{" + "film_id=" + film_id + ", film_isim=" + film_isim + ", film_tanimi=" + film_tanimi + ", cikis_yili=" + cikis_yili + ", yonetmen=" + yonetmen + ", kategori=" + kategori + '}';
     }
-    
+
 }

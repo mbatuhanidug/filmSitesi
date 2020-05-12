@@ -1,69 +1,168 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package dao;
 
+import entity.aktor;
 import entity.filmler;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import util.DBConnection;
 
+/**
+ *
+ * @author mrtbthn
+ */
 public class filmlerDAO {
 
-    private yorumlarDAO ydao;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+
     private kategorilerDAO kdao;
     private aktorDAO adao;
-    private puanlarDAO pdao;
 
-    public List<filmler> findAll() throws InstantiationException, IllegalAccessException, SQLException {
-        List<filmler> flist = new ArrayList();
-
-        DBConnection db = new DBConnection();
-        Connection conn = db.connect();
-
+    public void insert(filmler film)  {
+        
         try {
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("select * from filmler");
-            //select film_id,film_isim,film_tanimi,cikis_yili,yonetmen,kategori_ad from filmler inner join  kategoriler on kategoriler.kategori_id = filmler.kategori_id
-            while (rs.next()) {
-                filmler tmp = new filmler();
-                tmp.setFilm_id(rs.getInt("film_id"));
-                tmp.setFilm_isim(rs.getString("film_isim"));
-                tmp.setFilm_tanimi(rs.getString("film_tanimi"));
-                tmp.setCikis_yili(rs.getInt("cikis_yili"));
-                tmp.setYonetmen(rs.getString("yonetmen"));
+            DBConnection db = DBConnection.getInstance();
+            pst = db.getConnection().prepareStatement("insert into filmler (film_isim,film_tanimi,cikis_yili,yonetmen,kategori_id)"
+                    + " values (?,?,?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
+            pst.setString(1, film.getFilm_isim());
+            pst.setString(2, film.getFilm_tanimi());
+            pst.setInt(3, film.getCikis_yili());
+            pst.setString(4, film.getYonetmen());
+            pst.setInt(5, film.getKategori().getKategori_id());
 
-                tmp.setFilmAktor(this.getAdao().getFilmAktor(tmp.getFilm_id()));
+            pst.executeUpdate();
+//******************************************************Film tablosuna insert işlem
+            int f_id = 0;
+            ResultSet gk = pst.getGeneratedKeys();
 
-                tmp.setKategori(this.getKdao().find(rs.getInt("kategori_id")));
+            if (gk.next()) {
+                f_id = gk.getInt(1);
+            }
 
-                tmp.setYorum_film(this.getYdao().getYorum_Film(tmp.getFilm_id()));
+            for (aktor ak : film.getFilmAktor()) {
 
-                tmp.setPuan_film(this.getPdao().getPuan_Film(tmp.getFilm_id()));
-
-                flist.add(tmp);
+                pst = db.getConnection().prepareStatement("INSERT INTO  film_aktor (film_id,aktor_id) values (?,?)");
+                pst.setInt(1, f_id);
+                pst.setInt(2, ak.getAktor_id());
+                pst.executeUpdate();
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            System.out.println(" FilmlerDAO HATA(Create): " + ex.getMessage());
+        }
+    }
+
+    public void delete(filmler film)  { 
+        
+        try {
+            DBConnection db = DBConnection.getInstance();
+            pst = db.getConnection().prepareStatement("DELETE FROM filmler WHERE film_id=?");
+            pst.setInt(1, film.getFilm_id());
+            pst.executeUpdate();
+
+            pst.close();
+        } catch (SQLException ex) {
+            System.out.println(" FilmlerDAO HATA(Delete): " + ex.getMessage());
+        }
+    }
+
+    public List<filmler> findAll() {
+
+       
+        List<filmler> flist = new ArrayList();
+        try {
+             DBConnection db = DBConnection.getInstance();
+            pst = db.getConnection().prepareStatement("SELECT * FROM filmler ORDER BY film_id ASC");
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                filmler temp = new filmler();
+
+                temp.setFilm_id(rs.getInt("film_id"));
+                temp.setFilm_isim(rs.getString("film_isim"));
+                temp.setFilm_tanimi(rs.getString("film_tanimi"));
+                temp.setCikis_yili(rs.getInt("cikis_yili"));
+                temp.setYonetmen(rs.getString("yonetmen"));
+                temp.setKategori(this.getKdao().find(rs.getInt("kategori_id")));
+                temp.setFilmAktor(this.getAdao().getFilmAktor(rs.getInt("film_id")));
+                
+                
+
+                flist.add(temp);
+            }
+        } catch (SQLException ex) {
+            System.out.println("filmlerDAO HATA(ReadAll):" + ex.getMessage());
         }
         return flist;
     }
 
-    public puanlarDAO getPdao() {
-        if (this.pdao == null) {
-            this.pdao = new puanlarDAO();
+    public void update(filmler f){
+
+        
+        try {
+             DBConnection db = DBConnection.getInstance();
+            pst = db.getConnection().prepareStatement("UPDATE filmler SET film_isim=?,film_tanimi=?,cikis_yili=?,"
+                    + "yonetmen=?,kategori_id=? where film_id=?");
+            pst.setString(1, f.getFilm_isim());
+            pst.setString(2, f.getFilm_tanimi());
+            pst.setInt(3, f.getCikis_yili());
+            pst.setString(4, f.getYonetmen());
+            pst.setInt(5, f.getKategori().getKategori_id());
+            pst.setInt(6, f.getFilm_id());
+
+            pst.executeUpdate();
+
+            //Önce 3. tablodan servisleri siliyoruz.
+            pst = db.getConnection().prepareStatement("DELETE FROM film_aktor where film_id=?");
+            pst.setInt(1, f.getFilm_id());
+            pst.executeUpdate();
+            //Burada tekrar ekliyoruz.
+            for (aktor ak : f.getFilmAktor()) {
+
+                pst = db.getConnection().prepareStatement("INSERT INTO  film_aktor (film_id,aktor_id) values (?,?)");
+                pst.setInt(1, f.getFilm_id());
+                pst.setInt(2, ak.getAktor_id());
+                pst.executeUpdate();
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("filmlerDAO HATA(Update): " + ex.getMessage());
         }
-        return pdao;
     }
 
-    public yorumlarDAO getYdao() {
-        if (this.ydao == null) {
-            this.ydao = new yorumlarDAO();
+    public filmler find(int id)  {
+        
+
+        filmler temp = null;
+        try {
+            DBConnection db = DBConnection.getInstance();
+            pst = db.getConnection().prepareStatement("SELECT * FROM filmler WHERE film_id=?");
+            pst.setInt(1, id);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                temp = new filmler();
+                temp.setFilm_id(rs.getInt("film_id"));
+                temp.setFilm_isim(rs.getString("film_isim"));
+                temp.setFilm_tanimi(rs.getString("film_tanimi"));
+                temp.setCikis_yili(rs.getInt("cikis_yili"));
+                temp.setYonetmen(rs.getString("yonetmen"));
+                temp.setKategori(this.getKdao().find(rs.getInt("kategori_id")));
+                temp.setFilmAktor(this.getAdao().getFilmAktor(rs.getInt("film_id")));   //Buraya dikkat buradan patlayabilir!
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("filmlerDAO HATA(FİND) :" + ex.getMessage());
         }
-        return ydao;
+        return temp;
     }
 
     public kategorilerDAO getKdao() {
@@ -73,6 +172,10 @@ public class filmlerDAO {
         return kdao;
     }
 
+    public void setKdao(kategorilerDAO kdao) {
+        this.kdao = kdao;
+    }
+
     public aktorDAO getAdao() {
         if (this.adao == null) {
             this.adao = new aktorDAO();
@@ -80,40 +183,8 @@ public class filmlerDAO {
         return adao;
     }
 
-    public void create(filmler filmler, int selectedKategori) throws InstantiationException, IllegalAccessException, SQLException {
-        DBConnection db = new DBConnection();
-        Connection conn = db.connect();
-        try {
-            Statement st = conn.createStatement();
-            st.executeUpdate("insert into filmler (film_isim,film_tanimi,cikis_yili,yonetmen,kategori_id) values ('" + filmler.getFilm_isim() + "','" + filmler.getFilm_tanimi() + "'," + filmler.getCikis_yili() + ",'" + filmler.getYonetmen() + "'," + selectedKategori + ")");
-        } catch (SQLException ex) {
-            Logger.getLogger(filmlerDAO.class.getName()).log(Level.SEVERE, null, ex);
-
-        }
-    }
-
-    public void update(filmler film) throws InstantiationException, IllegalAccessException, SQLException {
-        DBConnection db = new DBConnection();
-        Connection conn = db.connect();
-        try {
-            Statement st = conn.createStatement();
-            st.executeUpdate("update filmler set film_isim = '" + film.getFilm_isim() + "',film_tanimi ='" + film.getFilm_tanimi() + "', cikis_yili = " + film.getCikis_yili() + ",yonetmen='" + film.getYonetmen() + "' where film_id= " + film.getFilm_id());
-        } catch (SQLException ex) {
-            Logger.getLogger(filmlerDAO.class.getName()).log(Level.SEVERE, null, ex);
-
-        }
-    }
-
-    public void delete(filmler film) throws InstantiationException, SQLException, IllegalAccessException {
-        DBConnection db = new DBConnection();
-        Connection conn = db.connect();
-        try {
-            Statement st = conn.createStatement();
-            st.executeUpdate("delete from filmler where film_isim = '" + film.getFilm_isim() + "'");
-        } catch (SQLException ex) {
-            Logger.getLogger(kategorilerDAO.class.getName()).log(Level.SEVERE, null, ex);
-
-        }
+    public void setAdao(aktorDAO adao) {
+        this.adao = adao;
     }
 
 }

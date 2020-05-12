@@ -1,17 +1,12 @@
 package controller;
 
 import dao.filmlerDAO;
-import dao.kategorilerDAO;
-import dao.puanlarDAO;
-import dao.yorumlarDAO;
 import entity.filmler;
-import entity.kategoriler;
-import entity.puanlar;
-import entity.yorumlar;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 
 import javax.inject.Named;
 
@@ -22,47 +17,43 @@ public class filmlerController implements Serializable {
     private List<filmler> flist;
     private filmler filmler;
     private filmlerDAO filmDAO;
-    
-    private List<kategoriler> klist;
-    
-    private kategorilerDAO kdao;
-    private int selectedKategori;
-    
-    private List<yorumlar> ylist;
-    private yorumlarDAO ydao;
-    
-    private List<puanlar> plist;
-    private puanlarDAO pdao;
-    
-    public String delete(filmler film) throws InstantiationException, SQLException, IllegalAccessException{
-        this.getFilmDAO().delete(film);
-        return "index";
-    }
-    
-    public String updateForm(filmler film){
+
+    @Inject
+    private aktorController aktorController;
+    @Inject
+    private kategorilerController kategorilerController;
+
+    public void updateForm(filmler film) {
         this.filmler = film;
-        return "index";
-    }
-    
-    public String update()throws InstantiationException, IllegalAccessException, SQLException{
-        this.getFilmDAO().update(this.filmler);
-        return "index";
     }
 
-    public String create() throws InstantiationException, IllegalAccessException, SQLException {
-        this.getFilmDAO().create(this.filmler, selectedKategori);
-        return  "filmler"; 
-    }
-    
-    public filmler getFilmler() {
-        if (this.filmler == null) {
-            this.filmler = new filmler();
-        }
-        return filmler;
+    public void clearForm() {
+        this.filmler = new filmler();
     }
 
-    public List<filmler> getFlist() throws InstantiationException, IllegalAccessException, SQLException {
-        this.flist  = this.getFilmDAO().findAll();
+    public void create() throws SQLException {
+
+        this.getFilmDAO().insert(filmler);
+
+        this.clearForm();
+    }
+
+    public void deleteConfirm(filmler film) {
+        this.filmler = film;
+    }
+
+    public void delete() throws SQLException {
+        this.getFilmDAO().delete(filmler);
+        this.clearForm();
+    }
+
+    public void update() throws SQLException {
+        this.getFilmDAO().update(filmler);
+        this.clearForm();
+    }
+
+    public List<filmler> getFlist() throws SQLException {
+        this.flist = this.getFilmDAO().findAll();
         return flist;
     }
 
@@ -70,8 +61,19 @@ public class filmlerController implements Serializable {
         this.flist = flist;
     }
 
+    public filmler getFilmler() {
+        if (this.filmler == null) {
+            this.filmler = new filmler();
+        }
+        return filmler;
+    }
+
+    public void setFilmler(filmler film) {
+        this.filmler = film;
+    }
+
     public filmlerDAO getFilmDAO() {
-        if(this.filmDAO == null){
+        if (this.filmDAO == null) {
             this.filmDAO = new filmlerDAO();
         }
         return filmDAO;
@@ -81,59 +83,12 @@ public class filmlerController implements Serializable {
         this.filmDAO = filmDAO;
     }
 
-    public int getSelectedKategori() {
-        return selectedKategori;
+    public aktorController getAktorController() {
+        return aktorController;
     }
 
-    public void setSelectedKategori(int selectedKategori) {
-        this.selectedKategori = selectedKategori;
+    public kategorilerController getKategorilerController() {
+        return kategorilerController;
     }
 
-    public kategorilerDAO getKdao() {
-        if(this.kdao == null){
-            this.kdao = new kategorilerDAO();
-        }
-        return kdao;
-    }
-
-    public List<kategoriler> getKlist() throws InstantiationException, IllegalAccessException, SQLException {
-        this.klist = this.getKdao().getKategori();
-        return klist;
-    }
-
-    public void setKlist(List<kategoriler> klist) {
-        this.klist = klist;
-    }
-    
-    public List<yorumlar> getYlist() throws InstantiationException, IllegalAccessException, SQLException {
-        this.ylist = this.getYdao().getYorumlar();
-        return ylist;
-    }
-
-    public void setYlist(List<yorumlar> ylist) {
-        this.ylist = ylist;
-    }
-    
-    public yorumlarDAO getYdao() {
-        if (this.ydao == null) {
-            this.ydao = new yorumlarDAO();
-        }
-        return ydao;
-    }
-    
-    public List<puanlar> getPlist() throws InstantiationException, IllegalAccessException, SQLException {
-        this.plist = this.getPdao().getPuanlar();
-        return plist;
-    }
-
-    public void setPlist(List<puanlar> plist) {
-        this.plist = plist;
-    }
-
-    public puanlarDAO getPdao() {
-        if (this.pdao == null) {
-            this.pdao = new puanlarDAO();
-        }
-        return pdao;
-    }
 }

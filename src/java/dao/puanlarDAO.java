@@ -7,6 +7,7 @@ package dao;
 
 import entity.puanlar;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -22,17 +23,19 @@ import util.DBConnection;
  */
 public class puanlarDAO {
 
-    public List<puanlar> getPuanlar() throws InstantiationException, IllegalAccessException, SQLException {
+    PreparedStatement pst;
+    ResultSet rs = null;
+
+    public List<puanlar> getPuanlar() throws SQLException {
         List<puanlar> plist = new ArrayList();
-
-        DBConnection db = new DBConnection();
-        Connection conn = db.connect();
-
+        DBConnection db = DBConnection.getInstance();
         try {
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("select * from puanlar");
+            pst = db.getConnection().prepareStatement("select * from puanlar");
+            rs = pst.executeQuery();
             while (rs.next()) {
-                puanlar tmp = new puanlar(rs.getInt("puan_id"), rs.getInt("puan_degeri"));
+                puanlar tmp = new puanlar();
+                tmp.setPuan_id(rs.getInt("puan_id"));
+                tmp.setPuanDegeri(rs.getInt("puan_degeri"));
                 plist.add(tmp);
             }
         } catch (SQLException ex) {
@@ -41,80 +44,58 @@ public class puanlarDAO {
         return plist;
     }
 
-    public puanlar find(int id) throws InstantiationException, IllegalAccessException, SQLException {
+    public puanlar find(int id) throws SQLException {
 
-        DBConnection db = new DBConnection();
-        Connection conn = db.connect();
+        DBConnection db = DBConnection.getInstance();
         puanlar p = null;
 
         try {
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("select * from puanlar where puan_id =" + id);
-            rs.next();
-            p = new puanlar();
-            p.setPuan_id(rs.getInt("puan_id"));
+            pst = db.getConnection().prepareStatement("Select * from puanlar where puan_id = ?");
+            pst.setInt(1, id);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                p = new puanlar();
+                p.setPuan_id(rs.getInt("puan_id"));
+            }
+
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
         return p;
     }
-    
-    public List<puanlar> getPuan_Film(int film_id) throws InstantiationException, IllegalAccessException, SQLException {
-        List<puanlar> puan_film = new ArrayList<>();
 
-        DBConnection db = new DBConnection();
-        Connection conn = db.connect();
-
+    public void create(puanlar puanlar) throws SQLException {
+        DBConnection db = DBConnection.getInstance();
         try {
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("select * from puan_bulunur where film_id ="+film_id);
-            
-            while(rs.next()){
-                puan_film.add(this.find(rs.getInt("puan_id")));
-            }
-        } catch(SQLException ex){
-            Logger.getLogger(aktorDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return puan_film;
-    }
-
-    public void create(puanlar puanlar) throws InstantiationException, IllegalAccessException, SQLException {
-
-        DBConnection db = new DBConnection();
-        Connection conn = db.connect();
-
-        try {
-            Statement st = conn.createStatement();
-            st.executeUpdate("insert into puanlar (puan_degeri) values ('" + puanlar.getPuanDegeri() + "')");
+            pst = db.getConnection().prepareStatement("insert into puanlar (puan_degeri) values (?)");
+            pst.setInt(1, puanlar.getPuanDegeri());
+            pst.executeQuery();
         } catch (SQLException ex) {
             Logger.getLogger(kategorilerDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void delete(puanlar puanlar) throws InstantiationException, SQLException, IllegalAccessException{
-        
-        DBConnection db = new DBConnection();
-        Connection conn = db.connect();
-        
+
+    public void delete(puanlar puanlar) throws SQLException {
+        DBConnection db = DBConnection.getInstance();
         try {
-            Statement st = conn.createStatement();
-            st.executeUpdate("delete from puanlar where puan_degeri = '"+ puanlar.getPuanDegeri()+"'");
+            pst = db.getConnection().prepareStatement("delete from puanlar where puan_id = ?");
+            pst.setInt(1, puanlar.getPuan_id());
+            pst.executeUpdate();
+            pst.close();
         } catch (SQLException ex) {
             Logger.getLogger(kategorilerDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
- 
-    public void update(puanlar puanlar) throws InstantiationException, IllegalAccessException, SQLException {
-        
-        DBConnection db = new DBConnection();
-        Connection conn = db.connect();
-        
+
+    public void update(puanlar puanlar) throws SQLException {
+        DBConnection db = DBConnection.getInstance();
         try {
-            Statement st = conn.createStatement();
-            st.executeUpdate("update puanlar set puan_degeri = '"+puanlar.getPuanDegeri()+"'where puan_id="+puanlar.getPuan_id());
+            pst = db.getConnection().prepareStatement("update puanlar set puan_degeri = ? where puan_id = ? ");
+            pst.setInt(1, puanlar.getPuanDegeri());
+            pst.setInt(2, puanlar.getPuan_id());
+            pst.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(kategorilerDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }   
+    }
 }

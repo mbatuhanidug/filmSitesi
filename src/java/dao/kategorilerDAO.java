@@ -2,6 +2,7 @@ package dao;
 
 import entity.kategoriler;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -13,37 +14,43 @@ import util.DBConnection;
 
 public class kategorilerDAO {
 
-    public kategoriler find(int id) throws InstantiationException, IllegalAccessException, SQLException{
-        DBConnection db = new DBConnection();
-        Connection conn = db.connect();
+    PreparedStatement pst;
+    ResultSet rs = null;
+
+    public kategoriler find(int id)    {
         
+       
         kategoriler k = null;
-        
-        try{
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("select*from kategoriler where kategori_id = "+id);
-            rs.next();
-            
-            k= new kategoriler();
-            k.setKategori_id(rs.getInt("kategori_id"));
-        }catch(SQLException ex){
+        try {
+            DBConnection db = DBConnection.getInstance();
+            pst = db.getConnection().prepareStatement("select * from kategoriler where kategori_id = ?");
+            pst.setInt(1, id);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                k = new kategoriler();
+                k.setKategori_id(rs.getInt("kategori_id"));
+                k.setKategori_ad(rs.getString("kategori_ad"));
+            }
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        
+
         return k;
+
     }
-    
-    public List<kategoriler> getKategori() throws InstantiationException, IllegalAccessException, SQLException {
+
+    public List<kategoriler> getKategori()   {
+        
         List<kategoriler> klist = new ArrayList();
-
-        DBConnection db = new DBConnection();
-        Connection conn = db.connect();
-
+        
         try {
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("select * from kategoriler");
+            DBConnection db = DBConnection.getInstance();
+            pst = db.getConnection().prepareStatement("Select * from kategoriler");
+            rs = pst.executeQuery();
             while (rs.next()) {
-                kategoriler tmp = new kategoriler(rs.getInt("kategori_id"), rs.getString("kategori_ad"));
+                kategoriler tmp = new kategoriler();
+                tmp.setKategori_id(rs.getInt("kategori_id"));
+                tmp.setKategori_ad(rs.getString("kategori_ad"));
                 klist.add(tmp);
             }
         } catch (SQLException ex) {
@@ -52,36 +59,40 @@ public class kategorilerDAO {
         return klist;
     }
 
-    public void create(kategoriler kategoriler) throws InstantiationException, IllegalAccessException, SQLException {
-        DBConnection db = new DBConnection();
-        Connection conn = db.connect();
+    public void create(kategoriler kategoriler) {
+       
         try {
-            Statement st = conn.createStatement();
-            st.executeUpdate("insert into kategoriler (kategori_ad) values ('" + kategoriler.getKategori_ad() + "')");
+             DBConnection db = DBConnection.getInstance();
+            pst = db.getConnection().prepareStatement("insert into kategoriler (kategori_ad) values (?)");
+            pst.setString(1, kategoriler.getKategori_ad());
+            pst.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(kategorilerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void delete(kategoriler kat) {
+       
+        try {
+            DBConnection db = DBConnection.getInstance();
+            pst = db.getConnection().prepareStatement("delete from kategoriler where kategori_ad = ?");
+            pst.setString(1, kat.getKategori_ad());
+            pst.executeUpdate();
+            pst.close();
         } catch (SQLException ex) {
             Logger.getLogger(kategorilerDAO.class.getName()).log(Level.SEVERE, null, ex);
 
         }
     }
-    
-    public void delete(kategoriler kat) throws InstantiationException, SQLException, IllegalAccessException{
-        DBConnection db = new DBConnection();
-        Connection conn = db.connect();
-        try {
-            Statement st = conn.createStatement();
-            st.executeUpdate("delete from kategoriler where kategori_ad = '"+ kat.getKategori_ad()+"'");
-        } catch (SQLException ex) {
-            Logger.getLogger(kategorilerDAO.class.getName()).log(Level.SEVERE, null, ex);
 
-        }
-    }
-
-    public void update(kategoriler kat) throws InstantiationException, IllegalAccessException, SQLException {
-        DBConnection db = new DBConnection();
-        Connection conn = db.connect();
+    public void update(kategoriler kat)  {
+         
         try {
-            Statement st = conn.createStatement();
-            st.executeUpdate("update kategoriler set kategori_ad = '"+kat.getKategori_ad()+"'where kategori_id= "+kat.getKategori_id());
+           DBConnection db = DBConnection.getInstance();
+            pst = db.getConnection().prepareStatement("update kategoriler set kategori_ad = ? where kategori_id = ?");
+            pst.setString(1, kat.getKategori_ad());
+            pst.setInt(2, kat.getKategori_id());
+            pst.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(kategorilerDAO.class.getName()).log(Level.SEVERE, null, ex);
 

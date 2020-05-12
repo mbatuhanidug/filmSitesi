@@ -2,6 +2,7 @@ package dao;
 
 import entity.aktor;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -13,21 +14,25 @@ import util.DBConnection;
 
 public class aktorDAO {
 
-    public aktor find(int id) throws InstantiationException, IllegalAccessException, SQLException {
-        DBConnection db = new DBConnection();
-        Connection conn = db.connect();
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+
+    public aktor find(int id) {
 
         aktor a = null;
 
         try {
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("select * from aktor where aktor_id =" + id);
-            rs.next();
+            DBConnection db = DBConnection.getInstance();
+            pst = db.getConnection().prepareStatement("select * from aktor where aktor_id =");
+            pst.setInt(1, id);
+            rs = pst.executeQuery();
+            if (rs.next()) {
 
-            a = new aktor();
-            a.setAktor_id(rs.getInt("aktor_id"));
-            a.setAktor_ad(rs.getString("aktor_ad"));
-            a.setAktor_soyad(rs.getString("aktor_soyad"));
+                a = new aktor();
+                a.setAktor_id(rs.getInt("aktor_id"));
+                a.setAktor_ad(rs.getString("aktor_ad"));
+                a.setAktor_soyad(rs.getString("aktor_soyad"));
+            }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -35,15 +40,13 @@ public class aktorDAO {
         return a;
     }
 
-    public List<aktor> getAktor() throws InstantiationException, IllegalAccessException, SQLException {
+    public List<aktor> getAktor() {
         List<aktor> alist = new ArrayList();
 
-        DBConnection db = new DBConnection();
-        Connection conn = db.connect();
-
         try {
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("select * from aktor");
+            DBConnection db = DBConnection.getInstance();
+            pst = db.getConnection().prepareStatement("select * from aktor");
+            rs = pst.executeQuery();
             while (rs.next()) {
                 aktor tmp = new aktor(rs.getInt("aktor_id"), rs.getString("aktor_ad"), rs.getString("aktor_soyad"));
                 alist.add(tmp);
@@ -54,60 +57,66 @@ public class aktorDAO {
         return alist;
     }
 
-    public void create(aktor aktor) throws InstantiationException, IllegalAccessException, SQLException {
-        DBConnection db = new DBConnection();
-        Connection conn = db.connect();
+    public void create(aktor aktor) {
+
         try {
-            Statement st = conn.createStatement();
-            st.executeUpdate("insert into aktor (aktor_ad,aktor_soyad) values ('" + aktor.getAktor_ad() + "','" + aktor.getAktor_soyad() + "')");
+            DBConnection db = DBConnection.getInstance();
+            pst = db.getConnection().prepareStatement("insert into aktor (aktor_ad,aktor_soyad) values(?,?)");
+            pst.setString(1, aktor.getAktor_ad());
+            pst.setString(2, aktor.getAktor_soyad());
+            pst.executeUpdate();
+
         } catch (SQLException ex) {
             Logger.getLogger(aktorDAO.class.getName()).log(Level.SEVERE, null, ex);
 
         }
     }
 
-    public void delete(aktor akt) throws InstantiationException, SQLException, IllegalAccessException {
-        DBConnection db = new DBConnection();
-        Connection conn = db.connect();
+    public void delete(aktor akt) {
+
         try {
-            Statement st = conn.createStatement();
-            st.executeUpdate("delete from aktor where aktor_ad = '" + akt.getAktor_ad() + "'");
+            DBConnection db = DBConnection.getInstance();
+            pst = db.getConnection().prepareStatement("delete from aktor where aktor_ad = ?");
+            pst.setString(1, akt.getAktor_ad());
+            pst.executeUpdate();
+            pst.close();
         } catch (SQLException ex) {
             Logger.getLogger(aktorDAO.class.getName()).log(Level.SEVERE, null, ex);
 
         }
     }
 
-    public void update(aktor akt) throws InstantiationException, IllegalAccessException, SQLException {
-        DBConnection db = new DBConnection();
-        Connection conn = db.connect();
+    public void update(aktor akt) {
+
         try {
-            Statement st = conn.createStatement();
-            st.executeUpdate("update aktor set aktor_ad = '" + akt.getAktor_ad() + "', aktor_soyad = '" + akt.getAktor_soyad() + "' where aktor_id= " + akt.getAktor_id());
+            DBConnection db = DBConnection.getInstance();
+            pst = db.getConnection().prepareStatement("update aktor set aktor_ad = ?, aktor_soyad=? where aktor_id = ?");
+            pst.setString(1, akt.getAktor_ad());
+            pst.setString(2, akt.getAktor_soyad());
+            pst.setInt(3, akt.getAktor_id());
+            pst.executeUpdate();
+            pst.close();
         } catch (SQLException ex) {
             Logger.getLogger(aktorDAO.class.getName()).log(Level.SEVERE, null, ex);
 
         }
     }
 
-    public List<aktor> getFilmAktor(int film_id) throws InstantiationException, IllegalAccessException, SQLException {
+    public List<aktor> getFilmAktor(int film_id) {
         List<aktor> filmAktor = new ArrayList<>();
 
-        DBConnection db = new DBConnection();
-        Connection conn = db.connect();
-
         try {
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("select * from film_aktor where film_id ="+film_id);
-            
-            while(rs.next()){
-                filmAktor.add(this.find(rs.getInt("aktor_id")));
+            DBConnection db = DBConnection.getInstance();
+            PreparedStatement pst1 = db.getConnection().prepareStatement("select * from film_aktor where film_id = ?");
+            pst1.setInt(1, film_id);
+            ResultSet rs1 = pst1.executeQuery();
+
+            while (rs1.next()) {
+                filmAktor.add(this.find(rs1.getInt("aktor_id")));
             }
-        } catch(SQLException ex){
+        } catch (SQLException ex) {
             Logger.getLogger(aktorDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         return filmAktor;
     }
-
 }
