@@ -5,7 +5,10 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>KATEGORİLER</title>
-        <h:outputStylesheet library="css" name="bootstrap.css"/>
+        <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+        <h:outputStylesheet library="font-awesome" name="css/font-awesome.css"/>
+        <h:outputStylesheet library="css" name="sb-admin.min.css"/>
+        <h:outputStylesheet library="css" name="admin.css"/>
         <h:outputScript library = "js" name = "bootstrap.js"/>
     </h:head>
     <h:body>
@@ -35,10 +38,10 @@
                 </div>
             </nav>
         </div>
-        <div class="container">
+        <div id="content">
             <div class="row">
                 <div class="col-md-6">
-                    <h:form>
+                    <h:form id = "kategoriler-table">
                         <h:dataTable styleClass="table table-striped" value = "#{kategorilerController.klist}" var = "kat">
                             <h:column>
                                 <f:facet name ="header">İD</f:facet>
@@ -46,30 +49,51 @@
                             </h:column>
                             <h:column>
                                 <f:facet name ="header">KATEGORİLER</f:facet>
-                                <h:commandLink action="#{kategorilerController.updateForm(kat)}" value="#{kat.kategori_ad}"/>   
+                                    #{kat.kategori_ad}   
                             </h:column>
                             <h:column>
-                                <f:facet name ="header">Delete</f:facet>
-                                <h:commandButton styleClass="btn btn-sm btn-danger" action="#{kategorilerController.delete(kat)}" value = "Delete"/>
+                                <f:facet name ="header">SEÇ</f:facet>
+                                <h:commandButton styleClass="btn btn-sm btn-info" action="#{kategorilerController.updateForm(kat)}" value = "SEÇ">
+                                    <f:ajax render="kategoriler-table kategoriler-form" execute="@this"/>
+                                </h:commandButton>
                             </h:column>
                         </h:dataTable>
                     </h:form> 
                 </div>
                 <div class = "col-md-6">
-                    <h:form>
+                    <h:form id = "kategoriler-form">
+                        <h:messages styleClass="alert alert-danger alert" />
                         <div class = "form-group">
-                            <h:inputHidden value="#{kategorilerController.kategoriler.kategori_id}"/>
-                            <label for="inputName" >Kategori Adı </label>
-                            <h:inputText styleClass="form-control" value = "#{kategorilerController.kategoriler.kategori_ad}"/>
+                            <div class = "form-group">
+                                <h:inputHidden value="#{kategorilerController.kategoriler.kategori_id}"/>
+                                <label for="inputName" >Kategori Adı </label>
+                                <h:inputText styleClass="form-control" value = "#{kategorilerController.kategoriler.kategori_ad}"/>
+                            </div>
+                            <div class = "form-group">
+                                <div class="btn-group">
+                                    <h:commandButton rendered="#{kategorilerController.kategoriler.kategori_id != 0}" styleClass="btn btn-info" value="Güncelle" action="#{kategorilerController.update}">                       
+                                        <f:ajax execute="kategoriler-form" render="kategoriler-form kategoriler-table"/>
+                                    </h:commandButton>
+                                    <h:commandButton rendered="#{kategorilerController.kategoriler.kategori_id  ==0}" styleClass="btn btn-primary" value="Ekle" action="#{kategorilerController.create}">
+                                        <f:ajax execute="kategoriler-form" render="kategoriler-form kategoriler-table"/>
+                                    </h:commandButton>
+                                    <h:commandButton rendered="#{kategorilerController.kategoriler.kategori_id != 0}" styleClass="btn btn-secondary" value="Formu Temizle" action="#{kategorilerController.clearForm}">
+                                        <f:ajax execute="@this" render="kategoriler-form kategoriler-table"/>
+                                    </h:commandButton>
+                                    <h:commandButton  rendered="#{kategorilerController.kategoriler.kategori_id != 0}" styleClass="btn btn-sm btn-danger" value="SİL" action="#{kategorilerController.delete}">
+                                        <f:ajax render="kategoriler-form kategoriler-table" execute="@this" />
+                                    </h:commandButton>
+                                </div>
+                            </div>
                         </div>
-                        <div class = "form-group">
-                            <h:commandButton  styleClass="btn btn-sm btn-warning" value =" Update " action="#{kategorilerController.update}"/>
-                            <h:commandButton  styleClass="btn btn-sm btn-primary" value =" Create " action="#{kategorilerController.create}"/>
-                        </div>
-                    </h:form>    
-                </div>    
-            </div>
+                    </h:form> 
+                </div>
+            </div>    
         </div>
+        <h:outputScript library="js" name="jquery-3.3.1.min.js"/>
+        <h:outputScript library="js" name="bootstrap.bundle.min.js"/>
+        <h:outputScript library="js" name="sb-admin.min.js"/>
     </h:body>
-</html>
 
+
+</html>

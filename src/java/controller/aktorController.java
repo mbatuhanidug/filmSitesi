@@ -27,16 +27,16 @@ public class aktorController implements Serializable {
         this.aktor = new aktor();
     }
 
-    public void update() throws SQLException {
+    public void update()  {
         this.getAdao().update(aktor);
         this.clearForm();
     }
 
-    public void delete() throws SQLException {
+    public void delete()  {
         this.getAdao().delete(aktor);
     }
 
-    public void create() throws SQLException {
+    public void create()  {
         this.getAdao().create(aktor);
         this.clearForm();
     }
@@ -45,7 +45,7 @@ public class aktorController implements Serializable {
         this.aktor = aktor;
     }
 
-    public List<aktor> getAlist() throws SQLException {
+    public List<aktor> getAlist()   {
         this.alist = this.getAdao().getAktor();
         return alist;
     }

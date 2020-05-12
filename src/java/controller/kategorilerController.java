@@ -8,40 +8,45 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
 
-
 import javax.inject.Named;
 
 @Named
 @SessionScoped
 public class kategorilerController implements Serializable {
+
     private List<kategoriler> klist;
     private kategorilerDAO kdao;
-    
+
     private kategoriler kategoriler;
-    
-    
-    
-    public String updateForm(kategoriler kat){
+
+    public void updateForm(kategoriler kat) {
         this.kategoriler = kat;
-        return "index";
-    }
-    
-    public String update()throws SQLException  {
-        this.getKdao().update(this.kategoriler);
-        return "index";
-    }
-    
-    public String delete(kategoriler kat)throws SQLException { 
-        this.getKdao().delete(kat);
-        return "index"; 
-    }
-    
-    public String create() throws SQLException { 
-        this.getKdao().create(this.kategoriler); 
-        return "index";   
     }
 
-    public List<kategoriler> getKlist() throws SQLException  {
+    public void clearForm() {
+        this.kategoriler = new kategoriler();
+    }
+
+    public void update()  {
+        this.getKdao().update(this.kategoriler);
+        this.clearForm();
+    }
+
+    public void delete(kategoriler kat)  {
+        this.getKdao().delete(kat);
+        this.clearForm();
+    }
+
+    public void create() {
+        this.getKdao().create(this.kategoriler);
+        this.clearForm();
+    }
+
+    public void deleteConfirm(kategoriler kat) {
+        this.kategoriler = kat;
+    }
+
+    public List<kategoriler> getKlist() {
         this.klist = this.getKdao().getKategori();
         return klist;
     }
@@ -51,7 +56,7 @@ public class kategorilerController implements Serializable {
     }
 
     public kategorilerDAO getKdao() {
-        if(this.kdao ==null){
+        if (this.kdao == null) {
             this.kdao = new kategorilerDAO();
         }
         return kdao;
@@ -62,7 +67,7 @@ public class kategorilerController implements Serializable {
     }
 
     public kategoriler getKategoriler() {
-        if(this.kategoriler == null){
+        if (this.kategoriler == null) {
             this.kategoriler = new kategoriler();
         }
         return kategoriler;
@@ -71,6 +76,5 @@ public class kategorilerController implements Serializable {
     public void setKategoriler(kategoriler kategoriler) {
         this.kategoriler = kategoriler;
     }
-    
-    
+
 }

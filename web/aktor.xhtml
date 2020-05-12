@@ -5,8 +5,10 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>AKTÖRLER</title>
-        <h:outputStylesheet library="css" name="bootstrap.css"/>
-
+        <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+        <h:outputStylesheet library="font-awesome" name="css/font-awesome.css"/>
+        <h:outputStylesheet library="css" name="sb-admin.min.css"/>
+        <h:outputStylesheet library="css" name="admin.css"/>
         <h:outputScript library = "js" name = "bootstrap.js"/>
     </h:head>
     <h:body>
@@ -88,7 +90,7 @@
                                         <f:ajax execute="@this" render="aktor-form aktor-table"/>
                                     </h:commandButton>
                                     <h:commandButton  rendered="#{aktorController.aktor.aktor_id != 0}" styleClass="btn btn-sm btn-danger" value="SİL" action="#{aktorController.delete}">
-                                        <f:ajax render="film-form film-table" execute="@this" />
+                                        <f:ajax render="aktor-form aktor-table" execute="@this" />
                                     </h:commandButton>
                                 </div> 
                             </div> 
