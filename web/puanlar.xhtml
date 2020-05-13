@@ -48,8 +48,12 @@
                                     #{puan.puan_id}
                             </h:column>
                             <h:column>
-                                <f:facet name = "header">PUAN DEGERI</f:facet>
+                                <f:facet name = "header">PUAN DEGERİ</f:facet>
                                     #{puan.puanDegeri}
+                            </h:column>
+                            <h:column>
+                                <f:facet name = "header">FİLM İSİM</f:facet>
+                                    #{puan.film.film_isim}
                             </h:column>
                             <h:column>
                                 <f:facet name ="header">SEÇ</f:facet>
@@ -67,9 +71,12 @@
                             <div class = "form-group">
                                 <h:inputHidden value="#{puanlarController.puanlar.puan_id}"/>
                                 <label for="inputName" >PUAN DEĞERİ GİRİN </label>
-                                <h:inputText styleClass ="form-control"   value="#{puanlarController.puanlar.puanDegeri}"/>
+                                <input type="number" name="puan" min="1" max="5"  />
+                                <label for="inputName" >FİLM İSİM SEÇİNİZ </label>
+                                <h:selectOneMenu styleClass="custom-select" id="film" value="#{puanlarController.puanlar.film}" converter="filmlerConverter">
+                                    <f:selectItems value="#{puanlarController.filmlerController.flist}" var="film" itemValue="#{film}" itemLabel="#{film.film_isim}"/>
+                                </h:selectOneMenu>
                             </div>
-
                             <div class = "form-group">
                                 <div class = "form-group">
                                     <h:commandButton rendered="#{puanlarController.puanlar.puan_id != 0}" styleClass="btn btn-info" value="Güncelle" action="#{puanlarController.update}">                       

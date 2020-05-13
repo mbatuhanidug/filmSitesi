@@ -3,9 +3,11 @@ package controller;
 
 import dao.yorumlarDAO;
 import entity.yorumlar;
+
 import java.io.Serializable;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 
 
 import javax.inject.Named;
@@ -19,6 +21,8 @@ public class yorumlarController implements Serializable {
     private yorumlarDAO ydao;
     private yorumlar yorumlar;
     
+    @Inject
+    private filmlerController filmlerController;
     
     public void updateForm(yorumlar yorumlar) {
         this.yorumlar = yorumlar;
@@ -36,7 +40,7 @@ public class yorumlarController implements Serializable {
     }
 
     public void delete( )  {
-        this.getYdao().delete(yorumlar);
+        this.getYdao().delete(this.yorumlar);
         this.clearForm();
     }
 
@@ -76,4 +80,12 @@ public class yorumlarController implements Serializable {
         this.yorumlar = yorumlar;
     }
 
+    public filmlerController getFilmlerController() {
+        return filmlerController;
+    }
+
+    public void setFilmlerController(filmlerController filmlerController) {
+        this.filmlerController = filmlerController;
+    }
+    
 }

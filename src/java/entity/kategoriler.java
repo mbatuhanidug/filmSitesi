@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.Objects;
+
 
 public class kategoriler {
     private int kategori_id;
@@ -32,6 +34,35 @@ public class kategoriler {
     @Override
     public String toString() {
         return "kategoriler{" + "kategori_id=" + kategori_id + ", kategori_ad=" + kategori_ad + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 59 * hash + this.kategori_id;
+        hash = 59 * hash + Objects.hashCode(this.kategori_ad);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final kategoriler other = (kategoriler) obj;
+        if (this.kategori_id != other.kategori_id) {
+            return false;
+        }
+        if (!Objects.equals(this.kategori_ad, other.kategori_ad)) {
+            return false;
+        }
+        return true;
     }
     
 }

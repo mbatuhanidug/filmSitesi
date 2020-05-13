@@ -3,11 +3,13 @@ package entity;
 import java.util.Objects;
 
 
+
 public class aktor {
     private int aktor_id;
     private String aktor_ad;
     private String aktor_soyad;
 
+   
     public aktor() {
     }
 
@@ -48,8 +50,10 @@ public class aktor {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 97 * hash + this.aktor_id;
+        int hash = 3;
+        hash = 43 * hash + this.aktor_id;
+        hash = 43 * hash + Objects.hashCode(this.aktor_ad);
+        hash = 43 * hash + Objects.hashCode(this.aktor_soyad);
         return hash;
     }
 
@@ -66,6 +70,12 @@ public class aktor {
         }
         final aktor other = (aktor) obj;
         if (this.aktor_id != other.aktor_id) {
+            return false;
+        }
+        if (!Objects.equals(this.aktor_ad, other.aktor_ad)) {
+            return false;
+        }
+        if (!Objects.equals(this.aktor_soyad, other.aktor_soyad)) {
             return false;
         }
         return true;

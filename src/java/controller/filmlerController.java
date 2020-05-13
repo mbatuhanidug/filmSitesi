@@ -31,9 +31,9 @@ public class filmlerController implements Serializable {
         this.filmler = new filmler();
     }
 
-    public void create() throws SQLException {
+    public void create()  {
 
-        this.getFilmDAO().insert(filmler);
+        this.getFilmDAO().insert(this.filmler);
 
         this.clearForm();
     }
@@ -42,17 +42,17 @@ public class filmlerController implements Serializable {
         this.filmler = film;
     }
 
-    public void delete() throws SQLException {
+    public void delete()  {
         this.getFilmDAO().delete(filmler);
         this.clearForm();
     }
 
-    public void update() throws SQLException {
+    public void update() {
         this.getFilmDAO().update(filmler);
         this.clearForm();
     }
 
-    public List<filmler> getFlist() throws SQLException {
+    public List<filmler> getFlist() {
         this.flist = this.getFilmDAO().findAll();
         return flist;
     }

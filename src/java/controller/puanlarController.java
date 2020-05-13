@@ -5,8 +5,11 @@ import entity.puanlar;
 import java.io.Serializable;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
-
+/*
+<h:inputText styleClass ="form-control"   value="#{puanlarController.puanlar.puanDegeri}"/>
+*/
 @Named
 @SessionScoped
 public class puanlarController implements Serializable {
@@ -14,6 +17,9 @@ public class puanlarController implements Serializable {
     private List<puanlar> plist;
     private puanlarDAO pdao;
     private puanlar puanlar;
+    
+    @Inject
+    private filmlerController filmlerController;
 
     public void updateForm(puanlar puan) {
         this.puanlar = puan;
@@ -39,7 +45,8 @@ public class puanlarController implements Serializable {
         this.getPdao().create(this.puanlar);
         this.clearForm();
     }
-     public void deleteConfirm(puanlar puan) {
+
+    public void deleteConfirm(puanlar puan) {
         this.puanlar = puan;
     }
 
@@ -72,6 +79,14 @@ public class puanlarController implements Serializable {
 
     public void setPuanlar(puanlar puanlar) {
         this.puanlar = puanlar;
+    }
+
+    public filmlerController getFilmlerController() {
+        return filmlerController;
+    }
+
+    public void setFilmlerController(filmlerController filmlerController) {
+        this.filmlerController = filmlerController;
     }
 
 }

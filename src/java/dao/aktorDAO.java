@@ -1,16 +1,16 @@
 package dao;
 
 import entity.aktor;
-import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import util.DBConnection;
+
 
 public class aktorDAO extends superDAO{
 
@@ -18,20 +18,20 @@ public class aktorDAO extends superDAO{
     ResultSet rs = null;
 
     public aktor find(int id) {
-
+        //System.out.println("Gelen id:"+id);
         aktor a = null;
 
         try {          
-            pst = this.getConnection().prepareStatement("select * from aktor where aktor_id =");
+            pst = this.getConnection().prepareStatement("select * from aktor where aktor_id =?");
             pst.setInt(1, id);
             rs = pst.executeQuery();
-            if (rs.next()) {
-
+            rs.next();
+           //System.out.println("*************************TEST****************************");
                 a = new aktor();
                 a.setAktor_id(rs.getInt("aktor_id"));
                 a.setAktor_ad(rs.getString("aktor_ad"));
                 a.setAktor_soyad(rs.getString("aktor_soyad"));
-            }
+           
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -101,19 +101,24 @@ public class aktorDAO extends superDAO{
 
     public List<aktor> getFilmAktor(int film_id) {
         List<aktor> filmAktor = new ArrayList<>();
-
+        //System.out.println("*******************************FİLM İD:"+film_id);
         try {
             
-            PreparedStatement pst1 = this.getConnection().prepareStatement("select * from film_aktor where film_id = ?");
-            pst1.setInt(1, film_id);
-            ResultSet rs1 = pst1.executeQuery();
+           PreparedStatement pst1 = this.getConnection().prepareStatement("select * from film_aktor where film_id = ?");
+            pst.setInt(1, film_id);
+           ResultSet rs1 = pst.executeQuery();
 
             while (rs1.next()) {
+              
                 filmAktor.add(this.find(rs1.getInt("aktor_id")));
+                
+                //System.out.println("*************************WHİLE************************: "+rs1.getInt("aktor_id"));
+                
             }
         } catch (SQLException ex) {
-            Logger.getLogger(aktorDAO.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("AKTORDAO(getFilmAktor hata)"+ex.getMessage());
         }
+        //System.out.println(film_id+" numaralı filmin aktör listesinin boyutu:"+filmAktor.size()+"  Liste:"+filmAktor.toString());
         return filmAktor;
     }
 }

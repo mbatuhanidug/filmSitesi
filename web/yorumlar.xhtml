@@ -52,6 +52,10 @@
                                     #{yorum.yorumMetni}
                             </h:column>
                             <h:column>
+                                <f:facet name = "header">Film Isim</f:facet>
+                                    #{yorum.film.film_isim}
+                            </h:column>
+                            <h:column>
                                 <f:facet name ="header">SEÇ</f:facet>
                                 <h:commandButton styleClass="btn btn-sm btn-info" action="#{yorumlarController.updateForm(yorum)}" value = "SEÇ">
                                     <f:ajax render="yorumlar-table yorumlar-form" execute="@this" />
@@ -68,6 +72,10 @@
                                 <h:inputHidden value="#{yorumlarController.yorumlar.yorum_id}"/>
                                 <label >Yorum Metni </label>
                                 <h:inputTextarea styleClass="form-control" value = "#{yorumlarController.yorumlar.yorumMetni}"/>
+                                <label >Film İsim </label>
+                                <h:selectOneMenu styleClass="custom-select" id="film" value="#{yorumlarController.yorumlar.film}" converter="filmlerConverter">
+                                    <f:selectItems value="#{yorumlarController.filmlerController.flist}" var="film" itemValue="#{film}" itemLabel="#{film.film_isim}" />
+                                </h:selectOneMenu>
                             </div>
                             <div class = "form-group">
                                 <div class="btn-group">

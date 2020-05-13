@@ -1,9 +1,6 @@
-
 package converter;
 
-import dao.aktorDAO;
 import dao.kategorilerDAO;
-import entity.aktor;
 import entity.kategoriler;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;

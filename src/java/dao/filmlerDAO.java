@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dao;
 
 import entity.aktor;
@@ -12,13 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import util.DBConnection;
 
-/**
- *
- * @author mrtbthn
- */
-public class filmlerDAO extends superDAO{
+public class filmlerDAO extends superDAO {
 
     PreparedStatement pst = null;
     ResultSet rs = null;
@@ -26,10 +16,9 @@ public class filmlerDAO extends superDAO{
     private kategorilerDAO kdao;
     private aktorDAO adao;
 
-    public void insert(filmler film)  {
-        
+    public void insert(filmler film) {
+
         try {
-            
             pst = this.getConnection().prepareStatement("insert into filmler (film_isim,film_tanimi,cikis_yili,yonetmen,kategori_id)"
                     + " values (?,?,?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
             pst.setString(1, film.getFilm_isim());
@@ -40,17 +29,18 @@ public class filmlerDAO extends superDAO{
 
             pst.executeUpdate();
 //******************************************************Film_aktor tablosuna insert işlemi
-            int f_id = 0;
+          int film_id = 0;
             ResultSet gk = pst.getGeneratedKeys();
 
             if (gk.next()) {
-                f_id = gk.getInt(1);
+                film_id = gk.getInt(1);
             }
 
+            
             for (aktor ak : film.getFilmAktor()) {
 
                 pst = this.getConnection().prepareStatement("INSERT INTO  film_aktor (film_id,aktor_id) values (?,?)");
-                pst.setInt(1, f_id);
+                pst.setInt(1, film_id);
                 pst.setInt(2, ak.getAktor_id());
                 pst.executeUpdate();
             }
@@ -59,10 +49,10 @@ public class filmlerDAO extends superDAO{
         }
     }
 
-    public void delete(filmler film)  { 
-        
+    public void delete(filmler film) {
+
         try {
-           
+
             pst = this.getConnection().prepareStatement("DELETE FROM filmler WHERE film_id=?");
             pst.setInt(1, film.getFilm_id());
             pst.executeUpdate();
@@ -75,10 +65,9 @@ public class filmlerDAO extends superDAO{
 
     public List<filmler> findAll() {
 
-       
         List<filmler> flist = new ArrayList();
         try {
-            
+
             pst = this.getConnection().prepareStatement("SELECT * FROM filmler ORDER BY film_id ASC");
             rs = pst.executeQuery();
             while (rs.next()) {
@@ -92,21 +81,19 @@ public class filmlerDAO extends superDAO{
                 temp.setKategori(this.getKdao().find(rs.getInt("kategori_id")));
                 temp.setFilmAktor(this.getAdao().getFilmAktor(rs.getInt("film_id")));
                 
-                
-
                 flist.add(temp);
             }
+            //System.out.println("***************************Liste Boyutu:"+flist.get(0).getFilmAktor().toString());
         } catch (SQLException ex) {
             System.out.println("filmlerDAO HATA(ReadAll):" + ex.getMessage());
         }
         return flist;
     }
 
-    public void update(filmler f){
+    public void update(filmler f) {
 
-        
         try {
-           
+
             pst = this.getConnection().prepareStatement("UPDATE filmler SET film_isim=?,film_tanimi=?,cikis_yili=?,"
                     + "yonetmen=?,kategori_id=? where film_id=?");
             pst.setString(1, f.getFilm_isim());
@@ -136,12 +123,11 @@ public class filmlerDAO extends superDAO{
         }
     }
 
-    public filmler find(int id)  {
-        
+    public filmler find(int id) {
 
         filmler temp = null;
         try {
-           
+
             pst = this.getConnection().prepareStatement("SELECT * FROM filmler WHERE film_id=?");
             pst.setInt(1, id);
             rs = pst.executeQuery();

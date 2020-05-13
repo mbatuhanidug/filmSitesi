@@ -13,6 +13,7 @@ public class filmler {
 
     private kategoriler kategori;
     private List<aktor> filmAktor;
+    
 
     public filmler() {
     }
