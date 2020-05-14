@@ -71,7 +71,7 @@
                             <div class = "form-group">
                                 <h:inputHidden value="#{puanlarController.puanlar.puan_id}"/>
                                 <label for="inputName" >PUAN DEĞERİ GİRİN </label>
-                                <input type="number" name="puan" min="1" max="5"  />
+                                <h:inputText styleClass ="form-control"   value="#{puanlarController.puanlar.puanDegeri}"/>
                                 <label for="inputName" >FİLM İSİM SEÇİNİZ </label>
                                 <h:selectOneMenu styleClass="custom-select" id="film" value="#{puanlarController.puanlar.film}" converter="filmlerConverter">
                                     <f:selectItems value="#{puanlarController.filmlerController.flist}" var="film" itemValue="#{film}" itemLabel="#{film.film_isim}"/>

@@ -105,8 +105,8 @@ public class aktorDAO extends superDAO{
         try {
             
            PreparedStatement pst1 = this.getConnection().prepareStatement("select * from film_aktor where film_id = ?");
-            pst.setInt(1, film_id);
-           ResultSet rs1 = pst.executeQuery();
+           pst1.setInt(1, film_id);
+           ResultSet rs1 = pst1.executeQuery();
 
             while (rs1.next()) {
               

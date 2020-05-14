@@ -7,9 +7,7 @@ import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-/*
-<h:inputText styleClass ="form-control"   value="#{puanlarController.puanlar.puanDegeri}"/>
-*/
+
 @Named
 @SessionScoped
 public class puanlarController implements Serializable {
