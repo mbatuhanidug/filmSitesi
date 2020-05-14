@@ -7,11 +7,10 @@ import java.sql.SQLException;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
- 
+
 @Named
 @SessionScoped
 public class uyelerController {
-    
     private List<uyeler> uyelist;
     private uyeler uyeler;
     private uyelerDAO uyeDAO;
