@@ -11,7 +11,7 @@ public class DBConnection {
 
         try {
             Class.forName("org.postgresql.Driver").newInstance();
-            c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/film", "postgres", "123");
+            c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/filmm", "postgres", "123");
         } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
             System.out.println(e.getMessage());
         }
