@@ -10,6 +10,7 @@ public class filmler {
     private String film_tanimi;
     private int cikis_yili;
     private String yonetmen;
+    private int puan_ortalama;
 
     private kategoriler kategori;
     private List<aktor> filmAktor;
@@ -18,13 +19,13 @@ public class filmler {
     public filmler() {
     }
 
-    public filmler(int film_id, String film_isim, String film_tanimi, int cikis_yili, String yonetmen, kategoriler kategori) {
+    public filmler(int film_id, String film_isim, String film_tanimi, int cikis_yili, String yonetmen, kategoriler kategori, int puan_ortalama) {
         this.film_id = film_id;
         this.film_isim = film_isim;
         this.film_tanimi = film_tanimi;
         this.cikis_yili = cikis_yili;
         this.yonetmen = yonetmen;
-
+        this.puan_ortalama = puan_ortalama;
         this.kategori = kategori;
     }
 
@@ -74,6 +75,14 @@ public class filmler {
 
     public void setKategori(kategoriler kategori) {
         this.kategori = kategori;
+    }
+
+    public int getPuan_ortalama() {
+        return puan_ortalama;
+    }
+
+    public void setPuan_ortalama(int puan_ortalama) {
+        this.puan_ortalama = puan_ortalama;
     }
 
     public List<aktor> getFilmAktor() {

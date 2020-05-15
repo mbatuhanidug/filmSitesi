@@ -38,7 +38,7 @@ public class kategorilerDAO extends superDAO{
         List<kategoriler> klist = new ArrayList();
         
         try {  
-            pst = this.getConnection().prepareStatement("Select * from kategoriler");
+            pst = this.getConnection().prepareStatement("Select * from kategoriler ORDER BY kategori_id ASC");
             rs = pst.executeQuery();
             while (rs.next()) {
                 kategoriler tmp = new kategoriler();

@@ -19,13 +19,14 @@ public class filmlerDAO extends superDAO {
     public void insert(filmler film) {
 
         try {
-            pst = this.getConnection().prepareStatement("insert into filmler (film_isim,film_tanimi,cikis_yili,yonetmen,kategori_id)"
-                    + " values (?,?,?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
+            pst = this.getConnection().prepareStatement("insert into filmler (film_isim,film_tanimi,cikis_yili,yonetmen,puan_ortalama,kategori_id)"
+                    + " values (?,?,?,?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
             pst.setString(1, film.getFilm_isim());
             pst.setString(2, film.getFilm_tanimi());
             pst.setInt(3, film.getCikis_yili());
             pst.setString(4, film.getYonetmen());
-            pst.setInt(5, film.getKategori().getKategori_id());
+            pst.setInt(5, film.getPuan_ortalama());
+            pst.setInt(6, film.getKategori().getKategori_id());
 
             pst.executeUpdate();
 //******************************************************Film_aktor tablosuna insert işlemi
@@ -48,7 +49,8 @@ public class filmlerDAO extends superDAO {
             System.out.println(" FilmlerDAO HATA(Create): " + ex.getMessage());
         }
     }
-
+    
+  
     public void delete(filmler film) {
 
         try {
@@ -56,7 +58,6 @@ public class filmlerDAO extends superDAO {
             pst = this.getConnection().prepareStatement("DELETE FROM filmler WHERE film_id=?");
             pst.setInt(1, film.getFilm_id());
             pst.executeUpdate();
-
             pst.close();
         } catch (SQLException ex) {
             System.out.println(" FilmlerDAO HATA(Delete): " + ex.getMessage());
@@ -68,7 +69,7 @@ public class filmlerDAO extends superDAO {
         List<filmler> flist = new ArrayList();
         try {
 
-            pst = this.getConnection().prepareStatement("SELECT * FROM filmler ORDER BY film_id ASC");
+            pst = this.getConnection().prepareStatement("SELECT * FROM filmler ORDER BY film_isim ASC");
             rs = pst.executeQuery();
             while (rs.next()) {
                 filmler temp = new filmler();
@@ -78,6 +79,7 @@ public class filmlerDAO extends superDAO {
                 temp.setFilm_tanimi(rs.getString("film_tanimi"));
                 temp.setCikis_yili(rs.getInt("cikis_yili"));
                 temp.setYonetmen(rs.getString("yonetmen"));
+                temp.setPuan_ortalama(rs.getInt("puan_ortalama"));
                 temp.setKategori(this.getKdao().find(rs.getInt("kategori_id")));
                 temp.setFilmAktor(this.getAdao().getFilmAktor(rs.getInt("film_id")));
                 
@@ -89,19 +91,25 @@ public class filmlerDAO extends superDAO {
         }
         return flist;
     }
+    
+    public void puanOrtalama(filmler film){
+        
+    }
+
 
     public void update(filmler f) {
 
         try {
 
             pst = this.getConnection().prepareStatement("UPDATE filmler SET film_isim=?,film_tanimi=?,cikis_yili=?,"
-                    + "yonetmen=?,kategori_id=? where film_id=?");
+                    + "yonetmen=?,puan_ortalama=?,kategori_id=? where film_id=?");
             pst.setString(1, f.getFilm_isim());
             pst.setString(2, f.getFilm_tanimi());
             pst.setInt(3, f.getCikis_yili());
             pst.setString(4, f.getYonetmen());
-            pst.setInt(5, f.getKategori().getKategori_id());
-            pst.setInt(6, f.getFilm_id());
+            pst.setInt(5, f.getPuan_ortalama());
+            pst.setInt(6, f.getKategori().getKategori_id());
+            pst.setInt(7, f.getFilm_id());
 
             pst.executeUpdate();
 
@@ -138,6 +146,7 @@ public class filmlerDAO extends superDAO {
                 temp.setFilm_tanimi(rs.getString("film_tanimi"));
                 temp.setCikis_yili(rs.getInt("cikis_yili"));
                 temp.setYonetmen(rs.getString("yonetmen"));
+                temp.setPuan_ortalama(rs.getInt("puan_ortalama"));
                 temp.setKategori(this.getKdao().find(rs.getInt("kategori_id")));
                 temp.setFilmAktor(this.getAdao().getFilmAktor(rs.getInt("film_id")));   //Buraya dikkat buradan patlayabilir!
             }

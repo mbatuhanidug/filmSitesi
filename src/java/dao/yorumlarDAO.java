@@ -1,4 +1,3 @@
-
 package dao;
 
 import entity.yorumlar;
@@ -11,18 +10,18 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
-public class yorumlarDAO extends superDAO{
-
-    PreparedStatement pst;
+public class yorumlarDAO extends superDAO {
+    
+    PreparedStatement pst = null;
     ResultSet rs = null;
     
     private filmlerDAO fdao;
+    private uyelerDAO udao;
     
-    public yorumlar find(int id)  {
-
+    public yorumlar find(int id) {
+        
         yorumlar y = null;
-
+        
         try {
             pst = this.getConnection().prepareStatement("select * from yorumlar where yorum_id = ?");
             pst.setInt(1, id);
@@ -32,25 +31,27 @@ public class yorumlarDAO extends superDAO{
                 y.setYorum_id(rs.getInt("yorum_id"));
                 y.setYorumMetni(rs.getString("yorum_metni"));
                 y.setFilm(this.getFdao().find(rs.getInt("film_id")));
+                y.setUye(this.getUdao().find(rs.getInt("uye_id")));
             }
-
+            
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
         return y;
     }
-
-    public List<yorumlar> getYorumlar()  {
+    
+    public List<yorumlar> getYorumlar() {
         List<yorumlar> ylist = new ArrayList();
-
+        
         try {
-            pst= this.getConnection().prepareStatement("select * from yorumlar ORDER BY film_id ASC");
+            pst = this.getConnection().prepareStatement("select * from yorumlar ORDER BY yorum_id ASC");
             rs = pst.executeQuery();
             while (rs.next()) {
                 yorumlar tmp = new yorumlar();
                 tmp.setYorum_id(rs.getInt("yorum_id"));
                 tmp.setYorumMetni(rs.getString("yorum_metni"));
                 tmp.setFilm(this.getFdao().find(rs.getInt("film_id")));
+                tmp.setUye(this.getUdao().find(rs.getInt("uye_id")));
                 ylist.add(tmp);
             }
         } catch (SQLException ex) {
@@ -58,22 +59,23 @@ public class yorumlarDAO extends superDAO{
         }
         return ylist;
     }
-
-    public void create(yorumlar yorumlar)  {
-
+    
+    public void create(yorumlar yorumlar) {
+        
         try {
-            pst = this.getConnection().prepareStatement("insert into yorumlar (yorum_metni, film_id) values (?,?)");
+            pst = this.getConnection().prepareStatement("insert into yorumlar (yorum_metni, film_id,uye_id) values (?,?,?)");
             pst.setString(1, yorumlar.getYorumMetni());
             pst.setInt(2, yorumlar.getFilm().getFilm_id());
+            pst.setInt(3, yorumlar.getUye().getUye_id());
             pst.executeUpdate();
             
         } catch (SQLException ex) {
             Logger.getLogger(yorumlarDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    public void delete(yorumlar yorumlar)  {
-
+    
+    public void delete(yorumlar yorumlar) {
+        
         try {
             pst = this.getConnection().prepareStatement("delete from yorumlar where yorum_id = ?");
             pst.setInt(1, yorumlar.getYorum_id());
@@ -83,26 +85,38 @@ public class yorumlarDAO extends superDAO{
             Logger.getLogger(yorumlarDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     public void update(yorumlar yorumlar) {
- 
+        
         try {
-            pst = this.getConnection().prepareStatement("update yorumlar set yorum_metni=? , film_id=? where yorum_id=? ");
+            pst = this.getConnection().prepareStatement("update yorumlar set yorum_metni=? , film_id=?,uye_id where yorum_id=? ");
             pst.setString(1, yorumlar.getYorumMetni());
             pst.setInt(2, yorumlar.getFilm().getFilm_id());
-            pst.setInt(3, yorumlar.getYorum_id());
+            pst.setInt(3, yorumlar.getUye().getUye_id());
+            pst.setInt(4, yorumlar.getYorum_id());
             pst.executeUpdate();
             
         } catch (SQLException ex) {
             Logger.getLogger(yorumlarDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     public filmlerDAO getFdao() {
-        if(this.fdao == null){
+        if (this.fdao == null) {
             this.fdao = new filmlerDAO();
         }
         return fdao;
     }
-
+    
+    public void setUdao(uyelerDAO udao) {
+        this.udao = udao;
+    }
+    
+    public uyelerDAO getUdao() {
+        if (this.udao == null) {
+            this.udao = new uyelerDAO();
+        }
+        return udao;
+    }
+    
 }

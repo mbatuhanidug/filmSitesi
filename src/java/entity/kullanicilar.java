@@ -2,69 +2,90 @@ package entity;
 
 public class kullanicilar {
 
-    private int K_id;
-    private String K_Ad;
-    private String K_Soyad;
-    private String E_mail;
-    private int Telefon_no;
+    private int kullanici_id;
+    private String kullanici_ad;
+    private String kullanici_soyad;
+    private String email;
+    private String telefon;
+    private boolean admin;
+    private String sifre;
 
     public kullanicilar() {
-
     }
 
-    public kullanicilar(int K_id, String K_Ad, String K_Soyad, String E_mail, int Telefon_no) {
-        this.K_id = K_id;
-        this.K_Ad = K_Ad;
-        this.K_Soyad = K_Soyad;
-        this.E_mail = E_mail;
-        this.Telefon_no = Telefon_no;
-
+    public kullanicilar(int kullanici_id, String kullanici_ad, String kullanici_soyad, String email, String telefon, boolean admin, String sifre) {
+        this.kullanici_id = kullanici_id;
+        this.kullanici_ad = kullanici_ad;
+        this.kullanici_soyad = kullanici_soyad;
+        this.email = email;
+        this.telefon = telefon;
+        this.admin = admin;
+        this.sifre = sifre;
     }
 
-    public int getK_id() {
-        return K_id;
+ 
+
+    public String getSifre() {
+        return sifre;
     }
 
-    public void setK_id(int K_id) {
-        this.K_id = K_id;
+    public void setSifre(String sifre) {
+        this.sifre = sifre;
     }
 
-    public String getK_Ad() {
-        return K_Ad;
+    public boolean isAdmin() {
+        return admin;
     }
 
-    public void setK_Ad(String K_Ad) {
-        this.K_Ad = K_Ad;
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
     }
 
-    public String getK_Soyad() {
-        return K_Soyad;
+    public int getKullanici_id() {
+        return kullanici_id;
     }
 
-    public void setK_Soyad(String K_Soyad) {
-        this.K_Soyad = K_Soyad;
+    public void setKullanici_id(int kullanici_id) {
+        this.kullanici_id = kullanici_id;
     }
 
-    public String getE_mail() {
-        return E_mail;
+    public String getKullanici_ad() {
+        return kullanici_ad;
     }
 
-    public void setE_mail(String E_mail) {
-        this.E_mail = E_mail;
+    public void setKullanici_ad(String kullanici_ad) {
+        this.kullanici_ad = kullanici_ad;
     }
 
-    public int getTelefon_no() {
-        return Telefon_no;
+    public String getKullanici_soyad() {
+        return kullanici_soyad;
     }
 
-    public void setTelefon_no(int Telefon_no) {
-        this.Telefon_no = Telefon_no;
+    public void setKullanici_soyad(String kullanici_soyad) {
+        this.kullanici_soyad = kullanici_soyad;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTelefon() {
+        return telefon;
+    }
+
+    public void setTelefon(String telefon) {
+        this.telefon = telefon;
     }
 
     @Override
     public String toString() {
-        return "kullanicilar{" + "K_id=" + K_id + ", K_Ad=" + K_Ad + ", K_Soyad=" + K_Soyad + ", E_mail=" + E_mail + ", Telefon_no=" + Telefon_no + '}';
+        return "kullanicilar{" + "kullanici_id=" + kullanici_id + ", kullanici_ad=" + kullanici_ad + ", kullanici_soyad=" + kullanici_soyad + ", email=" + email + ", telefon=" + telefon + ", admin=" + admin + ", sifre=" + sifre + '}';
     }
 
+    
 
 }

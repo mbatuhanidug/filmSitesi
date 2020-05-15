@@ -21,7 +21,7 @@ public class puanlarDAO extends superDAO{
         List<puanlar> plist = new ArrayList();
         
         try {
-            pst = this.getConnection().prepareStatement("select * from puanlar");
+            pst = this.getConnection().prepareStatement("select * from puanlar ORDER BY film_id ASC");
             rs = pst.executeQuery();
             while (rs.next()) {
                 puanlar tmp = new puanlar();

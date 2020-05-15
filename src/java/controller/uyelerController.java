@@ -1,42 +1,49 @@
-
 package controller;
-
 import dao.uyelerDAO;
 import entity.uyeler;
-import java.sql.SQLException;
+import java.io.Serializable;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 @Named
 @SessionScoped
-public class uyelerController {
+public class uyelerController implements Serializable {
     private List<uyeler> uyelist;
-    private uyeler uyeler;
-    private uyelerDAO uyeDAO;
+    private uyelerDAO uyedao;
+    private uyeler uye;
+
+    public void updateForm(uyeler uye) {
+        this.uye = uye;
+    }
+
+    public void clearForm() {
+        this.uye = new uyeler();
+    }
+
+    public void create() {
+        this.getUyedao().create(this.uye);
+        this.clearForm();
+    }
+
+    public void delete() {
+        this.getUyedao().delete(this.uye);
+        this.clearForm();
+    }
     
-    public String updateForm(uyeler uye) {
-        this.uyeler = uye;
-        return "index";
+    public String deleteCik(uyeler uye){
+        this.getUyedao().delete(uye);
+        this.clearForm();
+        return "/XHTML/panel/cikis.xhtml";
+    }
+    
+    public void update() {
+        this.getUyedao().update(this.uye);
+        this.clearForm();
     }
 
-    public String update() throws InstantiationException, IllegalAccessException, SQLException {
-        this.getuyeDAO().update(uyeler);
-        return "index";
-    }
-
-    public String delete(uyeler uye) throws InstantiationException, SQLException, IllegalAccessException {
-        this.getuyeDAO().delete(uyeler);
-        return "index";
-    }
-
-    public String create() throws InstantiationException, IllegalAccessException, SQLException {
-        this.getuyeDAO().create(uyeler);
-        return "index";
-    }
-
-    public List<uyeler> getUyelist() throws InstantiationException, IllegalAccessException, SQLException {
-        this.uyelist=this.getuyeDAO().findAll();
+    public List<uyeler> getUyelist() {
+        this.uyelist = this.getUyedao().findAll();
         return uyelist;
     }
 
@@ -44,30 +51,27 @@ public class uyelerController {
         this.uyelist = uyelist;
     }
 
-    public uyeler getUyeler() {
-         if (this.uyeler == null)
-        {
-            this.uyeler = new uyeler();
+    public uyelerDAO getUyedao() {
+        if (this.uyedao == null) {
+            this.uyedao = new uyelerDAO();
+
         }
-        return uyeler;
+        return uyedao;
     }
 
-    public void setUyeler(uyeler uyeler) {
-        this.uyeler = uyeler;
+    public void setUyedao(uyelerDAO uyedao) {
+        this.uyedao = uyedao;
     }
 
-    public uyelerDAO getuyeDAO() {
-        if (this.uyeDAO == null)
-        {
-            this.uyeDAO = new uyelerDAO();
+    public uyeler getUye() {
+        if (this.uye == null) {
+            this.uye = new uyeler();
+
         }
-        return uyeDAO;
+        return uye;
     }
 
-    public void setUyeDAO(uyelerDAO uyeDAO) {
-        this.uyeDAO = uyeDAO;
+    public void setUye(uyeler uye) {
+        this.uye = uye;
     }
-    
 }
-
-

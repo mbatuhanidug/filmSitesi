@@ -5,43 +5,58 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>KATEGORİLER</title>
-        <h:outputStylesheet library="css" name="bootstrap.min.css"/>
-        <h:outputStylesheet library="font-awesome" name="css/font-awesome.css"/>
-        <h:outputStylesheet library="css" name="sb-admin.min.css"/>
-        <h:outputStylesheet library="css" name="admin.css"/>
-        <h:outputScript library = "js" name = "bootstrap.js"/>
+        <h:outputStylesheet library ="css" name="bootstrap.css"/>
+        <style>
+            .bg-transparents{
+                background-color: #336699   !important;
+            }.bg-s{
+                background-color: #999999    !important;
+            }
+            .bg-t{
+                background-color: #e3e3e3     !important;
+            }
+        </style>
     </h:head>
-    <h:body>
-        <div class="container">  
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <h:form>
-                        <ul class="navbar-nav">
+    <h:body class="bg-s">
+        <nav  class="navbar navbar-transparent bg-transparents navbar-expand-lg text-success">
+            <div class="container">
+                <ul class="navbar-nav ml-auto">
+                    <h:form >
+                        <ul  class="navbar-nav ">
                             <li class="nav-item active">
-                                <h:commandLink styleClass="nav-link" action = "filmler" value = "Filmler"/> 
+                                <h:commandLink styleClass="nav-link text-white" action = "/XHTML/film/filmler.xhtml" value = "Filmler"/> 
+                            </li>
+                            <li  class="nav-item">
+                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/kategori/kategoriler.xhtml" value = "Kategori"/> 
+                            </li>
+                            <li  class="nav-item">
+                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/uyeler/uyeler.xhtml" value = "Uyeler"/> 
                             </li>
                             <li class="nav-item">
-                                <h:commandLink styleClass="nav-link" action = "kategoriler" value = "Kategori"/> 
+                                <h:commandLink styleClass="nav-link text-white" action = "/XHTML/yorum/yorumlar.xhtml" value = "Yorumlar"/> 
                             </li>
                             <li class="nav-item">
-                                <h:commandLink styleClass="nav-link" action = "yorumlar" value = "Yorumlar"/> 
+                                <h:commandLink styleClass="nav-link text-white" action = "/XHTML/puan/puanlar.xhtml" value = "Puanlar"/> 
+                            </li>
+                            <li  class="nav-item">
+                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/aktor/aktor.xhtml" value = "Aktörler"/> 
                             </li>
                             <li class="nav-item">
-                                <h:commandLink styleClass="nav-link" action = "puanlar" value = "Puanlar"/> 
+                                <h:commandLink styleClass="nav-link text-white" action = "/XHTML/profil/profil.xhtml" value = "Profil"/> 
                             </li>
                             <li class="nav-item">
-                                <h:commandLink styleClass="nav-link" action = "aktor" value = "Aktörler"/> 
+                                <h:link  class="nav-link text-white" value="Çıkış" outcome="/XHTML/panel/cikis.xhtml"></h:link>
                             </li>
-
                         </ul>
                     </h:form>
-                </div>
-            </nav>
-        </div>
-        <div id="content">
+                </ul>
+            </div>
+        </nav>
+        <br /><br />
+        <div class="container " id="content">
             <div class="row">
-                <div class="col-md-6">
-                    <h:form id = "kategoriler-table">
+                <div class="col-md-6 bg-t">
+                    <h:form  id = "kategoriler-table">
                         <h:dataTable styleClass="table table-striped" value = "#{kategorilerController.klist}" var = "kat">
                             <h:column>
                                 <f:facet name ="header">İD</f:facet>
@@ -61,6 +76,7 @@
                     </h:form> 
                 </div>
                 <div class = "col-md-6">
+                    <br />
                     <h:form id = "kategoriler-form">
                         <h:messages styleClass="alert alert-danger alert" />
                         <div class = "form-group">
@@ -71,7 +87,7 @@
                             </div>
                             <div class = "form-group">
                                 <div class="btn-group">
-                                    <h:commandButton rendered="#{kategorilerController.kategoriler.kategori_id != 0}" styleClass="btn btn-info" value="Güncelle" action="#{kategorilerController.update}">                       
+                                    <h:commandButton onclick="return confirm('Güncellemek İstediğinizden Emin Misiniz?')" rendered="#{kategorilerController.kategoriler.kategori_id != 0}" styleClass="btn btn-info" value="Güncelle" action="#{kategorilerController.update}">                       
                                         <f:ajax execute="kategoriler-form" render="kategoriler-form kategoriler-table"/>
                                     </h:commandButton>
                                     <h:commandButton rendered="#{kategorilerController.kategoriler.kategori_id  ==0}" styleClass="btn btn-primary" value="Ekle" action="#{kategorilerController.create}">
@@ -80,7 +96,7 @@
                                     <h:commandButton rendered="#{kategorilerController.kategoriler.kategori_id != 0}" styleClass="btn btn-secondary" value="Formu Temizle" action="#{kategorilerController.clearForm}">
                                         <f:ajax execute="@this" render="kategoriler-form kategoriler-table"/>
                                     </h:commandButton>
-                                    <h:commandButton  rendered="#{kategorilerController.kategoriler.kategori_id != 0}" styleClass="btn btn-sm btn-danger" value="SİL" action="#{kategorilerController.delete}">
+                                    <h:commandButton onclick="return confirm('Silmek İstediğinizden Emin Misiniz?')" rendered="#{kategorilerController.kategoriler.kategori_id != 0}" styleClass="btn btn-sm btn-danger" value="SİL" action="#{kategorilerController.delete}">
                                         <f:ajax render="kategoriler-form kategoriler-table" execute="@this" />
                                     </h:commandButton>
                                 </div>

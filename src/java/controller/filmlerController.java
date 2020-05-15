@@ -3,7 +3,6 @@ package controller;
 import dao.filmlerDAO;
 import entity.filmler;
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -90,5 +89,4 @@ public class filmlerController implements Serializable {
     public kategorilerController getKategorilerController() {
         return kategorilerController;
     }
-
 }
