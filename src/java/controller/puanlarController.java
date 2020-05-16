@@ -16,8 +16,12 @@ public class puanlarController implements Serializable {
     private puanlarDAO pdao;
     private puanlar puanlar;
     
+    
     @Inject
     private filmlerController filmlerController;
+    
+    @Inject
+    private uyelerController uyelerController;
 
     public void updateForm(puanlar puan) {
         this.puanlar = puan;
@@ -85,6 +89,14 @@ public class puanlarController implements Serializable {
 
     public void setFilmlerController(filmlerController filmlerController) {
         this.filmlerController = filmlerController;
+    }
+
+    public uyelerController getUyelerController() {
+        return uyelerController;
+    }
+
+    public void setUyelerController(uyelerController uyelerController) {
+        this.uyelerController = uyelerController;
     }
 
 }

@@ -59,15 +59,15 @@
                         <h:dataTable styleClass="table table-striped" value = "#{valid_user}" var = "uye">
                             <h:column rendered="#{sessionScope.valid_user.admin}">
                                 <f:facet name ="header">ID</f:facet>
-                                    #{sessionScope.valid_user.kullanici_id}
+                                    #{sessionScope.valid_user.uye_id}
                             </h:column>
                             <h:column>
                                 <f:facet name ="header">AD</f:facet>
-                                    #{sessionScope.valid_user.kullanici_ad}
+                                    #{sessionScope.valid_user.uye_ad}
                             </h:column>
                             <h:column>
                                 <f:facet name ="header">SOYAD</f:facet>
-                                    #{sessionScope.valid_user.kullanici_soyad}  
+                                    #{sessionScope.valid_user.uye_soyad}  
                             </h:column>
                             <h:column>
                                 <f:facet name ="header">E-MAİL</f:facet>

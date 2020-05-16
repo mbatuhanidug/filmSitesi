@@ -10,15 +10,20 @@ public class puanlar {
     private int puan_id;
     
     private filmler film;
+   
     
     public puanlar() {
     }
 
-    public puanlar(int puan_id, int puanDegeri) {
+    public puanlar(int puanDegeri, int puan_id, filmler film) {
         this.puanDegeri = puanDegeri;
         this.puan_id = puan_id;
+        this.film = film;
+      
     }
 
+   
+    
  
     public int getPuanDegeri() {
         return puanDegeri;
@@ -51,10 +56,10 @@ public class puanlar {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 61 * hash + this.puanDegeri;
-        hash = 61 * hash + this.puan_id;
-        hash = 61 * hash + Objects.hashCode(this.film);
+        int hash = 5;
+        hash = 37 * hash + this.puanDegeri;
+        hash = 37 * hash + this.puan_id;
+        hash = 37 * hash + Objects.hashCode(this.film);
         return hash;
     }
 
@@ -81,5 +86,8 @@ public class puanlar {
         }
         return true;
     }
+
+  
+  
 
 }

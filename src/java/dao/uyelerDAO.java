@@ -17,16 +17,16 @@ public class uyelerDAO extends superDAO {
     public uyeler giris(String mail, String sifre) {
         uyeler temp = null;
         try {
-            pst = this.getConnection().prepareStatement("select * from kullanicilar where email = ? and sifre = ?");
+            pst = this.getConnection().prepareStatement("select * from uyeler where email = ? and sifre = ?");
             pst.setString(1, mail);
             pst.setString(2, sifre);
             rs = pst.executeQuery();
 
             while (rs.next()) {
                 temp = new uyeler();
-                temp.setKullanici_id(rs.getInt("kullanici_id"));
-                temp.setKullanici_ad(rs.getString("kullanici_ad"));
-                temp.setKullanici_soyad(rs.getString("kullanici_soyad"));
+                temp.setUye_id(rs.getInt("uye_id"));
+                temp.setUye_ad(rs.getString("uye_ad"));
+                temp.setUye_soyad(rs.getString("uye_soyad"));
                 temp.setEmail(rs.getString("email"));
                 temp.setTelefon(rs.getString("telefon"));
                 temp.setSifre(rs.getString("sifre"));
@@ -55,9 +55,9 @@ public class uyelerDAO extends superDAO {
 
     public void create(uyeler uyeler) {
         try {
-            pst = this.getConnection().prepareStatement("insert into uyeler (kullanici_ad,kullanici_soyad,email,telefon,sifre,admin) values (?,?,?,?,?,false)");
-            pst.setString(1, uyeler.getKullanici_ad());
-            pst.setString(2, uyeler.getKullanici_soyad());
+            pst = this.getConnection().prepareStatement("insert into uyeler (uye_ad,uye_soyad,email,telefon,sifre,admin) values (?,?,?,?,?,0)");
+            pst.setString(1, uyeler.getUye_ad());
+            pst.setString(2, uyeler.getUye_soyad());
             pst.setString(3, uyeler.getEmail());
             pst.setString(4, uyeler.getTelefon());
             pst.setString(5, uyeler.getSifre());
@@ -86,9 +86,9 @@ public class uyelerDAO extends superDAO {
             rs = pst.executeQuery();
             while (rs.next()) {
                 uyeler temp = new uyeler();
-                temp.setKullanici_id(rs.getInt("kullanici_id"));
-                temp.setKullanici_ad(rs.getString("kullanici_ad"));
-                temp.setKullanici_soyad(rs.getString("kullanici_soyad"));
+                temp.setUye_id(rs.getInt("uye_id"));
+                temp.setUye_ad(rs.getString("uye_ad"));
+                temp.setUye_soyad(rs.getString("uye_soyad"));
                 temp.setEmail(rs.getString("email"));
                 temp.setTelefon(rs.getString("telefon"));
                 temp.setUye_id(rs.getInt("uye_id"));
@@ -109,9 +109,9 @@ public class uyelerDAO extends superDAO {
             rs = pst.executeQuery();
             if (rs.next()) {
                 uyeler = new uyeler();
-                uyeler.setKullanici_id(rs.getInt("kullanici_id"));
-                uyeler.setKullanici_ad(rs.getString("kullanici_ad"));
-                uyeler.setKullanici_soyad(rs.getString("kullanici_soyad"));
+                uyeler.setUye_id(rs.getInt("uye_id"));
+                uyeler.setUye_ad(rs.getString("uye_ad"));
+                uyeler.setUye_soyad(rs.getString("uye_soyad"));
                 uyeler.setEmail(rs.getString("email"));
                 uyeler.setTelefon(rs.getString("telefon"));
                 uyeler.setUye_id(rs.getInt("uye_id"));
@@ -126,15 +126,13 @@ public class uyelerDAO extends superDAO {
 
     public void update(uyeler uyeler) {
         try {
-            pst = this.getConnection().prepareStatement("update uyeler set kullanici_id=? , kullanici_ad=? , kullanici_soyad=? , email=? , telefon=? , uye_id=? , sifre=? , admin=false where uye_id=?");
-
-            pst.setInt(1, uyeler.getKullanici_id());
-            pst.setString(2, uyeler.getKullanici_ad());
-            pst.setString(3, uyeler.getKullanici_soyad());
-            pst.setString(4, uyeler.getEmail());
-            pst.setString(5, uyeler.getTelefon());
+            pst = this.getConnection().prepareStatement("update uyeler set  uye_ad=? , uye_soyad=? , email=? , telefon=? , sifre=? , admin=0 where uye_id=?");
+            pst.setString(1, uyeler.getUye_ad());
+            pst.setString(2, uyeler.getUye_soyad());
+            pst.setString(3, uyeler.getEmail());
+            pst.setString(4, uyeler.getTelefon());
+            pst.setString(5, uyeler.getSifre());
             pst.setInt(6, uyeler.getUye_id());
-            pst.setString(7, uyeler.getSifre());
             pst.executeUpdate();
             pst.close();
         } catch (SQLException ex) {

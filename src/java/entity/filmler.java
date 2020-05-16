@@ -10,22 +10,23 @@ public class filmler {
     private String film_tanimi;
     private int cikis_yili;
     private String yonetmen;
-    private int puan_ortalama;
+   
 
     private kategoriler kategori;
     private List<aktor> filmAktor;
+  
     
 
     public filmler() {
     }
 
-    public filmler(int film_id, String film_isim, String film_tanimi, int cikis_yili, String yonetmen, kategoriler kategori, int puan_ortalama) {
+    public filmler(int film_id, String film_isim, String film_tanimi, int cikis_yili, String yonetmen, kategoriler kategori) {
         this.film_id = film_id;
         this.film_isim = film_isim;
         this.film_tanimi = film_tanimi;
         this.cikis_yili = cikis_yili;
         this.yonetmen = yonetmen;
-        this.puan_ortalama = puan_ortalama;
+     
         this.kategori = kategori;
     }
 
@@ -77,13 +78,7 @@ public class filmler {
         this.kategori = kategori;
     }
 
-    public int getPuan_ortalama() {
-        return puan_ortalama;
-    }
-
-    public void setPuan_ortalama(int puan_ortalama) {
-        this.puan_ortalama = puan_ortalama;
-    }
+  
 
     public List<aktor> getFilmAktor() {
         if(this.filmAktor == null){
@@ -95,6 +90,7 @@ public class filmler {
     public void setFilmAktor(List<aktor> filmAktor) {
         this.filmAktor = filmAktor;
     }
+
 
     @Override
     public int hashCode() {
@@ -123,7 +119,10 @@ public class filmler {
 
     @Override
     public String toString() {
-        return "filmler{" + "film_id=" + film_id + ", film_isim=" + film_isim + ", film_tanimi=" + film_tanimi + ", cikis_yili=" + cikis_yili + ", yonetmen=" + yonetmen + ", kategori=" + kategori + '}';
+        return "filmler{" + "film_id=" + film_id + ", film_isim=" + film_isim + ", film_tanimi=" + film_tanimi + ", cikis_yili=" + cikis_yili + ", yonetmen=" + yonetmen + ", kategori=" + kategori + ", filmAktor=" + filmAktor + '}';
     }
 
+    
+
+    
 }
