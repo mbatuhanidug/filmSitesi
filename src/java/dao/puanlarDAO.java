@@ -72,7 +72,7 @@ public class puanlarDAO extends superDAO{
             
             pst.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(kategorilerDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(puanlarDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -84,7 +84,7 @@ public class puanlarDAO extends superDAO{
             pst.executeUpdate();
             pst.close();
         } catch (SQLException ex) {
-            Logger.getLogger(kategorilerDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(puanlarDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -97,7 +97,7 @@ public class puanlarDAO extends superDAO{
             pst.setInt(3, puanlar.getPuan_id());
             pst.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(kategorilerDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(puanlarDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

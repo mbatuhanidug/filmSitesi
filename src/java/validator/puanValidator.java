@@ -21,11 +21,11 @@ public class puanValidator implements Serializable {
         boolean isValid = true;
         msgList.clear();
 
-        String value = (String) v;
-        if (value.equals("")) {
+        int value = (int) v;
+        if (value == 0) {
             msgList.add(new FacesMessage("Lütfen Puan Değeri Giriniz ! "));
             isValid = false;
-        } else if (value.length() < 0 || value.length() > 11) {
+        } else if (value < 0 || value > 10) {
             msgList.add(new FacesMessage("Verilen Puan Değeri 1' den Küçük 10' dan Büyük Olamaz !"));
             isValid = false;
         }
