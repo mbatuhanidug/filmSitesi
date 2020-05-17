@@ -17,7 +17,7 @@ public class puanlarController implements Serializable {
     private puanlar puanlar;
     
     private int page = 1;
-    private int pageSize = 10;
+    private int pageSize = 5;
     private int pageCount;
 
     public void next() {

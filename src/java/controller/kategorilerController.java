@@ -13,13 +13,14 @@ import javax.inject.Named;
 public class kategorilerController implements Serializable {
 
     private List<kategoriler> klist;
+    private List<kategoriler> kFULLlist;
     private kategorilerDAO kdao;
 
     private kategoriler kategoriler;
 
      
     private int page = 1;
-    private int pageSize = 10;
+    private int pageSize = 5;
     private int pageCount;
 
     public void next() {
@@ -95,6 +96,17 @@ public class kategorilerController implements Serializable {
         this.klist = this.getKdao().getKategori(page, pageSize);
         return klist;
     }
+
+    public List<kategoriler> getKFULLlist() {
+        this.kFULLlist = this.getKdao().getKategori();
+        return kFULLlist;
+    }
+    
+    public void setkFULLlist(List<kategoriler> kFULLlist) {
+        this.kFULLlist = kFULLlist;
+    }
+    
+  
 
     public void setKlist(List<kategoriler> klist) {
         this.klist = klist;

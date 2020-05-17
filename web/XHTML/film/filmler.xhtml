@@ -3,8 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Filmler</title>
         <h:outputStylesheet library ="css" name="bootstrap.css"/>
@@ -92,7 +91,7 @@
                                             <div class=" col-md-3 container ">
                                                 <h:graphicImage value="/media/sss.PNG" width="150" height="150" />
                                             </div>
-                                            <div class="card-body bg-dark">
+                                            <div class="card-body bg-dark container">
                                                 <h4 style="color: #bd2130" class="card-title">-#{film.film_isim}-</h4>
                                                 <h6 class="card-subtitle mb-2 text-muted"><p style="color: #EF6C00">IMBD: #{film.imbd}</p></h6>
                                                 <p class="card-text text-white">#{film.film_tanimi}</p>
@@ -138,6 +137,13 @@
                             </h:column>
                         </h:dataTable>
                     </h:form>
+                    <h:form>
+                        <div class = "btn-group container">
+                            <h:commandButton action="#{filmlerController.previous()}" value="Geri" styleClass="btn btn-outline-dark"/>
+                            <h:commandButton action="#{filmlerController.next()}" value="İleri" styleClass="btn btn-outline-dark"/>
+                        </div>
+                        <pre>  Page #{filmlerController.page} of #{filmlerController.pageCount} </pre>
+                    </h:form>
                 </div>
                 <div class="col-md-4 container">
                     <br />
@@ -162,17 +168,17 @@
                                 <label for="inputName" >IMBD</label>
                                 <h:inputText styleClass="form-control" value = "#{filmlerController.filmler.imbd}"/>
 
-                                <label for="inputName" >FRAGMAN</label>
+                                <label for="inputName" >Fragman Link</label>
                                 <h:inputText styleClass="form-control" value = "#{filmlerController.filmler.fragman}"/>
 
                                 <label>Kategori Adı</label>
                                 <h:selectOneMenu styleClass="custom-select" id="kategori" value="#{filmlerController.filmler.kategori}" converter="kategorilerConverter">
-                                    <f:selectItems value="#{filmlerController.kategorilerController.klist}" var="kategoriler" itemValue="#{kategoriler}" itemLabel="#{kategoriler.kategori_ad} "/>
+                                    <f:selectItems value="#{kategorilerController.KFULLlist}" var="kategoriler" itemValue="#{kategoriler}" itemLabel="#{kategoriler.kategori_ad} "/>
                                 </h:selectOneMenu>  
 
                                 <label for="inputAktor" >Aktörler</label>
                                 <h:selectManyMenu style="height: 200px" value="#{filmlerController.filmler.filmAktor}" styleClass="custom-select col-md-12 col-xs-12" converter="aktorlerConverter">
-                                    <f:selectItems value="#{filmlerController.aktorController.alist}" var="aktorler" itemValue="#{aktorler}" itemLabel="#{aktorler.aktor_ad} #{aktorler.aktor_soyad}"/>
+                                    <f:selectItems value="#{aktorController.AFULLlist}" var="aktorler" itemValue="#{aktorler}" itemLabel="#{aktorler.aktor_ad} #{aktorler.aktor_soyad}"/>
                                 </h:selectManyMenu>
                             </div>
                             <div class="form-group">
@@ -197,13 +203,7 @@
                 </div>
             </div>
         </div>
-        <h:form>
-            <div class = "btn-group">
-                <h:commandButton action="#{filmlerController.previous()}" value="Geri" styleClass="btn btn-outline-dark"/>
-                <h:commandButton action="#{filmlerController.next()}" value="İleri" styleClass="btn btn-outline-dark"/>
-            </div>
-            <pre>  Page #{filmlerController.page} of #{filmlerController.pageCount} </pre>
-        </h:form>
+
         <h:outputScript library="js" name="jquery-3.3.1.min.js"/>
         <h:outputScript library="js" name="bootstrap.bundle.min.js"/>
         <h:outputScript library="js" name="sb-admin.min.js"/>

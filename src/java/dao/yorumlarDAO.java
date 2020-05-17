@@ -65,7 +65,7 @@ public class yorumlarDAO extends superDAO {
             pst = this.getConnection().prepareStatement("SELECT count(yorum_id) as yorum_count from yorumlar ");
             rs = pst.executeQuery();
             rs.next();
-            count = rs.getInt("yorum_id");
+            count = rs.getInt("yorum_count");
 
         } catch (SQLException ex) {
             System.out.println("yorumlarDAO HATA(ReadAll):" + ex.getMessage());

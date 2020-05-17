@@ -18,7 +18,7 @@ public class uyelerController implements Serializable {
     private uyeler uye;
     
     private int page = 1;
-    private int pageSize = 10;
+    private int pageSize = 5;
     private int pageCount;
 
     public void next() {

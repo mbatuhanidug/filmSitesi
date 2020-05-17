@@ -13,11 +13,12 @@ import javax.inject.Named;
 public class aktorController implements Serializable {
 
     private List<aktor> alist;
+    private List<aktor> aFULLlist;
     private aktorDAO adao;
     private aktor aktor;
     
     private int page = 1;
-    private int pageSize = 10;
+    private int pageSize = 5;
     private int pageCount;
 
     public void next() {
@@ -91,6 +92,11 @@ public class aktorController implements Serializable {
     public List<aktor> getAlist()   {
         this.alist = this.getAdao().getAktor(page , pageSize);
         return alist;
+    }
+
+    public List<aktor> getAFULLlist() {
+        this.aFULLlist = this.getAdao().getAktor();
+        return aFULLlist;
     }
 
     public void setAlist(List<aktor> alist) {

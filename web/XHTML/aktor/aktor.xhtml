@@ -84,6 +84,13 @@
                             </h:column>
                         </h:dataTable>
                     </h:form>
+                    <h:form>
+                        <div class = "btn-group container">
+                            <h:commandButton action="#{aktorController.previous()}" value="Geri" styleClass="btn btn-outline-dark"/>
+                            <h:commandButton action="#{aktorController.next()}" value="İleri" styleClass="btn btn-outline-dark"/>
+                        </div>
+                        <pre>  Page #{aktorController.page} of #{aktorController.pageCount} </pre>
+                    </h:form>
                 </div>
                 <div class = "col-md-4 container">
                     <br />
@@ -120,13 +127,7 @@
                 </div>
             </div>
         </div>
-        <h:form>
-            <div class = "btn-group">
-                <h:commandButton action="#{aktorController.previous()}" value="Geri" styleClass="btn btn-outline-dark"/>
-                <h:commandButton action="#{aktorController.next()}" value="İleri" styleClass="btn btn-outline-dark"/>
-            </div>
-            <pre>  Page #{aktorController.page} of #{aktorController.pageCount} </pre>
-        </h:form>
+
         <h:outputScript library="js" name="jquery-3.3.1.min.js"/>
         <h:outputScript library="js" name="bootstrap.bundle.min.js"/>
         <h:outputScript library="js" name="sb-admin.min.js"/>

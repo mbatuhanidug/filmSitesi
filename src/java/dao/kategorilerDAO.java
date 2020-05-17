@@ -52,6 +52,25 @@ public class kategorilerDAO extends superDAO{
         return klist;
     }
     
+    public List<kategoriler> getKategori()   {
+        
+        List<kategoriler> klist = new ArrayList();
+    
+        try {  
+            pst = this.getConnection().prepareStatement("Select * from kategoriler ORDER BY kategori_ad ASC");
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                kategoriler tmp = new kategoriler();
+                tmp.setKategori_id(rs.getInt("kategori_id"));
+                tmp.setKategori_ad(rs.getString("kategori_ad"));
+                klist.add(tmp);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return klist;
+    }
+    
      public int count() {
         
         int count =0;

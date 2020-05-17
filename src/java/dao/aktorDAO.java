@@ -55,6 +55,21 @@ public class aktorDAO extends superDAO{
         return alist;
     }
     
+    public List<aktor> getAktor() {
+        List<aktor> alist = new ArrayList();
+        try {           
+            pst = this.getConnection().prepareStatement("SELECT * FROM aktor order by aktor_ad ASC");
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                aktor tmp = new aktor(rs.getInt("aktor_id"), rs.getString("aktor_ad"), rs.getString("aktor_soyad"));
+                alist.add(tmp);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return alist;
+    }
+    
     public int count() {
         
         int count =0;

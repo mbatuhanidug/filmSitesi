@@ -24,7 +24,7 @@ public class dosyaController implements Serializable {
     private final String uploadTo = "C:\\Users\\asus\\Desktop\\İNTERNET PROG\\04\\filmSitesi\\web\\upload\\";
 
     private int page = 1;
-    private int pageSize = 10;
+    private int pageSize = 5;
     private int pageCount;
 
     public void next() {

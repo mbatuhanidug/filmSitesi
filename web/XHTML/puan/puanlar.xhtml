@@ -85,6 +85,13 @@
                             </h:column>
                         </h:dataTable>
                     </h:form>
+                    <h:form>
+                        <div class = "btn-group container">
+                            <h:commandButton action="#{puanlarController.previous()}" value="Geri" styleClass="btn btn-outline-dark"/>
+                            <h:commandButton action="#{puanlarController.next()}" value="İleri" styleClass="btn btn-outline-dark"/>
+                        </div>
+                        <pre>  Page #{puanlarController.page} of #{puanlarController.pageCount} </pre>
+                    </h:form>
                 </div>
                 <div class = "col-md-2 container">
                     <br /><br />
@@ -95,7 +102,7 @@
                                 <h:inputHidden value="#{puanlarController.puanlar.puan_id}"/>
                                 <label for = "inputPuan">1-10 ARASINDA PUAN GİRİNİZ (Örn. 7)</label>
                                 <h:inputText id="inputPuan" styleClass="form-control" value = "#{puanlarController.puanlar.puanDegeri}" validatorMessage="xhtm Validation : Puan Değeri 0' dan Büyük 11'den Küçük Olmalıdır.">
-                                 <f:validateDoubleRange minimum="1" maximum="10" for="inputPuan"/>
+                                    <f:validateDoubleRange minimum="1" maximum="10" for="inputPuan"/>
                                 </h:inputText>
                                 <br></br>
                                 <label>FİLM İSİM SEÇİNİZ </label>
@@ -121,13 +128,7 @@
                 </div>
             </div>
         </div>
-        <h:form>
-            <div class = "btn-group">
-                <h:commandButton action="#{puanlarController.previous()}" value="Geri" styleClass="btn btn-outline-dark"/>
-                <h:commandButton action="#{puanlarController.next()}" value="İleri" styleClass="btn btn-outline-dark"/>
-            </div>
-            <pre>  Page #{puanlarController.page} of #{puanlarController.pageCount} </pre>
-        </h:form>
+
         <h:outputScript library="js" name="jquery-3.3.1.min.js"/>
         <h:outputScript library="js" name="bootstrap.bundle.min.js"/>
         <h:outputScript library="js" name="sb-admin.min.js"/>
