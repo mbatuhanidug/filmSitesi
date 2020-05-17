@@ -33,12 +33,12 @@ public class kategorilerDAO extends superDAO{
         return k;
     }
 
-    public List<kategoriler> getKategori()   {
+    public List<kategoriler> getKategori(int page, int pageSize)   {
         
         List<kategoriler> klist = new ArrayList();
-        
+        int start = (page-1)*pageSize;
         try {  
-            pst = this.getConnection().prepareStatement("Select * from kategoriler ORDER BY kategori_id ASC");
+            pst = this.getConnection().prepareStatement("Select * from kategoriler ORDER BY kategori_ad ASC limit "+start+","+pageSize);
             rs = pst.executeQuery();
             while (rs.next()) {
                 kategoriler tmp = new kategoriler();
@@ -50,6 +50,23 @@ public class kategorilerDAO extends superDAO{
             System.out.println(ex.getMessage());
         }
         return klist;
+    }
+    
+     public int count() {
+        
+        int count =0;
+        try {
+
+            pst = this.getConnection().prepareStatement("SELECT count(kategori_id) as kategori_count from kategoriler ");
+            rs = pst.executeQuery();
+            rs.next();
+            count = rs.getInt("kategori_count");
+
+          
+        } catch (SQLException ex) {
+            System.out.println("kategorilerDAO HATA(ReadAll):" + ex.getMessage());
+        }
+        return count;
     }
 
     public void create(kategoriler kategoriler) {

@@ -31,14 +31,13 @@ public class filmlerDAO extends superDAO {
 
             pst.executeUpdate();
 //******************************************************Film_aktor tablosuna insert işlemi
-          int film_id = 0;
+            int film_id = 0;
             ResultSet gk = pst.getGeneratedKeys();
 
             if (gk.next()) {
                 film_id = gk.getInt(1);
             }
 
-            
             for (aktor ak : film.getFilmAktor()) {
 
                 pst = this.getConnection().prepareStatement("INSERT INTO  film_aktor (film_id,aktor_id) values (?,?)");
@@ -50,8 +49,7 @@ public class filmlerDAO extends superDAO {
             System.out.println(" FilmlerDAO HATA(Create): " + ex.getMessage());
         }
     }
-    
-  
+
     public void delete(filmler film) {
 
         try {
@@ -65,12 +63,13 @@ public class filmlerDAO extends superDAO {
         }
     }
 
-    public List<filmler> findAll() {
+    public List<filmler> findAll(int page, int pageSize) {
 
         List<filmler> flist = new ArrayList();
+        int start = (page-1)*pageSize;
         try {
 
-            pst = this.getConnection().prepareStatement("SELECT * FROM filmler order by imbd ASC");
+            pst = this.getConnection().prepareStatement("SELECT * FROM filmler order by imbd ASC limit "+start+","+pageSize);
             rs = pst.executeQuery();
             while (rs.next()) {
                 filmler temp = new filmler();
@@ -84,7 +83,7 @@ public class filmlerDAO extends superDAO {
                 temp.setFragman(rs.getString("fragman"));
                 temp.setKategori(this.getKdao().find(rs.getInt("kategori_id")));
                 temp.setFilmAktor(this.getAdao().getFilmAktor(rs.getInt("film_id")));
-                
+
                 flist.add(temp);
             }
             //System.out.println("***************************Liste Boyutu:"+flist.get(0).getFilmAktor().toString());
@@ -94,6 +93,22 @@ public class filmlerDAO extends superDAO {
         return flist;
     }
 
+    public int count() {
+        
+        int count =0;
+        try {
+
+            pst = this.getConnection().prepareStatement("SELECT count(film_id) as film_count from filmler ");
+            rs = pst.executeQuery();
+            rs.next();
+            count = rs.getInt("film_count");
+
+          
+        } catch (SQLException ex) {
+            System.out.println("filmlerDAO HATA(ReadAll):" + ex.getMessage());
+        }
+        return count;
+    }
 
     public void update(filmler f) {
 
@@ -109,7 +124,7 @@ public class filmlerDAO extends superDAO {
             pst.setDouble(6, f.getImbd());
             pst.setString(7, f.getFragman());
             pst.setInt(8, f.getFilm_id());
-            
+
             pst.executeUpdate();
 
             //Önce 3. tablodan servisleri siliyoruz.

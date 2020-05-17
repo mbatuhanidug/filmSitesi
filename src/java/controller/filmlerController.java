@@ -17,6 +17,51 @@ public class filmlerController implements Serializable {
     private filmler filmler;
     private filmlerDAO filmDAO;
 
+    private int page = 1;
+    private int pageSize = 10;
+    private int pageCount;
+
+    public void next() {
+        if (this.page == this.getPageCount()) {
+            this.page = 1;
+        } else {
+            this.page++;
+        }
+    }
+
+    public void previous() {
+        if (this.page == 1) {
+            this.page = this.getPageCount();
+        } else {
+            this.page--;
+        }
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public int getPageCount() {
+        this.pageCount = (int) Math.ceil(this.getFilmDAO().count() / (double) pageSize);
+        return pageCount;
+    }
+
+    public void setPageCount(int pageCount) {
+        this.pageCount = pageCount;
+    }
+
     @Inject
     private aktorController aktorController;
     @Inject
@@ -30,7 +75,7 @@ public class filmlerController implements Serializable {
         this.filmler = new filmler();
     }
 
-    public void create()  {
+    public void create() {
 
         this.getFilmDAO().insert(this.filmler);
 
@@ -41,7 +86,7 @@ public class filmlerController implements Serializable {
         this.filmler = film;
     }
 
-    public void delete()  {
+    public void delete() {
         this.getFilmDAO().delete(filmler);
         this.clearForm();
     }
@@ -52,7 +97,7 @@ public class filmlerController implements Serializable {
     }
 
     public List<filmler> getFlist() {
-        this.flist = this.getFilmDAO().findAll();
+        this.flist = this.getFilmDAO().findAll(page, pageSize);
         return flist;
     }
 

@@ -39,11 +39,12 @@ public class dosyaDAO extends superDAO {
         }
     }
 
-    public List<dosya> findAll() {
+    public List<dosya> findAll(int page, int pageSize) {
         List<dosya> dlist = new ArrayList();
+        int start = (page - 1) * pageSize;
         try {
-            pst = this.getConnection().prepareStatement("select * from dosya");
-        
+            pst = this.getConnection().prepareStatement("select * from dosya order by doya_isim ASC limit " + start + "," + pageSize);
+
             rs = pst.executeQuery();
 
             while (rs.next()) {
@@ -71,6 +72,22 @@ public class dosyaDAO extends superDAO {
         return d;
     }
 
+    public int count() {
+
+        int count = 0;
+        try {
+
+            pst = this.getConnection().prepareStatement("SELECT count(dosya_id) as dosya_count from dosya ");
+            rs = pst.executeQuery();
+            rs.next();
+            count = rs.getInt("dosya_count");
+
+        } catch (SQLException ex) {
+            System.out.println("dosyaDAO HATA(ReadAll):" + ex.getMessage());
+        }
+        return count;
+    }
+
     public void update(dosya dosya) {
 
         try {
@@ -88,5 +105,4 @@ public class dosyaDAO extends superDAO {
         }
     }
 
-   
 }

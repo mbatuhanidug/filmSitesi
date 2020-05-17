@@ -19,11 +19,11 @@ public class puanlarDAO extends superDAO{
     private filmlerDAO fdao;
    
     
-    public List<puanlar> getPuanlar()  {
+    public List<puanlar> getPuanlar(int page, int pageSize)  {
         List<puanlar> plist = new ArrayList();
-        
+        int start = (page-1)*pageSize;
         try {
-            pst = this.getConnection().prepareStatement("select * from puanlar ORDER BY film_id ASC");
+            pst = this.getConnection().prepareStatement("select * from puanlar ORDER BY film_id ASC limit "+start+","+pageSize);
             rs = pst.executeQuery();
             while (rs.next()) {
                 puanlar tmp = new puanlar();
@@ -37,6 +37,23 @@ public class puanlarDAO extends superDAO{
             System.out.println(ex.getMessage());
         }
         return plist;
+    }
+    
+    public int count() {
+        
+        int count =0;
+        try {
+
+            pst = this.getConnection().prepareStatement("SELECT count(puan_id) as puan_count from puanlar ");
+            rs = pst.executeQuery();
+            rs.next();
+            count = rs.getInt("puan_count");
+
+          
+        } catch (SQLException ex) {
+            System.out.println("puanlarDAO HATA(ReadAll):" + ex.getMessage());
+        }
+        return count;
     }
 
     public puanlar find(int id)  {

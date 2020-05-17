@@ -3,8 +3,6 @@ package controller;
 import dao.kategorilerDAO;
 import entity.kategoriler;
 import java.io.Serializable;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
 
@@ -19,6 +17,53 @@ public class kategorilerController implements Serializable {
 
     private kategoriler kategoriler;
 
+     
+    private int page = 1;
+    private int pageSize = 10;
+    private int pageCount;
+
+    public void next() {
+        if (this.page == this.getPageCount()) {
+            this.page = 1;
+        } else {
+            this.page++;
+        }
+    }
+
+    public void previous() {
+        if (this.page == 1) {
+            this.page = this.getPageCount();
+        } else {
+            this.page--;
+        }
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public int getPageCount() {
+        this.pageCount = (int) Math.ceil(this.getKdao().count() / (double) pageSize);
+        return pageCount;
+    }
+
+    public void setPageCount(int pageCount) {
+        this.pageCount = pageCount;
+    }
+
+    
     public void updateForm(kategoriler kat) {
         this.kategoriler = kat;
     }
@@ -47,7 +92,7 @@ public class kategorilerController implements Serializable {
     }
 
     public List<kategoriler> getKlist() {
-        this.klist = this.getKdao().getKategori();
+        this.klist = this.getKdao().getKategori(page, pageSize);
         return klist;
     }
 

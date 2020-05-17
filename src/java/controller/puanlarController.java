@@ -16,6 +16,50 @@ public class puanlarController implements Serializable {
     private puanlarDAO pdao;
     private puanlar puanlar;
     
+    private int page = 1;
+    private int pageSize = 10;
+    private int pageCount;
+
+    public void next() {
+        if (this.page == this.getPageCount()) {
+            this.page = 1;
+        } else {
+            this.page++;
+        }
+    }
+
+    public void previous() {
+        if (this.page == 1) {
+            this.page = this.getPageCount();
+        } else {
+            this.page--;
+        }
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public int getPageCount() {
+        this.pageCount = (int) Math.ceil(this.getPdao().count() / (double) pageSize);
+        return pageCount;
+    }
+
+    public void setPageCount(int pageCount) {
+        this.pageCount = pageCount;
+    }
     
     @Inject
     private filmlerController filmlerController;
@@ -53,7 +97,7 @@ public class puanlarController implements Serializable {
     }
 
     public List<puanlar> getPlist() {
-        this.plist = this.getPdao().getPuanlar();
+        this.plist = this.getPdao().getPuanlar(page, pageSize);
         return plist;
     }
 

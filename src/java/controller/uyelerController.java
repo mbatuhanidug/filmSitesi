@@ -8,12 +8,59 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
+
+
 @Named
 @SessionScoped
 public class uyelerController implements Serializable {
     private List<uyeler> uyelist;
     private uyelerDAO uyedao;
     private uyeler uye;
+    
+    private int page = 1;
+    private int pageSize = 10;
+    private int pageCount;
+
+    public void next() {
+        if (this.page == this.getPageCount()) {
+            this.page = 1;
+        } else {
+            this.page++;
+        }
+    }
+
+    public void previous() {
+        if (this.page == 1) {
+            this.page = this.getPageCount();
+        } else {
+            this.page--;
+        }
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public int getPageCount() {
+        this.pageCount = (int) Math.ceil(this.getUyedao().count() / (double) pageSize);
+        return pageCount;
+    }
+
+    public void setPageCount(int pageCount) {
+        this.pageCount = pageCount;
+    }
 
     public void updateForm(uyeler uye) {
         this.uye = uye;
@@ -46,7 +93,7 @@ public class uyelerController implements Serializable {
     }
 
     public List<uyeler> getUyelist() {
-        this.uyelist = this.getUyedao().findAll();
+        this.uyelist = this.getUyedao().findAll(page, pageSize);
         return uyelist;
     }
 

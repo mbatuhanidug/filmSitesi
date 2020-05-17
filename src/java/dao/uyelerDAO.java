@@ -79,10 +79,11 @@ public class uyelerDAO extends superDAO {
         }
     }
 
-    public List<uyeler> findAll() {
+    public List<uyeler> findAll(int page, int pageSize) {
         List<uyeler> ulist = new ArrayList();
+        int start = (page - 1) * pageSize;
         try {
-            pst = this.getConnection().prepareStatement("Select * from uyeler ORDER BY uye_id ASC");
+            pst = this.getConnection().prepareStatement("Select * from uyeler ORDER BY uye_id ASC limit " + start + "," + pageSize);
             rs = pst.executeQuery();
             while (rs.next()) {
                 uyeler temp = new uyeler();
@@ -99,6 +100,22 @@ public class uyelerDAO extends superDAO {
             System.out.println(ex.getMessage());
         }
         return ulist;
+    }
+
+    public int count() {
+
+        int count = 0;
+        try {
+
+            pst = this.getConnection().prepareStatement("SELECT count(uye_id) as uye_count from uyeler ");
+            rs = pst.executeQuery();
+            rs.next();
+            count = rs.getInt("uye_count");
+
+        } catch (SQLException ex) {
+            System.out.println("uyeDAO HATA(ReadAll):" + ex.getMessage());
+        }
+        return count;
     }
 
     public uyeler find(int id) {

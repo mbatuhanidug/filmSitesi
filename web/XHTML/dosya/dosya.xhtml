@@ -100,5 +100,12 @@
                 </div>
             </div>
         </div>
+        <h:form>
+            <div class = "btn-group">
+                <h:commandButton action="#{dosyaController.previous()}" value="Geri" styleClass="btn btn-outline-dark"/>
+                <h:commandButton action="#{dosyaController.next()}" value="İleri" styleClass="btn btn-outline-dark"/>
+            </div>
+            <pre>  Page #{dosyaController.page} of #{dosyaController.pageCount} </pre>
+        </h:form>
     </h:body>
 </html>
