@@ -93,8 +93,10 @@
                         <div class = "form-group">
                             <div class = "form-group">
                                 <h:inputHidden value="#{puanlarController.puanlar.puan_id}"/>
-                                <label>PUAN DEĞERİ GİRİN </label>
-                                <h:inputText  styleClass="form-control" value = "#{puanlarController.puanlar.puanDegeri}" a:placeholder="Puan Değeri" validator="#{puanvalidator.validatePuan}"/>
+                                <label for = "inputPuan">1-10 ARASINDA PUAN GİRİNİZ (Örn. 7)</label>
+                                <h:inputText id="inputPuan" styleClass="form-control" value = "#{puanlarController.puanlar.puanDegeri}" validatorMessage="xhtm Validation : Puan Değeri 0' dan Büyük 11'den Küçük Olmalıdır.">
+                                 <f:validateDoubleRange minimum="1" maximum="10" for="inputPuan"/>
+                                </h:inputText>
                                 <br></br>
                                 <label>FİLM İSİM SEÇİNİZ </label>
                                 <h:selectOneMenu styleClass="custom-select" id="film" value="#{puanlarController.puanlar.film}" converter="filmlerConverter">
