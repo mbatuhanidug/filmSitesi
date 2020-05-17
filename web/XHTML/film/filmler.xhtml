@@ -92,6 +92,10 @@
                                     </ui:repeat>
                                 </ul>
                             </h:column>
+                            <h:column>
+                                <f:facet name="header">IMBD</f:facet>
+                                    #{film.imbd}
+                            </h:column>
                           
                             <h:column rendered="#{sessionScope.valid_user.admin}">
                                 <f:facet name="header">SEÇ</f:facet>
@@ -123,6 +127,9 @@
                                 <label for="inputName" >Filmin Yönetmeni</label>
                                 <h:inputText styleClass="form-control" value = "#{filmlerController.filmler.yonetmen}"/>
 
+                                <label for="inputName" >IMBD</label>
+                                <h:inputText styleClass="form-control" value = "#{filmlerController.filmler.imbd}"/>
+                                
                                 <label>Kategori Adı</label>
                                 <h:selectOneMenu styleClass="custom-select" id="kategori" value="#{filmlerController.filmler.kategori}" converter="kategorilerConverter">
                                     <f:selectItems value="#{filmlerController.kategorilerController.klist}" var="kategoriler" itemValue="#{kategoriler}" itemLabel="#{kategoriler.kategori_ad} "/>

@@ -10,6 +10,7 @@ public class filmler {
     private String film_tanimi;
     private int cikis_yili;
     private String yonetmen;
+    private double imbd;
    
 
     private kategoriler kategori;
@@ -20,13 +21,13 @@ public class filmler {
     public filmler() {
     }
 
-    public filmler(int film_id, String film_isim, String film_tanimi, int cikis_yili, String yonetmen, kategoriler kategori) {
+    public filmler(int film_id, String film_isim, String film_tanimi, int cikis_yili, String yonetmen, kategoriler kategori, double imbd) {
         this.film_id = film_id;
         this.film_isim = film_isim;
         this.film_tanimi = film_tanimi;
         this.cikis_yili = cikis_yili;
         this.yonetmen = yonetmen;
-     
+        this.imbd = imbd;
         this.kategori = kategori;
     }
 
@@ -91,6 +92,14 @@ public class filmler {
         this.filmAktor = filmAktor;
     }
 
+    public double getImbd() {
+        return imbd;
+    }
+
+    public void setImbd(double imbd) {
+        this.imbd = imbd;
+    }
+
 
     @Override
     public int hashCode() {
@@ -119,9 +128,10 @@ public class filmler {
 
     @Override
     public String toString() {
-        return "filmler{" + "film_id=" + film_id + ", film_isim=" + film_isim + ", film_tanimi=" + film_tanimi + ", cikis_yili=" + cikis_yili + ", yonetmen=" + yonetmen + ", kategori=" + kategori + ", filmAktor=" + filmAktor + '}';
+        return "filmler{" + "film_id=" + film_id + ", film_isim=" + film_isim + ", film_tanimi=" + film_tanimi + ", cikis_yili=" + cikis_yili + ", yonetmen=" + yonetmen + ", imbd=" + imbd + ", kategori=" + kategori + ", filmAktor=" + filmAktor + '}';
     }
 
+    
     
 
     
