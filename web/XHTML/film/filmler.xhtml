@@ -5,7 +5,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Anasayfa</title>
+        <title>Filmler</title>
         <h:outputStylesheet library ="css" name="bootstrap.css"/>
         <style>
             .bg-transparents{
@@ -16,10 +16,16 @@
             .bg-t{
                 background-color: #e3e3e3     !important;
             }
+            .text-c{ color: #bd2130 }
+            .text-e{ color: #0056b3}
+            .text-d{ color: #EF6C00}
         </style>
     </h:head>
     <h:body class="fixed-nav sticky-footer bg-s" id="page-top">
         <nav  class="navbar navbar-transparent bg-transparents navbar-expand-lg text-success">
+            <h:link outcome="/index.xhtml">
+                <h:graphicImage value="/media/sss.PNG" width="100" height="100" /> 
+            </h:link>
             <div class="container">
                 <ul class="navbar-nav ml-auto">
                     <h:form>
@@ -28,10 +34,10 @@
                                 <h:commandLink styleClass="nav-link text-white" action = "/XHTML/film/filmler.xhtml" value = "Filmler"/> 
                             </li>
                             <li  class="nav-item">
-                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/kategori/kategoriler.xhtml" value = "Kategori"/> 
+                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/aktor/aktor.xhtml" value = "Aktörler"/> 
                             </li>
                             <li  class="nav-item">
-                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/uyeler/uyeler.xhtml" value = "Uyeler"/> 
+                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/kategori/kategoriler.xhtml" value = "Kategori"/> 
                             </li>
                             <li class="nav-item">
                                 <h:commandLink styleClass="nav-link text-white" action = "/XHTML/yorum/yorumlar.xhtml" value = "Yorumlar"/> 
@@ -40,10 +46,13 @@
                                 <h:commandLink styleClass="nav-link text-white" action = "/XHTML/puan/puanlar.xhtml" value = "Puanlar"/> 
                             </li>
                             <li  class="nav-item">
-                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/aktor/aktor.xhtml" value = "Aktörler"/> 
+                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/uyeler/uyeler.xhtml" value = "Uyeler"/> 
                             </li>
                             <li class="nav-item">
                                 <h:commandLink styleClass="nav-link text-white" action = "/XHTML/profil/profil.xhtml" value = "Profil"/> 
+                            </li>
+                            <li class="nav-item">
+                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/dosya/dosya.xhtml" value = "Upload Image"/> 
                             </li>
                             <li class="nav-item">
                                 <h:link  class="nav-link text-white" value="Çıkış" outcome="/XHTML/panel/cikis.xhtml"></h:link>
@@ -57,7 +66,7 @@
         <br />
         <div class="container " id="content">
             <div class="row">
-                <div class="col-md-18 bg-t">   
+                <div class="col-md-22 bg-t">   
                     <h:form id="film-table">
                         <h:dataTable  styleClass="table table-striped table-hover" value="#{filmlerController.flist}" var="film">
                             <h:column rendered="#{sessionScope.valid_user.admin}">
@@ -65,27 +74,27 @@
                                     #{film.film_id}
                             </h:column>
                             <h:column>
-                                <f:facet name="header">Film</f:facet>
-                                    #{film.film_isim}
+                                <f:facet name="header">FİLM</f:facet>
+                                <h6 class="text-c">#{film.film_isim}</h6>
                             </h:column>
                             <h:column>
-                                <f:facet name="header">Film Tanımı</f:facet>
-                                    #{film.film_tanimi}
+                                <f:facet name="header">FİLM HAKKINDA</f:facet>
+                                <p class="text-e">#{film.film_tanimi}</p>
                             </h:column>
                             <h:column>
-                                <f:facet name="header">Çıkış Yılı</f:facet>
+                                <f:facet name="header">YIL</f:facet>
                                     #{film.cikis_yili}
                             </h:column>
                             <h:column>
-                                <f:facet name="header">Kategori</f:facet>
-                                    #{film.kategori.kategori_ad}
+                                <f:facet name="header">KATEGORİ</f:facet>
+                                <p class="text-e">#{film.kategori.kategori_ad}</p> 
                             </h:column>
                             <h:column>
-                                <f:facet name="header">Yonetmen</f:facet>
+                                <f:facet name="header">YÖNETMEN</f:facet>
                                     #{film.yonetmen}
                             </h:column>
                             <h:column>
-                                <f:facet name="header">Aktörler</f:facet>
+                                <f:facet name="header">AKTÖRLER</f:facet>
                                 <ul>
                                     <ui:repeat value="#{film.filmAktor}" var="aktor">
                                         <li>#{aktor.aktor_ad} #{aktor.aktor_soyad}</li>
@@ -94,9 +103,13 @@
                             </h:column>
                             <h:column>
                                 <f:facet name="header">IMBD</f:facet>
-                                    #{film.imbd}
+                                <p class="text-d">#{film.imbd}</p>
                             </h:column>
-                          
+                            <h:column>
+                                <f:facet name="header">FRAGMAN</f:facet>
+                                <a href="#{film.fragman}" target="_blank">FRAGMAN</a>
+                            </h:column>
+
                             <h:column rendered="#{sessionScope.valid_user.admin}">
                                 <f:facet name="header">SEÇ</f:facet>
                                 <h:commandButton styleClass="btn btn-sm btn-info" value="SEÇ" action="#{filmlerController.updateForm(film)}">
@@ -106,7 +119,7 @@
                         </h:dataTable>
                     </h:form>
                 </div>
-
+                
                 <div class="col-md-4 container">
                     <br />
                     <br />
@@ -130,6 +143,9 @@
                                 <label for="inputName" >IMBD</label>
                                 <h:inputText styleClass="form-control" value = "#{filmlerController.filmler.imbd}"/>
                                 
+                                <label for="inputName" >FRAGMAN</label>
+                                <h:inputText styleClass="form-control" value = "#{filmlerController.filmler.fragman}"/>
+
                                 <label>Kategori Adı</label>
                                 <h:selectOneMenu styleClass="custom-select" id="kategori" value="#{filmlerController.filmler.kategori}" converter="kategorilerConverter">
                                     <f:selectItems value="#{filmlerController.kategorilerController.klist}" var="kategoriler" itemValue="#{kategoriler}" itemLabel="#{kategoriler.kategori_ad} "/>

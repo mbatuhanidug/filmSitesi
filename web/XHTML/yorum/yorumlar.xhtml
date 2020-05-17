@@ -18,10 +18,14 @@
             .bg-t{
                 background-color: #e3e3e3     !important;
             }
+            .text-c{ color: #bd2130 }
         </style>
     </h:head>
     <h:body class="bg-s">
         <nav  class="navbar navbar-transparent bg-transparents navbar-expand-lg text-success">
+            <h:link outcome="/index.xhtml">
+                <h:graphicImage value="/media/sss.PNG" width="100" height="100" /> 
+            </h:link>
             <div class="container">
                 <ul class="navbar-nav ml-auto">
                     <h:form>
@@ -30,10 +34,10 @@
                                 <h:commandLink styleClass="nav-link text-white" action = "/XHTML/film/filmler.xhtml" value = "Filmler"/> 
                             </li>
                             <li  class="nav-item">
-                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/kategori/kategoriler.xhtml" value = "Kategori"/> 
+                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/aktor/aktor.xhtml" value = "Aktörler"/> 
                             </li>
                             <li  class="nav-item">
-                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/uyeler/uyeler.xhtml" value = "Uyeler"/> 
+                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/kategori/kategoriler.xhtml" value = "Kategori"/> 
                             </li>
                             <li class="nav-item">
                                 <h:commandLink styleClass="nav-link text-white" action = "/XHTML/yorum/yorumlar.xhtml" value = "Yorumlar"/> 
@@ -42,10 +46,13 @@
                                 <h:commandLink styleClass="nav-link text-white" action = "/XHTML/puan/puanlar.xhtml" value = "Puanlar"/> 
                             </li>
                             <li  class="nav-item">
-                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/aktor/aktor.xhtml" value = "Aktörler"/> 
+                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/uyeler/uyeler.xhtml" value = "Uyeler"/> 
                             </li>
                             <li class="nav-item">
                                 <h:commandLink styleClass="nav-link text-white" action = "/XHTML/profil/profil.xhtml" value = "Profil"/> 
+                            </li>
+                            <li class="nav-item">
+                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/dosya/dosya.xhtml" value = "Upload Image"/> 
                             </li>
                             <li class="nav-item">
                                 <h:link  class="nav-link text-white" value="Çıkış" outcome="/XHTML/panel/cikis.xhtml"></h:link>
@@ -60,22 +67,19 @@
             <div class="row">
                 <div class="col-md-6">
                     <h:form class="bg-t" id = "yorumlar-table">
-                        <h:dataTable styleClass="table table-striped" value="#{yorumlarController.ylist}" var="yorum">
+                        <h:dataTable styleClass="table table-striped table-hover" value="#{yorumlarController.ylist}" var="yorum">
                             <h:column rendered="#{sessionScope.valid_user.admin}">
                                 <f:facet name = "header">ID</f:facet>
                                     #{yorum.yorum_id}
                             </h:column>
                             <h:column>
-                                <f:facet name = "header">Uye Adı</f:facet>
-                                    #{yorum.uye.uye_ad}
+                                <f:facet name = "header">Film Isim</f:facet>
+                                <p class="text-c">#{yorum.film.film_isim}</p>
                             </h:column>
                             <h:column>
                                 <f:facet name = "header">YORUM METNI</f:facet>
-                                    #{yorum.yorumMetni}
-                            </h:column>
-                            <h:column>
-                                <f:facet name = "header">Film Isim</f:facet>
-                                    #{yorum.film.film_isim}
+                                <p class="text-success">(__anonim__)</p>
+                                #{yorum.yorumMetni}
                             </h:column>
                             <h:column rendered="#{sessionScope.valid_user.admin}">
                                 <f:facet name ="header">SEÇ</f:facet>
@@ -86,22 +90,19 @@
                         </h:dataTable>
                     </h:form>
                 </div>
-                <div class = "col-md-6">
+                <div class = "col-md-6 container">
                     <br /><br />
                     <h:form id = "yorumlar-form">
-                        <h:messages styleClass ="alert alert-danger alert" />
+                        <h:messages styleClass ="alert alert-primary alert" />
                         <div class = "form-group">
                             <div class = "form-group">
                                 <h:inputHidden value="#{yorumlarController.yorumlar.yorum_id}"/>
                                 <label >Yorum Metni </label>
                                 <h:inputTextarea styleClass="form-control" value = "#{yorumlarController.yorumlar.yorumMetni}" a:placeholder="Yorum Metni" validator="#{yorumvalidator.validateYorumMetni}"/>
+                                <br></br>
                                 <label >Film İsim </label>
                                 <h:selectOneMenu styleClass="custom-select" id="film" value="#{yorumlarController.yorumlar.film}" converter="filmlerConverter">
                                     <f:selectItems value="#{yorumlarController.filmlerController.flist}" var="film" itemValue="#{film}" itemLabel="#{film.film_isim}" />
-                                </h:selectOneMenu>
-                                <label >Kullanıcı Adı </label>
-                                <h:selectOneMenu styleClass="custom-select" id="uye" value="#{yorumlarController.yorumlar.uye}" converter="uyelerConverter">
-                                    <f:selectItems value="#{yorumlarController.uyelerController.uyelist}" var="uye" itemValue="#{uye}" itemLabel="#{uye.uye_ad}" />
                                 </h:selectOneMenu>
                             </div>
                             <div class = "form-group">
@@ -122,6 +123,8 @@
                 </div> 
             </div> 
         </div>
-
+        <h:outputScript library="js" name="jquery-3.3.1.min.js"/>
+        <h:outputScript library="js" name="bootstrap.bundle.min.js"/>
+        <h:outputScript library="js" name="sb-admin.min.js"/>
     </h:body>
 </html>

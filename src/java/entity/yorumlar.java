@@ -9,15 +9,13 @@ public class yorumlar {
     private String yorumMetni;
 
     private filmler film;
-    private uyeler uye;
     
     public yorumlar() {
     }
 
-    public yorumlar(int yorum_id, String yorumMetni, uyeler uye) {
+    public yorumlar(int yorum_id, String yorumMetni) {
         this.yorum_id = yorum_id;
         this.yorumMetni = yorumMetni;
-        this.uye = uye;
     }
     
     public int getYorum_id() {
@@ -44,17 +42,10 @@ public class yorumlar {
         this.film = film;
     }
 
-    public uyeler getUye() {
-        return uye;
-    }
-
-    public void setUye(uyeler uye) {
-        this.uye = uye;
-    }
 
     @Override
     public String toString() {
-        return "yorumlar{" + "yorum_id=" + yorum_id + ", yorumMetni=" + yorumMetni + ", film=" + film + ", uye=" + uye + '}';
+        return "yorumlar{" + "yorum_id=" + yorum_id + ", yorumMetni=" + yorumMetni + ", film=" + film + '}';
     }
 
     @Override
@@ -63,7 +54,6 @@ public class yorumlar {
         hash = 13 * hash + this.yorum_id;
         hash = 13 * hash + Objects.hashCode(this.yorumMetni);
         hash = 13 * hash + Objects.hashCode(this.film);
-        hash = 13 * hash + Objects.hashCode(this.uye);
         return hash;
     }
 
@@ -86,9 +76,6 @@ public class yorumlar {
             return false;
         }
         if (!Objects.equals(this.film, other.film)) {
-            return false;
-        }
-        if (!Objects.equals(this.uye, other.uye)) {
             return false;
         }
         return true;

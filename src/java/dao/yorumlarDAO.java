@@ -16,8 +16,7 @@ public class yorumlarDAO extends superDAO {
     ResultSet rs = null;
     
     private filmlerDAO fdao;
-    private uyelerDAO udao;
-    
+
     public yorumlar find(int id) {
         
         yorumlar y = null;
@@ -31,7 +30,6 @@ public class yorumlarDAO extends superDAO {
                 y.setYorum_id(rs.getInt("yorum_id"));
                 y.setYorumMetni(rs.getString("yorum_metni"));
                 y.setFilm(this.getFdao().find(rs.getInt("film_id")));
-                y.setUye(this.getUdao().find(rs.getInt("uye_id")));
             }
             
         } catch (SQLException ex) {
@@ -44,14 +42,13 @@ public class yorumlarDAO extends superDAO {
         List<yorumlar> ylist = new ArrayList();
         
         try {
-            pst = this.getConnection().prepareStatement("select * from yorumlar ORDER BY yorum_id ASC");
+            pst = this.getConnection().prepareStatement("select * from yorumlar ORDER BY film_id ASC");
             rs = pst.executeQuery();
             while (rs.next()) {
                 yorumlar tmp = new yorumlar();
                 tmp.setYorum_id(rs.getInt("yorum_id"));
                 tmp.setYorumMetni(rs.getString("yorum_metni"));
                 tmp.setFilm(this.getFdao().find(rs.getInt("film_id")));
-                tmp.setUye(this.getUdao().find(rs.getInt("uye_id")));
                 ylist.add(tmp);
             }
         } catch (SQLException ex) {
@@ -63,10 +60,9 @@ public class yorumlarDAO extends superDAO {
     public void create(yorumlar yorumlar) {
         
         try {
-            pst = this.getConnection().prepareStatement("insert into yorumlar (yorum_metni, film_id,uye_id) values (?,?,?)");
+            pst = this.getConnection().prepareStatement("insert into yorumlar (yorum_metni, film_id) values (?,?)");
             pst.setString(1, yorumlar.getYorumMetni());
             pst.setInt(2, yorumlar.getFilm().getFilm_id());
-            pst.setInt(3, yorumlar.getUye().getUye_id());
             pst.executeUpdate();
             
         } catch (SQLException ex) {
@@ -89,11 +85,10 @@ public class yorumlarDAO extends superDAO {
     public void update(yorumlar yorumlar) {
         
         try {
-            pst = this.getConnection().prepareStatement("update yorumlar set yorum_metni=? , film_id=?,uye_id where yorum_id=? ");
+            pst = this.getConnection().prepareStatement("update yorumlar set yorum_metni=? , film_id=? where yorum_id=? ");
             pst.setString(1, yorumlar.getYorumMetni());
             pst.setInt(2, yorumlar.getFilm().getFilm_id());
-            pst.setInt(3, yorumlar.getUye().getUye_id());
-            pst.setInt(4, yorumlar.getYorum_id());
+            pst.setInt(3, yorumlar.getYorum_id());
             pst.executeUpdate();
             
         } catch (SQLException ex) {
@@ -106,17 +101,6 @@ public class yorumlarDAO extends superDAO {
             this.fdao = new filmlerDAO();
         }
         return fdao;
-    }
-    
-    public void setUdao(uyelerDAO udao) {
-        this.udao = udao;
-    }
-    
-    public uyelerDAO getUdao() {
-        if (this.udao == null) {
-            this.udao = new uyelerDAO();
-        }
-        return udao;
     }
     
 }

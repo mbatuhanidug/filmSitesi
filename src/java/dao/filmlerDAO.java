@@ -19,14 +19,15 @@ public class filmlerDAO extends superDAO {
     public void insert(filmler film) {
 
         try {
-            pst = this.getConnection().prepareStatement("insert into filmler (film_isim,film_tanimi,cikis_yili,yonetmen, kategori_id,imbd)"
-                    + " values (?,?,?,?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
+            pst = this.getConnection().prepareStatement("insert into filmler (film_isim,film_tanimi,cikis_yili,yonetmen, kategori_id,imbd,fragman)"
+                    + " values (?,?,?,?,?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
             pst.setString(1, film.getFilm_isim());
             pst.setString(2, film.getFilm_tanimi());
             pst.setInt(3, film.getCikis_yili());
             pst.setString(4, film.getYonetmen());
             pst.setInt(5, film.getKategori().getKategori_id());
             pst.setDouble(6, film.getImbd());
+            pst.setString(7, film.getFragman());
 
             pst.executeUpdate();
 //******************************************************Film_aktor tablosuna insert işlemi
@@ -80,7 +81,7 @@ public class filmlerDAO extends superDAO {
                 temp.setCikis_yili(rs.getInt("cikis_yili"));
                 temp.setYonetmen(rs.getString("yonetmen"));
                 temp.setImbd(rs.getDouble("imbd"));
-               
+                temp.setFragman(rs.getString("fragman"));
                 temp.setKategori(this.getKdao().find(rs.getInt("kategori_id")));
                 temp.setFilmAktor(this.getAdao().getFilmAktor(rs.getInt("film_id")));
                 
@@ -99,15 +100,16 @@ public class filmlerDAO extends superDAO {
         try {
 
             pst = this.getConnection().prepareStatement("UPDATE filmler SET film_isim=?,film_tanimi=?,cikis_yili=?,"
-                    + "yonetmen=?,kategori_id=?, imbd=? where film_id=?");
+                    + "yonetmen=?,kategori_id=?, imbd=?, fragman=? where film_id=?");
             pst.setString(1, f.getFilm_isim());
             pst.setString(2, f.getFilm_tanimi());
             pst.setInt(3, f.getCikis_yili());
             pst.setString(4, f.getYonetmen());
             pst.setInt(5, f.getKategori().getKategori_id());
             pst.setDouble(6, f.getImbd());
-            pst.setInt(7, f.getFilm_id());
-
+            pst.setString(7, f.getFragman());
+            pst.setInt(8, f.getFilm_id());
+            
             pst.executeUpdate();
 
             //Önce 3. tablodan servisleri siliyoruz.
@@ -144,6 +146,7 @@ public class filmlerDAO extends superDAO {
                 temp.setCikis_yili(rs.getInt("cikis_yili"));
                 temp.setYonetmen(rs.getString("yonetmen"));
                 temp.setImbd(rs.getDouble("imbd"));
+                temp.setFragman(rs.getString("fragman"));
                 temp.setKategori(this.getKdao().find(rs.getInt("kategori_id")));
                 temp.setFilmAktor(this.getAdao().getFilmAktor(rs.getInt("film_id")));   //Buraya dikkat buradan patlayabilir!
             }

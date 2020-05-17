@@ -20,6 +20,9 @@
     </h:head>
     <h:body class="bg-s"> 
         <nav  class="navbar navbar-transparent bg-transparents navbar-expand-lg text-success">
+            <h:link outcome="/index.xhtml">
+                <h:graphicImage value="/media/sss.PNG" width="100" height="100" /> 
+            </h:link>
             <div class="container">
                 <ul class="navbar-nav ml-auto">
                     <h:form>
@@ -28,10 +31,10 @@
                                 <h:commandLink styleClass="nav-link text-white" action = "/XHTML/film/filmler.xhtml" value = "Filmler"/> 
                             </li>
                             <li  class="nav-item">
-                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/kategori/kategoriler.xhtml" value = "Kategori"/> 
+                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/aktor/aktor.xhtml" value = "Aktörler"/> 
                             </li>
                             <li  class="nav-item">
-                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/uyeler/uyeler.xhtml" value = "Uyeler"/> 
+                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/kategori/kategoriler.xhtml" value = "Kategori"/> 
                             </li>
                             <li class="nav-item">
                                 <h:commandLink styleClass="nav-link text-white" action = "/XHTML/yorum/yorumlar.xhtml" value = "Yorumlar"/> 
@@ -40,10 +43,13 @@
                                 <h:commandLink styleClass="nav-link text-white" action = "/XHTML/puan/puanlar.xhtml" value = "Puanlar"/> 
                             </li>
                             <li  class="nav-item">
-                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/aktor/aktor.xhtml" value = "Aktörler"/> 
+                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/uyeler/uyeler.xhtml" value = "Uyeler"/> 
                             </li>
                             <li class="nav-item">
                                 <h:commandLink styleClass="nav-link text-white" action = "/XHTML/profil/profil.xhtml" value = "Profil"/> 
+                            </li>
+                            <li class="nav-item">
+                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/dosya/dosya.xhtml" value = "Upload Image"/> 
                             </li>
                             <li class="nav-item">
                                 <h:link  class="nav-link text-white" value="Çıkış" outcome="/XHTML/panel/cikis.xhtml"></h:link>
@@ -57,7 +63,7 @@
             <div class="row">
                 <div class="col-md-12 bg-t">
                     <h:form id = "uyeler-table">
-                        <h:dataTable styleClass="table table-striped" value = "#{uyelerController.uyelist}" var = "uye">
+                        <h:dataTable styleClass="table table-striped table-hover" value = "#{uyelerController.uyelist}" var = "uye">
                             <h:column>
                                 <f:facet name ="header">ID</f:facet>
                                     #{uye.uye_id}
@@ -80,40 +86,40 @@
                             </h:column>
                             <h:column>
                                 <f:facet name ="header">***</f:facet>
-                                <h:commandButton styleClass="btn btn-sm btn-info" action="#{uyelerController.updateForm(uye)}" value = "Üyeliği Kaldır">
+                                <h:commandButton styleClass="btn btn-sm btn-danger" action="#{uyelerController.updateForm(uye)}" value = "Üyeliği Kaldır">
                                     <f:ajax render="uyeler-table uyeler-form" execute="@this"/>
                                 </h:commandButton>
                             </h:column>
                         </h:dataTable>
                     </h:form> 
                 </div>
-                
-                    <div class = "col-md-4 container">
-                        <br /><br />
-                        <h:form id = "uyeler-form">
-                            <h:messages styleClass="alert alert-danger alert" />
+
+                <div class = "col-md-4 container">
+                    <br /><br />
+                    <h:form id = "uyeler-form">
+                        <h:messages styleClass="alert alert-danger alert" />
+                        <div class = "form-group">
                             <div class = "form-group">
-                                <div class = "form-group">
-                                    <h:inputHidden value="#{uyelerController.uye.uye_id}"/>
-                                    <label for="inputName" >E-mail </label>
-                                    <h:inputText styleClass="form-control" value = "#{uyelerController.uye.email}"/>
-                                </div>
-                                <div class = "form-group">
-                                    <div class="btn-group">
-                                        <h:commandButton rendered="#{uyelerController.uye.uye_id != 0}" styleClass="btn btn-secondary" value="Formu Temizle" action="#{uyelerController.clearForm()}">
-                                            <f:ajax execute="@this" render="uyeler-form uyeler-table"/>
-                                        </h:commandButton>
-                                        <h:commandButton onclick="return confirm('Silmek İstediğinizden Emin Misiniz?')" rendered="#{uyelerController.uye.uye_id != 0}" styleClass="btn btn-sm btn-danger" value="SİL" action="#{uyelerController.delete()}">
-                                            <f:ajax render="uyeler-form uyeler-form uyeler-table" execute="@this" />
-                                        </h:commandButton>
-                                    </div>
+                                <h:inputHidden value="#{uyelerController.uye.uye_id}"/>
+                                <label for="inputName" >E-mail </label>
+                                <h:inputText styleClass="form-control" value = "#{uyelerController.uye.email}"/>
+                            </div>
+                            <div class = "form-group">
+                                <div class="btn-group">
+                                    <h:commandButton rendered="#{uyelerController.uye.uye_id != 0}" styleClass="btn btn-secondary" value="Formu Temizle" action="#{uyelerController.clearForm()}">
+                                        <f:ajax execute="@this" render="uyeler-form uyeler-table"/>
+                                    </h:commandButton>
+                                    <h:commandButton onclick="return confirm('Silmek İstediğinizden Emin Misiniz?')" rendered="#{uyelerController.uye.uye_id != 0}" styleClass="btn btn-sm btn-danger" value="SİL" action="#{uyelerController.delete()}">
+                                        <f:ajax render="uyeler-form uyeler-form uyeler-table" execute="@this" />
+                                    </h:commandButton>
                                 </div>
                             </div>
-                        </h:form> 
-                    </div>
+                        </div>
+                    </h:form> 
                 </div>
-            </div>    
-        
+            </div>
+        </div>    
+
         <h:outputScript library="js" name="jquery-3.3.1.min.js"/>
         <h:outputScript library="js" name="bootstrap.bundle.min.js"/>
         <h:outputScript library="js" name="sb-admin.min.js"/>

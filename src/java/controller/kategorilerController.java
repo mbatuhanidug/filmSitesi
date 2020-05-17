@@ -32,8 +32,8 @@ public class kategorilerController implements Serializable {
         this.clearForm();
     }
 
-    public void delete(kategoriler kat)  {
-        this.getKdao().delete(kat);
+    public void delete()  {
+        this.getKdao().delete(this.kategoriler);
         this.clearForm();
     }
 

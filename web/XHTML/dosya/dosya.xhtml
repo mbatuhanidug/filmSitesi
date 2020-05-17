@@ -4,7 +4,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Profil</title>
+        <title>Filmler</title>
         <h:outputStylesheet library ="css" name="bootstrap.css"/>
         <style>
             .bg-transparents{
@@ -15,9 +15,12 @@
             .bg-t{
                 background-color: #e3e3e3     !important;
             }
+            .text-c{ color: #bd2130 }
+            .text-e{ color: #0056b3}
+            .text-d{ color: #EF6C00}
         </style>
     </h:head>
-    <h:body class="bg-s">
+    <h:body>
         <nav  class="navbar navbar-transparent bg-transparents navbar-expand-lg text-success">
             <h:link outcome="/index.xhtml">
                 <h:graphicImage value="/media/sss.PNG" width="100" height="100" /> 
@@ -57,47 +60,47 @@
                     </h:form>
                 </ul>
             </div>
-        </nav><br /><br />
-        <div class="container" id="content">
+        </nav>
+        <br />
+        <br />
+        <div class="container " >
             <div class="row">
-                <div class="col-md-12 bg-t">
-                    <h:form id = "uyeler-table">
-                        <h:dataTable styleClass="table table-striped table-hover" value = "#{valid_user}" var = "uye">
-                            <h:column rendered="#{sessionScope.valid_user.admin}">
-                                <f:facet name ="header">ID</f:facet>
-                                    #{sessionScope.valid_user.uye_id}
+                <div class="col-md-18 bg-t">
+                    <h:form>
+                        <h:dataTable styleClass="table table-striped" value="#{dosyaController.dosyaList}" var="d">
+                            <h:column>
+                                <f:facet name="header">ID</f:facet>
+                                    #{d.id}
                             </h:column>
                             <h:column>
-                                <f:facet name ="header">AD</f:facet>
-                                    #{sessionScope.valid_user.uye_ad}
+                                <f:facet name="header">Dosya Ismi</f:facet>
+                                    #{d.dosya_isim}
                             </h:column>
                             <h:column>
-                                <f:facet name ="header">SOYAD</f:facet>
-                                    #{sessionScope.valid_user.uye_soyad}  
+                                <f:facet name="header">Dosya Tipi</f:facet>
+                                    #{d.dosya_tipi}
                             </h:column>
                             <h:column>
-                                <f:facet name ="header">E-MAİL</f:facet>
-                                    #{sessionScope.valid_user.email}  
+                                <f:facet name="header">Dosya Konumu</f:facet>
+                                    #{d.dosya_path}
                             </h:column>
                             <h:column>
-                                <f:facet name ="header">TELEFON</f:facet>
-                                    #{sessionScope.valid_user.telefon}  
-                            </h:column>
-                            <h:column>
-                                <f:facet name ="header">SİFRE</f:facet>
-                                    #{sessionScope.valid_user.sifre}  
-                            </h:column>
-                            <h:column>
-                                <f:facet name ="header">Üyeliği İptal Et</f:facet>
-                                <h:commandButton onclick="return confirm('Üyeliği Silmek İstediğinizden Emin Misiniz?\nÜyelik Silinmesi Durumunda Çıkış İşlemi Gerçekleştirelecektir.')" styleClass="btn btn-sm btn-danger" value="Üyeliği Sil" action="#{uyelerController.deleteCik(uye)}"/>
+                                <h:graphicImage width="100"  value="/dosya/#{d.dosya_isim}"/>
                             </h:column>
                         </h:dataTable>
-                    </h:form> 
+                    </h:form>
+                </div> 
+                <div class="col-md-2 container">
+                    <br/>
+                    <h:form enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label>Dosya</label>
+                            <h:inputFile value="#{dosyaController.doc}" styleClass="custom-file" />             
+                        </div>       
+                        <h:commandButton action="#{dosyaController.upload()}" value="Yukle" styleClass="btn btn-danger" />
+                    </h:form>
                 </div>
             </div>
         </div>
-        <h:outputScript library="js" name="jquery-3.3.1.min.js"/>
-        <h:outputScript library="js" name="bootstrap.bundle.min.js"/>
-        <h:outputScript library="js" name="sb-admin.min.js"/>
     </h:body>
 </html>
