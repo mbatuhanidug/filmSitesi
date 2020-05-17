@@ -18,14 +18,12 @@
             }
             .text-c{ color: #bd2130 }
             .text-e{ color: #0056b3}
-            .text-d{ color: #EF6C00}
+            .text-d{ color: #FFB300}
         </style>
     </h:head>
     <h:body class="fixed-nav sticky-footer bg-s" id="page-top">
         <nav  class="navbar navbar-transparent bg-transparents navbar-expand-lg text-success">
-            <h:link outcome="/index.xhtml">
-                <h:graphicImage value="/media/sss.PNG" width="100" height="100" /> 
-            </h:link>
+            <h:graphicImage value="/media/sss.PNG" width="100" height="100" /> 
             <div class="container">
                 <ul class="navbar-nav ml-auto">
                     <h:form>
@@ -75,11 +73,32 @@
                             </h:column>
                             <h:column>
                                 <f:facet name="header">FİLM</f:facet>
-                                <h6 class="text-c">#{film.film_isim}</h6>
+                                <div class="card " style="width: 10rem; ">
+                                    <div class="card-body bg-s">
+                                        <h:graphicImage value="/upload/ss.jpg" width="125" height="150" />
+                                        <h6 class="text-white">#{film.film_isim}</h6>
+                                    </div>
+                                </div>
                             </h:column>
                             <h:column>
                                 <f:facet name="header">FİLM HAKKINDA</f:facet>
-                                <p class="text-e">#{film.film_tanimi}</p>
+                                <div class="btn-group">
+                                    <button class="btn btn-outline-dark dropdown-toggle" data-toggle="dropdown" data-display="static" >
+                                        FİLM HAKKINDA EDİTÖRÜN KALEMİNDEN
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left bg-dark">
+                                        <div class="card bg-dark" style="width: 45rem; ">
+                                            <div class=" col-md-3 container ">
+                                                <h:graphicImage value="/media/sss.PNG" width="150" height="150" />
+                                            </div>
+                                            <div class="card-body bg-dark">
+                                                <h4 style="color: #bd2130" class="card-title">-#{film.film_isim}-</h4>
+                                                <h6 class="card-subtitle mb-2 text-muted"><p style="color: #EF6C00">IMBD: #{film.imbd}</p></h6>
+                                                <p class="card-text text-white">#{film.film_tanimi}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </h:column>
                             <h:column>
                                 <f:facet name="header">YIL</f:facet>
@@ -101,15 +120,15 @@
                                     </ui:repeat>
                                 </ul>
                             </h:column>
-                            <h:column>
+                            <h:column class="bg-s">
+                                <f:facet name="header">FRAGMAN</f:facet>
+                                <a style="color: crimson" href="#{film.fragman}" target="_blank">FRAGMAN</a>
+                            </h:column>
+
+                            <h:column class="bg-dark">
                                 <f:facet name="header">IMBD</f:facet>
                                 <p class="text-d">#{film.imbd}</p>
                             </h:column>
-                            <h:column>
-                                <f:facet name="header">FRAGMAN</f:facet>
-                                <a href="#{film.fragman}" target="_blank">FRAGMAN</a>
-                            </h:column>
-
                             <h:column rendered="#{sessionScope.valid_user.admin}">
                                 <f:facet name="header">SEÇ</f:facet>
                                 <h:commandButton styleClass="btn btn-sm btn-info" value="SEÇ" action="#{filmlerController.updateForm(film)}">
@@ -119,7 +138,7 @@
                         </h:dataTable>
                     </h:form>
                 </div>
-                
+
                 <div class="col-md-4 container">
                     <br />
                     <br />
@@ -131,7 +150,7 @@
                                 <label for="inputName" >Film İsmi </label>
                                 <h:inputText styleClass="form-control" value = "#{filmlerController.filmler.film_isim}"/>
 
-                                <label for="inputName" >Film Tanımı </label>
+                                <label for="inputName" >Film Hakkında </label>
                                 <h:inputText styleClass="form-control" value = "#{filmlerController.filmler.film_tanimi}"/>
 
                                 <label for="inputName" >Film Çıkış Yılı </label>
@@ -142,7 +161,7 @@
 
                                 <label for="inputName" >IMBD</label>
                                 <h:inputText styleClass="form-control" value = "#{filmlerController.filmler.imbd}"/>
-                                
+
                                 <label for="inputName" >FRAGMAN</label>
                                 <h:inputText styleClass="form-control" value = "#{filmlerController.filmler.fragman}"/>
 

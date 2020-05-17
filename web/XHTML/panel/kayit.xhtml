@@ -33,69 +33,68 @@
                 </div>
             </nav>
         </h:form> 
-
-        <h:form >
-            <div class="container">
-                <div class="d-flex justify-content-center"  >
-                    <h:link outcome="/index.xhtml">
-                        <h:graphicImage value="/media/s.jpg" width="750" height="100%" /> 
-                    </h:link>
-                    <div class="card " style="width:200"  >
-                        <div class="card-header bg-transparents text-center">
-                            <h3 class="text-white">KAYIT OL</h3>
-                        </div>
-                        <div class="card-body bg-dark">
-                            <div class="container">
-                                <h:form> 
-                                    <h:inputHidden value="#{uyelerController.uye.uye_id}" />
-                                    <h6 class="text-white">Ad</h6>
-                                    <div class="input-group form-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                            <h:inputText  value="#{uyelerController.uye.uye_ad}" a:placeholder="Üye Adı" validator="#{uyevalidator.validateAd}"/><br />
-                                        </div>
+        
+        <h:form>
+            <br></br>
+            <div class="d-flex container">
+                <h:link outcome="/index.xhtml">
+                    <h:graphicImage value="/media/ddd.png" width="800" height="100%" /> 
+                </h:link>
+                <div class="card">
+                    <div class="card-header bg-transparents text-center">
+                        <h3 class="text-white">KAYIT OL</h3>
+                    </div>
+                    <div class="card-body bg-dark">
+                        <div class="container">
+                            <h:form> 
+                                <h:inputHidden value="#{uyelerController.uye.uye_id}" />
+                                <h6 class="text-white">Ad</h6>
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        <h:inputText  value="#{uyelerController.uye.uye_ad}" a:placeholder="Üye Adı" validator="#{uyevalidator.validateAd}"/><br />
                                     </div>
-                                    <h6 class="text-white">Soyad</h6>
-                                    <div class="input-group form-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-key"></i></span>
-                                        </div>
+                                </div>
+                                <h6 class="text-white">Soyad</h6>
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-key"></i></span>
                                         <h:inputText  value="#{uyelerController.uye.uye_soyad}" a:placeholder="Üye Soyadı" validator="#{uyevalidator.validateSoyad}" /><br />
                                     </div>
-                                    <h6 class="text-white">Email</h6>
-                                    <div class="input-group form-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-key"></i></span>
-                                        </div>
+                                </div>
+                                <h6 class="text-white">Email</h6>
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-key"></i></span>
                                         <h:inputText value="#{uyelerController.uye.email}" a:placeholder="Üye Email" validator="#{uyevalidator.validateEmail}"/><br />
                                     </div>
-                                    <h6 class="text-white">Telefon</h6>
-                                    <div class="input-group form-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-key"></i></span>
-                                        </div>
+                                </div>
+                                <h6 class="text-white">Telefon</h6>
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-key"></i></span>
                                         <h:inputText value="#{uyelerController.uye.telefon}" a:placeholder="Üye Telefon" validator="#{uyevalidator.validateTelefon}"/><br />
                                     </div>
-                                    <h6 class="text-white">Sifre</h6>
-                                    <div class="input-group form-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-key"></i></span>
-                                        </div>
+                                </div>
+                                <h6 class="text-white">Sifre</h6>
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-key"></i></span>
                                         <h:inputText  value="#{uyelerController.uye.sifre}" a:placeholder="Üye Şifre" validator="#{uyevalidator.validateSifre}" /><br />
                                     </div>
-                                    <h:inputHidden value="#{uyelerController.uye.uye_id}" />
-                                    <h:inputHidden value="#{uyelerController.uye.admin}" />
-                                    <div class="form-group">
-                                        <h:commandButton onclick="return confirm('Kayıt Oluşturulsun Mu?')" styleClass="btn btn-sm btn-info" action="#{uyelerController.create()}" value="Kayıt Ol" />
-                                    </div>
-                                </h:form>
-                                <h:form > <h:messages styleClass ="alert alert-primary alert" /></h:form>
-                            </div>
+                                </div>
+                                <h:inputHidden value="#{uyelerController.uye.uye_id}" />
+                                <h:inputHidden value="#{uyelerController.uye.admin}" />
+                                <div class="form-group">
+                                    <h:commandButton onclick="return confirm('Kayıt Oluşturulsun Mu?')" styleClass="btn btn-sm btn-info" action="#{uyelerController.create()}" value="Kayıt Ol" />
+                                </div>
+                            </h:form>
+                            <h:form > <h:messages styleClass ="alert alert-primary alert" /></h:form>
                         </div>
-                        <div class="card-footer bg-transparents">
-                            <div class="d-flex justify-content-center links text-white">
-                                <b>Hesabin var mı?</b> <a href="giris.xhtml" class="text-white" >GİRİŞ YAP</a>
-                            </div>
+                    </div>
+                    <div class="card-footer bg-transparents">
+                        <div class="d-flex justify-content-center links text-white">
+                            <b>Hesabin var mı?</b> <a href="giris.xhtml" class="text-white" >GİRİŞ YAP</a>
                         </div>
                     </div>
                 </div>

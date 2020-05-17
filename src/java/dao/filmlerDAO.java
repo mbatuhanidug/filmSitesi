@@ -70,7 +70,7 @@ public class filmlerDAO extends superDAO {
         List<filmler> flist = new ArrayList();
         try {
 
-            pst = this.getConnection().prepareStatement("SELECT * FROM filmler ORDER BY film_isim ASC");
+            pst = this.getConnection().prepareStatement("SELECT * FROM filmler order by imbd ASC");
             rs = pst.executeQuery();
             while (rs.next()) {
                 filmler temp = new filmler();

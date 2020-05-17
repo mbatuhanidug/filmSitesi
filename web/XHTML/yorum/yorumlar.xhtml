@@ -23,9 +23,7 @@
     </h:head>
     <h:body class="bg-s">
         <nav  class="navbar navbar-transparent bg-transparents navbar-expand-lg text-success">
-            <h:link outcome="/index.xhtml">
-                <h:graphicImage value="/media/sss.PNG" width="100" height="100" /> 
-            </h:link>
+            <h:graphicImage value="/media/sss.PNG" width="100" height="100" /> 
             <div class="container">
                 <ul class="navbar-nav ml-auto">
                     <h:form>
@@ -65,16 +63,16 @@
         <br /><br />
         <div class="container " id ="content">  
             <div class="row">
-                <div class="col-md-6">
-                    <h:form class="bg-t" id = "yorumlar-table">
+                <div class="col-md-6 bg-t">
+                    <h:form id = "yorumlar-table">
                         <h:dataTable styleClass="table table-striped table-hover" value="#{yorumlarController.ylist}" var="yorum">
                             <h:column rendered="#{sessionScope.valid_user.admin}">
                                 <f:facet name = "header">ID</f:facet>
                                     #{yorum.yorum_id}
                             </h:column>
-                            <h:column>
+                            <h:column class="bg-s">
                                 <f:facet name = "header">Film Isim</f:facet>
-                                <p class="text-c">#{yorum.film.film_isim}</p>
+                                <h6 class="text-white">#{yorum.film.film_isim}</h6>
                             </h:column>
                             <h:column>
                                 <f:facet name = "header">YORUM METNI</f:facet>
