@@ -11,7 +11,7 @@ public class DBConnection {
 
         try {
             Class.forName("org.mariadb.jdbc.Driver").newInstance();
-            c = DriverManager.getConnection("jdbc:mariadb://localhost:3306/film?user=root&password=732284Ata");
+            c = DriverManager.getConnection("jdbc:mariadb://localhost:3307/film?user=root&password=134962");
             System.out.println("bağlantı başarılı");
         } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
             System.out.println(e.getMessage());
