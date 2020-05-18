@@ -17,6 +17,7 @@ public class yorumlarController implements Serializable {
     private List<yorumlar> ylist;
     private yorumlarDAO ydao;
     private yorumlar yorumlar;
+    private String bul="";
     private int page = 1;
     private int pageSize = 5;
     private int pageCount;
@@ -90,7 +91,7 @@ public class yorumlarController implements Serializable {
     }
 
     public List<yorumlar> getYlist() {
-        this.ylist = this.getYdao().getYorumlar(page, pageSize);
+        this.ylist = this.getYdao().getYorumlar(this.bul, this.page, this.pageSize);
         return ylist;
     }
 
@@ -126,6 +127,14 @@ public class yorumlarController implements Serializable {
 
     public void setFilmlerController(filmlerController filmlerController) {
         this.filmlerController = filmlerController;
+    }
+
+    public String getBul() {
+        return bul;
+    }
+
+    public void setBul(String bul) {
+        this.bul = bul;
     }
 
 }

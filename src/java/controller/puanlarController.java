@@ -16,6 +16,8 @@ public class puanlarController implements Serializable {
     private puanlarDAO pdao;
     private puanlar puanlar;
     
+    private String bul="";
+    
     private int page = 1;
     private int pageSize = 5;
     private int pageCount;
@@ -97,7 +99,7 @@ public class puanlarController implements Serializable {
     }
 
     public List<puanlar> getPlist() {
-        this.plist = this.getPdao().getPuanlar(page, pageSize);
+        this.plist = this.getPdao().getPuanlar(this.bul,this.page, this.pageSize);
         return plist;
     }
 
@@ -142,5 +144,14 @@ public class puanlarController implements Serializable {
     public void setUyelerController(uyelerController uyelerController) {
         this.uyelerController = uyelerController;
     }
+
+    public String getBul() {
+        return bul;
+    }
+
+    public void setBul(String bul) {
+        this.bul = bul;
+    }
+    
 
 }

@@ -19,11 +19,12 @@ public class puanlarDAO extends superDAO{
     private filmlerDAO fdao;
    
     
-    public List<puanlar> getPuanlar(int page, int pageSize)  {
+    public List<puanlar> getPuanlar(String deger, int page, int pageSize)  {
         List<puanlar> plist = new ArrayList();
         int start = (page-1)*pageSize;
         try {
-            pst = this.getConnection().prepareStatement("select * from puanlar ORDER BY film_id ASC limit "+start+","+pageSize);
+            pst = this.getConnection().prepareStatement("select * from puanlar where film_id like ? ORDER BY film_id ASC limit "+start+","+pageSize);
+            pst.setString(1, "%" + deger + "%");
             rs = pst.executeQuery();
             while (rs.next()) {
                 puanlar tmp = new puanlar();

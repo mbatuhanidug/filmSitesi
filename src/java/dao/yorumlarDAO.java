@@ -38,11 +38,12 @@ public class yorumlarDAO extends superDAO {
         return y;
     }
 
-    public List<yorumlar> getYorumlar(int page, int pageSize) {
+    public List<yorumlar> getYorumlar(String deger, int page, int pageSize) {
         List<yorumlar> ylist = new ArrayList();
         int start = (page - 1) * pageSize;
         try {
-            pst = this.getConnection().prepareStatement("select * from yorumlar ORDER BY film_id ASC limit " + start + "," + pageSize);
+            pst = this.getConnection().prepareStatement("select * from yorumlar where film_id like ? ORDER BY film_id ASC limit " + start + "," + pageSize);
+            pst.setString(1, "%" + deger + "%");
             rs = pst.executeQuery();
             while (rs.next()) {
                 yorumlar tmp = new yorumlar();

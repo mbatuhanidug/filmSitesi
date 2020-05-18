@@ -4,7 +4,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:pl="http://xmlns.jcp.org/jsf/passthrough">
     <h:head>
         <title>YORUMLAR</title>
         <h:outputStylesheet library ="css" name="bootstrap.css"/>
@@ -64,6 +65,18 @@
         <div class="container " id ="content">  
             <div class="row">
                 <div class="col-md-6 bg-t">
+                    <h:form>
+                        <div>
+                            <div>
+                                <br/>
+
+                                <h:inputText styleClass="form-control" id="txtAra" value="#{yorumlarController.bul}" pl:placeholder="ARAMAK İÇİN FİLM ID GİRİNİZ ">
+                                    <f:ajax event="keyup" execute="txtAra" render="puanlar_table"></f:ajax>
+                                </h:inputText> 
+                            </div>
+                        </div>
+                    </h:form>
+                    <br></br>
                     <h:form id = "yorumlar-table">
                         <h:dataTable styleClass="table table-striped table-hover" value="#{yorumlarController.ylist}" var="yorum">
                             <h:column rendered="#{sessionScope.valid_user.admin}">
