@@ -82,9 +82,6 @@
                                 <f:facet name="header">Dosya Konumu</f:facet>
                                     #{d.dosya_path}
                             </h:column>
-                            <h:column>
-                                <h:graphicImage width="100"  value="/dosya/#{d.dosya_isim}"/>
-                            </h:column>
                         </h:dataTable>
                     </h:form>
                     <h:form>
@@ -99,14 +96,13 @@
                     <br/>
                     <h:form enctype="multipart/form-data">
                         <div class="form-group">
-                            <label>Dosya</label>
-                            <h:inputFile value="#{dosyaController.doc}" styleClass="custom-file" />             
+                            <label>İndir</label>
+                            <h:inputFile class="custom-file-control" value="#{dosyaController.doc}"  />             
                         </div>       
                         <h:commandButton action="#{dosyaController.upload()}" value="Yukle" styleClass="btn btn-danger" />
                     </h:form>
                 </div>
             </div>
         </div>
-
     </h:body>
 </html>

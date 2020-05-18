@@ -63,15 +63,16 @@
         </nav>
         <br />
         <br />
-        <div class="container " id="content">
+
+
+        <div class="container text-center col-auto " id="content">
             <div class="row">
                 <div class="col-md-22 bg-t">
                     <h:form>
-                        <div>
+                        <div class="container">
                             <div>
                                 <br/>
-
-                                <h:inputText styleClass="form-control" id="txtAra" value="#{uyelerController.bul}" pl:placeholder="ARAMAK İÇİN FİLM İSMİ GİRİNİZ ">
+                                <h:inputText styleClass="form-control" id="txtAra" value="#{filmlerController.bul}" style="color: crimson" pl:placeholder="ARAMAK İÇİN FİLM İSMİ GİRİNİZ ">
                                     <f:ajax event="keyup" execute="txtAra" render="film_table"></f:ajax>
                                 </h:inputText> 
                             </div>
@@ -79,15 +80,15 @@
                     </h:form>
                     <h:form id="film-table">
                         <h:dataTable  styleClass="table table-striped table-hover" value="#{filmlerController.flist}" var="film">
-                            <h:column rendered="#{sessionScope.valid_user.admin}">
+                            <h:column>
                                 <f:facet name="header">ID</f:facet>
-                                    #{film.film_id}
+                                ##{film.film_id}
                             </h:column>
                             <h:column>
                                 <f:facet name="header">FİLM</f:facet>
-                                <div class="card " style="width: 10rem; ">
+                                <div class="card ">
                                     <div class="card-body bg-s">
-                                        <h:graphicImage value="/upload/ss.jpg" width="125" height="150" />
+                                        <h:graphicImage value="/upload/#{film.dosya.dosya_isim}" width="130"/>
                                         <h6 class="text-white">#{film.film_isim}</h6>
                                     </div>
                                 </div>
@@ -133,8 +134,16 @@
                                 </ul>
                             </h:column>
                             <h:column class="bg-s">
-                                <f:facet name="header">FRAGMAN</f:facet>
-                                <a style="color: crimson" href="#{film.fragman}" target="_blank">FRAGMAN</a>
+                                <div class="btn-group">
+                                    <button class="btn btn-outline-dark dropdown-toggle" data-toggle="dropdown" data-display="static" >
+                                        <a style="color: crimson">FRAGMAN</a>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left bg-dark">
+                                        <div class="card bg-dark" style="width: 45rem; ">
+                                            <iframe width="720" height="450" src="https://www.youtube.com/embed/#{film.fragman} " frameborder="0"></iframe>
+                                        </div>
+                                    </div>
+                                </div>
                             </h:column>
 
                             <h:column class="bg-dark">
@@ -157,6 +166,9 @@
                         <pre>  Page #{filmlerController.page} of #{filmlerController.pageCount} </pre>
                     </h:form>
                 </div>
+
+
+
                 <div class="col-md-4 container">
                     <br />
                     <br />
@@ -179,8 +191,9 @@
 
                                 <label for="inputName" >IMBD</label>
                                 <h:inputText styleClass="form-control" value = "#{filmlerController.filmler.imbd}"/>
-
-                                <label for="inputName" >Fragman Link</label>
+                                <br/>
+                                <label for="inputName" >Fragman Link(YouTube link giriniz.)</label>
+                                <label for="inputName" >Fragman Link '=' karakterinden sonrasını giriniz!: youtube.com/watch?v=RlZaEXU_ME0</label>
                                 <h:inputText styleClass="form-control" value = "#{filmlerController.filmler.fragman}"/>
 
                                 <label>Kategori Adı</label>
@@ -192,6 +205,11 @@
                                 <h:selectManyMenu style="height: 200px" value="#{filmlerController.filmler.filmAktor}" styleClass="custom-select col-md-12 col-xs-12" converter="aktorlerConverter">
                                     <f:selectItems value="#{aktorController.AFULLlist}" var="aktorler" itemValue="#{aktorler}" itemLabel="#{aktorler.aktor_ad} #{aktorler.aktor_soyad}"/>
                                 </h:selectManyMenu>
+
+                                <label for="dosya">Film Fotoğraf</label>
+                                <h:selectOneMenu  styleClass="custom-select" id="dosya" value="#{filmlerController.filmler.dosya}" converter="dosyaConverter" >
+                                    <f:selectItems value="#{filmlerController.dosyaController.dosyaList}" var="dosya" itemValue="#{dosya}" itemLabel="#{dosya.dosya_isim}"/>
+                                </h:selectOneMenu>  
                             </div>
                             <div class="form-group">
                                 <div class="btn-group">

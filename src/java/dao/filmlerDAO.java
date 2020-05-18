@@ -15,12 +15,13 @@ public class filmlerDAO extends superDAO {
 
     private kategorilerDAO kdao;
     private aktorDAO adao;
+    private dosyaDAO ddao;
 
     public void insert(filmler film) {
 
         try {
-            pst = this.getConnection().prepareStatement("insert into filmler (film_isim,film_tanimi,cikis_yili,yonetmen, kategori_id,imbd,fragman)"
-                    + " values (?,?,?,?,?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
+            pst = this.getConnection().prepareStatement("insert into filmler (film_isim,film_tanimi,cikis_yili,yonetmen, kategori_id,imbd,fragman,dosya_id)"
+                    + " values (?,?,?,?,?,?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
             pst.setString(1, film.getFilm_isim());
             pst.setString(2, film.getFilm_tanimi());
             pst.setInt(3, film.getCikis_yili());
@@ -28,6 +29,7 @@ public class filmlerDAO extends superDAO {
             pst.setInt(5, film.getKategori().getKategori_id());
             pst.setDouble(6, film.getImbd());
             pst.setString(7, film.getFragman());
+            pst.setInt(8, film.getDosya().getId());
 
             pst.executeUpdate();
 //******************************************************Film_aktor tablosuna insert işlemi
@@ -53,7 +55,6 @@ public class filmlerDAO extends superDAO {
     public void delete(filmler film) {
 
         try {
-
             pst = this.getConnection().prepareStatement("DELETE FROM filmler WHERE film_id=?");
             pst.setInt(1, film.getFilm_id());
             pst.executeUpdate();
@@ -69,8 +70,9 @@ public class filmlerDAO extends superDAO {
         int start = (page-1)*pageSize;
         try {
 
-            pst = this.getConnection().prepareStatement("SELECT * FROM filmler where film_isim like ? order by imbd ASC limit "+start+","+pageSize);
+            pst = this.getConnection().prepareStatement("SELECT * FROM filmler where film_isim like ? order by imbd DESC limit "+start+","+pageSize);
             pst.setString(1, "%" + deger + "%");
+
             rs = pst.executeQuery();
             while (rs.next()) {
                 filmler temp = new filmler();
@@ -82,6 +84,7 @@ public class filmlerDAO extends superDAO {
                 temp.setYonetmen(rs.getString("yonetmen"));
                 temp.setImbd(rs.getDouble("imbd"));
                 temp.setFragman(rs.getString("fragman"));
+                temp.setDosya(this.getDdao().find(rs.getInt("dosya_id")));
                 temp.setKategori(this.getKdao().find(rs.getInt("kategori_id")));
                 temp.setFilmAktor(this.getAdao().getFilmAktor(rs.getInt("film_id")));
 
@@ -116,7 +119,7 @@ public class filmlerDAO extends superDAO {
         try {
 
             pst = this.getConnection().prepareStatement("UPDATE filmler SET film_isim=?,film_tanimi=?,cikis_yili=?,"
-                    + "yonetmen=?,kategori_id=?, imbd=?, fragman=? where film_id=?");
+                    + "yonetmen=?,kategori_id=?, imbd=?, fragman=?, dosya_id=? where film_id=?");
             pst.setString(1, f.getFilm_isim());
             pst.setString(2, f.getFilm_tanimi());
             pst.setInt(3, f.getCikis_yili());
@@ -124,7 +127,8 @@ public class filmlerDAO extends superDAO {
             pst.setInt(5, f.getKategori().getKategori_id());
             pst.setDouble(6, f.getImbd());
             pst.setString(7, f.getFragman());
-            pst.setInt(8, f.getFilm_id());
+            pst.setInt(8, f.getDosya().getId());
+            pst.setInt(9, f.getFilm_id());
 
             pst.executeUpdate();
 
@@ -163,6 +167,7 @@ public class filmlerDAO extends superDAO {
                 temp.setYonetmen(rs.getString("yonetmen"));
                 temp.setImbd(rs.getDouble("imbd"));
                 temp.setFragman(rs.getString("fragman"));
+                temp.setDosya(this.getDdao().find(rs.getInt("dosya_id")));
                 temp.setKategori(this.getKdao().find(rs.getInt("kategori_id")));
                 temp.setFilmAktor(this.getAdao().getFilmAktor(rs.getInt("film_id")));   //Buraya dikkat buradan patlayabilir!
             }
@@ -194,5 +199,17 @@ public class filmlerDAO extends superDAO {
     public void setAdao(aktorDAO adao) {
         this.adao = adao;
     }
+
+    public dosyaDAO getDdao() {
+        if (this.ddao == null) {
+            this.ddao = new dosyaDAO();
+        }
+        return ddao;
+    }
+
+    public void setDdao(dosyaDAO ddao) {
+        this.ddao = ddao;
+    }
+    
 
 }

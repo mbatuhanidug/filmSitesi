@@ -23,7 +23,7 @@ public class dosyaDAO extends superDAO {
             pst.executeUpdate();
             pst.close();
         } catch (SQLException ex) {
-            System.out.println(" DosyaDAO (Create): " + ex.getMessage());
+            System.out.println(" DosyaDAO (İnsert): " + ex.getMessage());
         }
     }
 
@@ -43,12 +43,12 @@ public class dosyaDAO extends superDAO {
         List<dosya> dlist = new ArrayList();
         int start = (page - 1) * pageSize;
         try {
-            pst = this.getConnection().prepareStatement("select * from dosya order by doya_isim ASC limit " + start + "," + pageSize);
+            pst = this.getConnection().prepareStatement("select * from dosya order by dosya_id ASC limit " + start + "," + pageSize);
 
             rs = pst.executeQuery();
 
             while (rs.next()) {
-                dosya temp = new dosya(rs.getInt("dosya_id"), rs.getString("dosya_isim"), rs.getString("dosya_path"), rs.getString("doysa_tipi"));
+                dosya temp = new dosya(rs.getInt("dosya_id"), rs.getString("dosya_isim"), rs.getString("dosya_path"), rs.getString("dosya_tipi"));
                 dlist.add(temp);
             }
         } catch (SQLException ex) {
@@ -64,7 +64,7 @@ public class dosyaDAO extends superDAO {
             pst.setInt(1, id);
             rs = pst.executeQuery();
             rs.next();
-            d = new dosya(rs.getInt("dosya_id"), rs.getString("dosya_isim"), rs.getString("dosya_path"), rs.getString("doysa_tipi"));
+            d = new dosya(rs.getInt("dosya_id"), rs.getString("dosya_isim"), rs.getString("dosya_path"), rs.getString("dosya_tipi"));
 
         } catch (SQLException ex) {
             System.out.println("DosyaDAO (FİND) :" + ex.getMessage());
@@ -91,7 +91,7 @@ public class dosyaDAO extends superDAO {
     public void update(dosya dosya) {
 
         try {
-            pst = this.getConnection().prepareStatement("update dosya set dosya_isim=?,dosya_path=?,doysa_tipi=? where dosya_id=?");
+            pst = this.getConnection().prepareStatement("update dosya set dosya_isim=?,dosya_path=?,dosya_tipi=? where dosya_id=?");
             pst.setString(1, dosya.getDosya_isim());
             pst.setString(2, dosya.getDosya_path());
             pst.setString(3, dosya.getDosya_tipi());

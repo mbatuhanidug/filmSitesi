@@ -12,7 +12,7 @@ public class dosya {
     public dosya() {
     }
 
-    public dosya(int id, String dosya_path, String dosya_isim, String dosya_tipi) {
+    public dosya(int id, String dosya_isim, String dosya_path, String dosya_tipi) {
         this.id = id;
         this.dosya_path = dosya_path;
         this.dosya_isim = dosya_isim;
@@ -51,14 +51,13 @@ public class dosya {
         this.dosya_tipi = dosya_tipi;
     }
 
-
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 11 * hash + this.id;
-        hash = 11 * hash + Objects.hashCode(this.dosya_path);
-        hash = 11 * hash + Objects.hashCode(this.dosya_isim);
-        hash = 11 * hash + Objects.hashCode(this.dosya_tipi);
+        int hash = 5;
+        hash = 59 * hash + this.id;
+        hash = 59 * hash + Objects.hashCode(this.dosya_path);
+        hash = 59 * hash + Objects.hashCode(this.dosya_isim);
+        hash = 59 * hash + Objects.hashCode(this.dosya_tipi);
         return hash;
     }
 
@@ -89,4 +88,6 @@ public class dosya {
         return true;
     }
 
+
+  
 }

@@ -1,5 +1,6 @@
 package controller;
 
+import dao.dosyaDAO;
 import dao.filmlerDAO;
 import entity.filmler;
 import java.io.Serializable;
@@ -16,7 +17,11 @@ public class filmlerController implements Serializable {
     private List<filmler> flist;
     private filmler filmler;
     private filmlerDAO filmDAO;
+
     private String bul="";
+
+    private dosyaDAO ddao;
+
 
     private int page = 1;
     private int pageSize = 5;
@@ -67,6 +72,8 @@ public class filmlerController implements Serializable {
     private aktorController aktorController;
     @Inject
     private kategorilerController kategorilerController;
+    @Inject
+    private dosyaController dosyaController;
 
     public void updateForm(filmler film) {
         this.filmler = film;
@@ -136,6 +143,7 @@ public class filmlerController implements Serializable {
         return kategorilerController;
     }
 
+
     public String getBul() {
         return bul;
     }
@@ -143,5 +151,26 @@ public class filmlerController implements Serializable {
     public void setBul(String bul) {
         this.bul = bul;
     }
+
+    public dosyaController getDosyaController() {
+        return dosyaController;
+    }
+
+    public void setDosyaController(dosyaController dosyaController) {
+        this.dosyaController = dosyaController;
+    }
+
+    public dosyaDAO getDdao() {
+        if (this.ddao == null) {
+            this.ddao = new dosyaDAO();    
+        }
+        return ddao;
+    }
+
+    public void setDdao(dosyaDAO ddao) {
+        this.ddao = ddao;
+    }
+    
+
     
 }

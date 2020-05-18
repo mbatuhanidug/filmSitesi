@@ -19,9 +19,8 @@ public class dosyaController implements Serializable {
     private dosya dosya;
     private List<dosya> dosyaList;
     private dosyaDAO dosyadao;
-
     private Part doc;
-    private final String uploadTo = "C:\\Users\\asus\\Desktop\\İNTERNET PROG\\04\\filmSitesi\\web\\upload\\";
+    private final String uploadTo = "C:\\Users\\asus\\Desktop\\İNTERNET PROG\\05\\filmSitesi\\web\\upload\\";
 
     private int page = 1;
     private int pageSize = 5;
@@ -77,8 +76,11 @@ public class dosyaController implements Serializable {
     }
 
     public void delete() {
-        this.getDosyadao().delete(dosya);
-        this.clearForm();
+        this.getDosyadao().delete(this.dosya);
+        this.dosya = new dosya();
+    }
+
+    public dosyaController() {
     }
 
     public void update() {
@@ -117,23 +119,6 @@ public class dosyaController implements Serializable {
         return dosyadao;
     }
 
-    public void upload() {
-        try {
-            InputStream upload = doc.getInputStream();
-            File file = new File(uploadTo + doc.getSubmittedFileName());
-            Files.copy(upload, file.toPath());
-
-            dosya = this.getDosya();
-            dosya.setDosya_path(file.getPath());
-            dosya.setDosya_isim(file.getName());
-            dosya.setDosya_tipi(doc.getContentType());
-            this.getDosyadao().insert(dosya);
-
-        } catch (IOException e) {
-            System.out.println("DosyaController UPLOAD):" + e.getMessage());
-        }
-    }
-
     public void setDosyadao(dosyaDAO dosyadao) {
         this.dosyadao = dosyadao;
     }
@@ -148,6 +133,25 @@ public class dosyaController implements Serializable {
 
     public String getUploadTo() {
         return uploadTo;
+    }
+
+    public void upload() {
+        try (InputStream input = doc.getInputStream()) {
+            String file = doc.getSubmittedFileName();
+            File f = new File(uploadTo,file);
+            Files.copy(input,f.toPath());
+
+            dosya = this.getDosya();
+            dosya.setDosya_path(f.getParent());
+            dosya.setDosya_isim(f.getName());
+            dosya.setDosya_tipi(doc.getContentType());
+
+            this.getDosyadao().insert(dosya);
+        
+
+        } catch (IOException e) {
+            System.out.println("DosyaController UPLOAD):" + e.getMessage());
+        }
     }
 
 }
