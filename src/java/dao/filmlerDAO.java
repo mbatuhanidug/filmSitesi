@@ -63,13 +63,14 @@ public class filmlerDAO extends superDAO {
         }
     }
 
-    public List<filmler> findAll(int page, int pageSize) {
+    public List<filmler> findAll(String deger ,int page, int pageSize) {
 
         List<filmler> flist = new ArrayList();
         int start = (page-1)*pageSize;
         try {
 
-            pst = this.getConnection().prepareStatement("SELECT * FROM filmler order by imbd ASC limit "+start+","+pageSize);
+            pst = this.getConnection().prepareStatement("SELECT * FROM filmler where film_isim like ? order by imbd ASC limit "+start+","+pageSize);
+            pst.setString(1, "%" + deger + "%");
             rs = pst.executeQuery();
             while (rs.next()) {
                 filmler temp = new filmler();

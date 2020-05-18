@@ -39,11 +39,12 @@ public class aktorDAO extends superDAO{
         return a;
     }
 
-    public List<aktor> getAktor(int page, int pageSize) {
+    public List<aktor> getAktor(String deger,int page, int pageSize) {
         List<aktor> alist = new ArrayList();
         int start = (page-1)*pageSize;
         try {           
-            pst = this.getConnection().prepareStatement("SELECT * FROM aktor order by aktor_ad ASC limit "+start+","+pageSize);
+            pst = this.getConnection().prepareStatement("SELECT * FROM aktor where aktor_ad like ? order by aktor_ad ASC limit "+start+","+pageSize);
+            pst.setString(1, "%" + deger+ "%");
             rs = pst.executeQuery();
             while (rs.next()) {
                 aktor tmp = new aktor(rs.getInt("aktor_id"), rs.getString("aktor_ad"), rs.getString("aktor_soyad"));

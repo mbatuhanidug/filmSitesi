@@ -16,6 +16,8 @@ public class aktorController implements Serializable {
     private List<aktor> aFULLlist;
     private aktorDAO adao;
     private aktor aktor;
+   
+    private String bul="";
     
     private int page = 1;
     private int pageSize = 5;
@@ -90,7 +92,7 @@ public class aktorController implements Serializable {
     }
 
     public List<aktor> getAlist()   {
-        this.alist = this.getAdao().getAktor(page , pageSize);
+        this.alist = this.getAdao().getAktor(this.bul ,this.page , this.pageSize);
         return alist;
     }
 
@@ -124,6 +126,14 @@ public class aktorController implements Serializable {
 
     public void setAktor(aktor aktor) {
         this.aktor = aktor;
+    }
+
+    public String getBul() {
+        return bul;
+    }
+
+    public void setBul(String bul) {
+        this.bul = bul;
     }
 
 }

@@ -17,6 +17,8 @@ public class uyelerController implements Serializable {
     private uyelerDAO uyedao;
     private uyeler uye;
     
+    private String bul = "";
+    
     private int page = 1;
     private int pageSize = 5;
     private int pageCount;
@@ -93,7 +95,7 @@ public class uyelerController implements Serializable {
     }
 
     public List<uyeler> getUyelist() {
-        this.uyelist = this.getUyedao().findAll(page, pageSize);
+        this.uyelist = this.getUyedao().findAll(this.bul,this.page, this.pageSize);
         return uyelist;
     }
 
@@ -124,4 +126,14 @@ public class uyelerController implements Serializable {
     public void setUye(uyeler uye) {
         this.uye = uye;
     }
+
+    public String getBul() {
+        return bul;
+    }
+
+    public void setBul(String bul) {
+        this.bul = bul;
+    }
+    
+    
 }

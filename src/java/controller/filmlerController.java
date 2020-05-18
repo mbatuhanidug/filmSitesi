@@ -16,6 +16,7 @@ public class filmlerController implements Serializable {
     private List<filmler> flist;
     private filmler filmler;
     private filmlerDAO filmDAO;
+    private String bul="";
 
     private int page = 1;
     private int pageSize = 5;
@@ -97,7 +98,7 @@ public class filmlerController implements Serializable {
     }
 
     public List<filmler> getFlist() {
-        this.flist = this.getFilmDAO().findAll(page, pageSize);
+        this.flist = this.getFilmDAO().findAll(this.bul,this.page, this.pageSize);
         return flist;
     }
 
@@ -134,4 +135,13 @@ public class filmlerController implements Serializable {
     public kategorilerController getKategorilerController() {
         return kategorilerController;
     }
+
+    public String getBul() {
+        return bul;
+    }
+
+    public void setBul(String bul) {
+        this.bul = bul;
+    }
+    
 }

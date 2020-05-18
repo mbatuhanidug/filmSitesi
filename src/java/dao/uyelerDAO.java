@@ -79,12 +79,14 @@ public class uyelerDAO extends superDAO {
         }
     }
 
-    public List<uyeler> findAll(int page, int pageSize) {
+    public List<uyeler> findAll(String deger,int page, int pageSize) {
         List<uyeler> ulist = new ArrayList();
         int start = (page - 1) * pageSize;
         try {
-            pst = this.getConnection().prepareStatement("Select * from uyeler ORDER BY uye_id ASC limit " + start + "," + pageSize);
+            pst = this.getConnection().prepareStatement("select * from uyeler where uye_ad like ? order by uye_id asc  limit " + start + "," + pageSize);
+            pst.setString(1, "%" + deger + "%");
             rs = pst.executeQuery();
+            
             while (rs.next()) {
                 uyeler temp = new uyeler();
                 temp.setUye_id(rs.getInt("uye_id"));
