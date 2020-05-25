@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:dataTable styleClass="table table-striped table-hover" value = "#{uyelerController.uyelist}" var = "uye">
+        <h:column>
+            <f:facet name ="header">ID</f:facet>
+                #{uye.uye_id}
+        </h:column>
+        <h:column>
+            <f:facet name ="header">AD</f:facet>
+                #{uye.uye_ad}   
+        </h:column>
+        <h:column>
+            <f:facet name ="header">SOYAD</f:facet>
+                #{uye.uye_soyad}   
+        </h:column>
+        <h:column>
+            <f:facet name ="header">E-MAİL</f:facet>
+                #{uye.email}   
+        </h:column>
+        <h:column>
+            <f:facet name ="header">TELEFON</f:facet>
+                #{uye.telefon}   
+        </h:column>
+        <h:column>
+            <f:facet name ="header">***</f:facet>
+            <h:commandButton styleClass="btn btn-sm btn-danger" action="#{uyelerController.updateForm(uye)}" value = "Üyeliği Kaldır">
+                <f:ajax render="uyeler-table uyeler-form" execute="@this"/>
+            </h:commandButton>
+        </h:column>
+    </h:dataTable>
+
+</ui:composition>

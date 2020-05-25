@@ -23,48 +23,13 @@
         </style>
     </h:head>
     <h:body class="fixed-nav sticky-footer bg-s" id="page-top">
-        <nav  class="navbar navbar-transparent bg-transparents navbar-expand-lg text-success">
-            <h:graphicImage value="/media/sss.PNG" width="100" height="100" /> 
-            <div class="container">
-                <ul class="navbar-nav ml-auto">
-                    <h:form>
-                        <ul  class="navbar-nav ">
-                            <li class="nav-item active">
-                                <h:commandLink styleClass="nav-link text-white" action = "/XHTML/film/filmler.xhtml" value = "Filmler"/> 
-                            </li>
-                            <li  class="nav-item">
-                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/aktor/aktor.xhtml" value = "Aktörler"/> 
-                            </li>
-                            <li  class="nav-item">
-                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/kategori/kategoriler.xhtml" value = "Kategori"/> 
-                            </li>
-                            <li class="nav-item">
-                                <h:commandLink styleClass="nav-link text-white" action = "/XHTML/yorum/yorumlar.xhtml" value = "Yorumlar"/> 
-                            </li>
-                            <li class="nav-item">
-                                <h:commandLink styleClass="nav-link text-white" action = "/XHTML/puan/puanlar.xhtml" value = "Puanlar"/> 
-                            </li>
-                            <li  class="nav-item">
-                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/uyeler/uyeler.xhtml" value = "Uyeler"/> 
-                            </li>
-                            <li class="nav-item">
-                                <h:commandLink styleClass="nav-link text-white" action = "/XHTML/profil/profil.xhtml" value = "Profil"/> 
-                            </li>
-                            <li class="nav-item">
-                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/dosya/dosya.xhtml" value = "Upload Image"/> 
-                            </li>
-                            <li class="nav-item">
-                                <h:link  class="nav-link text-white" value="Çıkış" outcome="/XHTML/panel/cikis.xhtml"></h:link>
-                            </li>
-                        </ul>
-                    </h:form>
-                </ul>
-            </div>
-        </nav>
+        <div>
+            <ui:insert name="menu">
+                <ui:include src="/template/panelNAV.xhtml"/>               
+            </ui:insert> 
+        </div>
         <br />
         <br />
-
-
         <div class="container text-center col-auto " id="content">
             <div class="row">
                 <div class="col-md-22 bg-t">
@@ -79,84 +44,11 @@
                         </div>
                     </h:form>
                     <h:form id="film-table">
-                        <h:dataTable  styleClass="table table-striped table-hover" value="#{filmlerController.flist}" var="film">
-                            <h:column>
-                                <f:facet name="header">FİLM NUMARASI</f:facet>
-                                ##{film.film_id}
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">FİLM</f:facet>
-                                <div class="card ">
-                                    <div class="card-body bg-s">
-                                        <h:graphicImage value="/upload/#{film.dosya.dosya_isim}" width="130"/>
-                                        <h6 class="text-white">#{film.film_isim}</h6>
-                                    </div>
-                                </div>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">FİLM HAKKINDA</f:facet>
-                                <div class="btn-group">
-                                    <button class="btn btn-outline-dark dropdown-toggle" data-toggle="dropdown" data-display="static" >
-                                        FİLM HAKKINDA EDİTÖRÜN KALEMİNDEN
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left bg-dark">
-                                        <div class="card bg-dark" style="width: 45rem; ">
-                                            <div class=" col-md-3 container ">
-                                                <h:graphicImage value="/media/sss.PNG" width="150" height="150" />
-                                            </div>
-                                            <div class="card-body bg-dark container">
-                                                <h4 style="color: #bd2130" class="card-title">-#{film.film_isim}-</h4>
-                                                <h6 class="card-subtitle mb-2 text-muted"><p style="color: #EF6C00">IMBD: #{film.imbd}</p></h6>
-                                                <p class="card-text text-white">#{film.film_tanimi}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">YIL</f:facet>
-                                    #{film.cikis_yili}
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">KATEGORİ</f:facet>
-                                <p class="text-e">#{film.kategori.kategori_ad}</p> 
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">YÖNETMEN</f:facet>
-                                    #{film.yonetmen}
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">AKTÖRLER</f:facet>
-                                <ul>
-                                    <ui:repeat value="#{film.filmAktor}" var="aktor">
-                                        <li>#{aktor.aktor_ad} #{aktor.aktor_soyad}</li>
-                                    </ui:repeat>
-                                </ul>
-                            </h:column>
-                            <h:column class="bg-s">
-                                <div class="btn-group">
-                                    <button class="btn btn-outline-dark dropdown-toggle" data-toggle="dropdown" data-display="static" >
-                                        <a style="color: crimson">FRAGMAN</a>
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left bg-dark">
-                                        <div class="card bg-dark" style="width: 45rem; ">
-                                            <iframe width="720" height="450" src="https://www.youtube.com/embed/#{film.fragman} " frameborder="0"></iframe>
-                                        </div>
-                                    </div>
-                                </div>
-                            </h:column>
-
-                            <h:column class="bg-dark">
-                                <f:facet name="header">IMBD</f:facet>
-                                <p class="text-d">#{film.imbd}</p>
-                            </h:column>
-                            <h:column rendered="#{sessionScope.valid_user.admin}">
-                                <f:facet name="header">SEÇ</f:facet>
-                                <h:commandButton styleClass="btn btn-sm btn-info" value="SEÇ" action="#{filmlerController.updateForm(film)}">
-                                    <f:ajax render="film-table film-form" execute="@this" />
-                                </h:commandButton>
-                            </h:column>
-                        </h:dataTable>
+                        <div>
+                            <ui:insert name="menu">
+                                <ui:include src="/XHTML/film/dataTable.xhtml"/>               
+                            </ui:insert>
+                        </div>
                     </h:form>
                     <h:form>
                         <div class = "btn-group container">
@@ -166,69 +58,15 @@
                         <pre>  Page #{filmlerController.page} of #{filmlerController.pageCount} </pre>
                     </h:form>
                 </div>
-
-
-
                 <div class="col-md-4 container">
                     <br />
                     <br />
                     <h:form rendered="#{sessionScope.valid_user.admin}" id="film-form">
-                        <h:messages styleClass="alert alert-danger alert" />
-                        <div class="form-group">
-                            <div class="form-group">
-                                <h:inputHidden value="#{filmlerController.filmler.film_id}"/> 
-                                <label for="inputName" >Film İsmi </label>
-                                <h:inputText styleClass="form-control" value = "#{filmlerController.filmler.film_isim}"/>
-
-                                <label for="inputName" >Film Hakkında </label>
-                                <h:inputText styleClass="form-control" value = "#{filmlerController.filmler.film_tanimi}"/>
-
-                                <label for="inputName" >Film Çıkış Yılı </label>
-                                <h:inputText styleClass="form-control" value = "#{filmlerController.filmler.cikis_yili}"/>
-
-                                <label for="inputName" >Filmin Yönetmeni</label>
-                                <h:inputText styleClass="form-control" value = "#{filmlerController.filmler.yonetmen}"/>
-
-                                <label for="inputName" >IMBD</label>
-                                <h:inputText styleClass="form-control" value = "#{filmlerController.filmler.imbd}"/>
-                                <br/>
-                                <label for="inputName" >Fragman Link(YouTube link giriniz.)</label>
-                                <label for="inputName" >Fragman Link '=' karakterinden sonrasını giriniz!: youtube.com/watch?v=RlZaEXU_ME0</label>
-                                <h:inputText styleClass="form-control" value = "#{filmlerController.filmler.fragman}"/>
-
-                                <label>Kategori Adı</label>
-                                <h:selectOneMenu styleClass="custom-select" id="kategori" value="#{filmlerController.filmler.kategori}" converter="kategorilerConverter">
-                                    <f:selectItems value="#{kategorilerController.KFULLlist}" var="kategoriler" itemValue="#{kategoriler}" itemLabel="#{kategoriler.kategori_ad} "/>
-                                </h:selectOneMenu>  
-
-                                <label for="inputAktor" >Aktörler</label>
-                                <h:selectManyMenu style="height: 200px" value="#{filmlerController.filmler.filmAktor}" styleClass="custom-select col-md-12 col-xs-12" converter="aktorlerConverter">
-                                    <f:selectItems value="#{aktorController.AFULLlist}" var="aktorler" itemValue="#{aktorler}" itemLabel="#{aktorler.aktor_ad} #{aktorler.aktor_soyad}"/>
-                                </h:selectManyMenu>
-
-                                <label for="dosya">Film Fotoğraf</label>
-                                <h:selectOneMenu  styleClass="custom-select" id="dosya" value="#{filmlerController.filmler.dosya}" converter="dosyaConverter" >
-                                    <f:selectItems value="#{filmlerController.dosyaController.dosyaList}" var="dosya" itemValue="#{dosya}" itemLabel="#{dosya.dosya_isim}"/>
-                                </h:selectOneMenu>  
-                            </div>
-                            <div class="form-group">
-                                <div class="btn-group">
-                                    <h:commandButton onclick="return confirm('Güncellemek İstediğinizden Emin Misiniz?')" rendered="#{filmlerController.filmler.film_id != 0}" styleClass="btn btn-info" value="Güncelle" action="#{filmlerController.update}">                       
-                                        <f:ajax execute="film-form" render="film-form film-table"/>
-                                    </h:commandButton>    
-                                    <h:commandButton rendered="#{filmlerController.filmler.film_id  ==0}" styleClass="btn btn-primary" value="Ekle" action="#{filmlerController.create}">
-                                        <f:ajax execute="film-form" render="film-form film-table"/>
-                                    </h:commandButton>
-                                    <h:commandButton rendered="#{filmlerController.filmler.film_id != 0}" styleClass="btn btn-secondary" value="Formu Temizle" action="#{filmlerController.clearForm}">
-                                        <f:ajax execute="@this" render="film-form film-table"/>
-                                    </h:commandButton>
-                                    <h:commandButton onclick="return confirm('Silmek İstediğinizden Emin Misiniz?')" rendered="#{filmlerController.filmler.film_id != 0}" styleClass="btn btn-sm btn-danger" value="SİL" action="#{filmlerController.delete}">
-                                        <f:ajax render="film-form film-table" execute="@this" />
-                                    </h:commandButton>
-                                </div>
-                            </div>
+                        <div>
+                            <ui:insert name="menu">
+                                <ui:include src="/XHTML/film/form.xhtml"/>               
+                            </ui:insert>
                         </div>
-
                     </h:form>
                 </div>
             </div>

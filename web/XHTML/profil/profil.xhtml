@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Profil</title>
         <h:outputStylesheet library ="css" name="bootstrap.css"/>
@@ -18,78 +18,20 @@
         </style>
     </h:head>
     <h:body class="bg-s">
-        <nav  class="navbar navbar-transparent bg-transparents navbar-expand-lg text-success">
-            <h:graphicImage value="/media/sss.PNG" width="100" height="100" /> 
-            <div class="container">
-                <ul class="navbar-nav ml-auto">
-                    <h:form>
-                        <ul  class="navbar-nav ">
-                            <li class="nav-item active">
-                                <h:commandLink styleClass="nav-link text-white" action = "/XHTML/film/filmler.xhtml" value = "Filmler"/> 
-                            </li>
-                            <li  class="nav-item">
-                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/aktor/aktor.xhtml" value = "Aktörler"/> 
-                            </li>
-                            <li  class="nav-item">
-                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/kategori/kategoriler.xhtml" value = "Kategori"/> 
-                            </li>
-                            <li class="nav-item">
-                                <h:commandLink styleClass="nav-link text-white" action = "/XHTML/yorum/yorumlar.xhtml" value = "Yorumlar"/> 
-                            </li>
-                            <li class="nav-item">
-                                <h:commandLink styleClass="nav-link text-white" action = "/XHTML/puan/puanlar.xhtml" value = "Puanlar"/> 
-                            </li>
-                            <li  class="nav-item">
-                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/uyeler/uyeler.xhtml" value = "Uyeler"/> 
-                            </li>
-                            <li class="nav-item">
-                                <h:commandLink styleClass="nav-link text-white" action = "/XHTML/profil/profil.xhtml" value = "Profil"/> 
-                            </li>
-                            <li class="nav-item">
-                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/dosya/dosya.xhtml" value = "Upload Image"/> 
-                            </li>
-                            <li class="nav-item">
-                                <h:link  class="nav-link text-white" value="Çıkış" outcome="/XHTML/panel/cikis.xhtml"></h:link>
-                            </li>
-                        </ul>
-                    </h:form>
-                </ul>
-            </div>
-        </nav><br /><br />
+        <div>
+            <ui:insert name="menu">
+                <ui:include src="/template/panelNAV.xhtml"/>               
+            </ui:insert> 
+        </div><br /><br />
         <div class="container" id="content">
             <div class="row">
                 <div class="col-md-12 bg-t">
                     <h:form id = "uyeler-table">
-                        <h:dataTable styleClass="table table-striped table-hover" value = "#{valid_user}" var = "uye">
-                            <h:column rendered="#{sessionScope.valid_user.admin}">
-                                <f:facet name ="header">ID</f:facet>
-                                    #{sessionScope.valid_user.uye_id}
-                            </h:column>
-                            <h:column>
-                                <f:facet name ="header">AD</f:facet>
-                                    #{sessionScope.valid_user.uye_ad}
-                            </h:column>
-                            <h:column>
-                                <f:facet name ="header">SOYAD</f:facet>
-                                    #{sessionScope.valid_user.uye_soyad}  
-                            </h:column>
-                            <h:column>
-                                <f:facet name ="header">E-MAİL</f:facet>
-                                    #{sessionScope.valid_user.email}  
-                            </h:column>
-                            <h:column>
-                                <f:facet name ="header">TELEFON</f:facet>
-                                    #{sessionScope.valid_user.telefon}  
-                            </h:column>
-                            <h:column>
-                                <f:facet name ="header">SİFRE</f:facet>
-                                    #{sessionScope.valid_user.sifre}  
-                            </h:column>
-                            <h:column>
-                                <f:facet name ="header">Üyeliği İptal Et</f:facet>
-                                <h:commandButton onclick="return confirm('Üyeliği Silmek İstediğinizden Emin Misiniz?\nÜyelik Silinmesi Durumunda Çıkış İşlemi Gerçekleştirelecektir.')" styleClass="btn btn-sm btn-danger" value="Üyeliği Sil" action="#{uyelerController.deleteCik(uye)}"/>
-                            </h:column>
-                        </h:dataTable>
+                        <div>
+                            <ui:insert name="menu">
+                                <ui:include src="/XHTML/profil/dataTable.xhtml"/>               
+                            </ui:insert> 
+                        </div>
                     </h:form> 
                 </div>
             </div>

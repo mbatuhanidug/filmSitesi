@@ -22,44 +22,11 @@
         </style>
     </h:head>
     <h:body class="bg-s">
-        <nav  class="navbar navbar-transparent bg-transparents navbar-expand-lg text-success">
-            <h:graphicImage value="/media/sss.PNG" width="100" height="100" /> 
-            <div class="container">
-                <ul class="navbar-nav ml-auto">
-                    <h:form>
-                        <ul  class="navbar-nav ">
-                            <li class="nav-item active">
-                                <h:commandLink styleClass="nav-link text-white" action = "/XHTML/film/filmler.xhtml" value = "Filmler"/> 
-                            </li>
-                            <li  class="nav-item">
-                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/aktor/aktor.xhtml" value = "Aktörler"/> 
-                            </li>
-                            <li  class="nav-item">
-                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/kategori/kategoriler.xhtml" value = "Kategori"/> 
-                            </li>
-                            <li class="nav-item">
-                                <h:commandLink styleClass="nav-link text-white" action = "/XHTML/yorum/yorumlar.xhtml" value = "Yorumlar"/> 
-                            </li>
-                            <li class="nav-item">
-                                <h:commandLink styleClass="nav-link text-white" action = "/XHTML/puan/puanlar.xhtml" value = "Puanlar"/> 
-                            </li>
-                            <li  class="nav-item">
-                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/uyeler/uyeler.xhtml" value = "Uyeler"/> 
-                            </li>
-                            <li class="nav-item">
-                                <h:commandLink styleClass="nav-link text-white" action = "/XHTML/profil/profil.xhtml" value = "Profil"/> 
-                            </li>
-                            <li class="nav-item">
-                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/dosya/dosya.xhtml" value = "Upload Image"/> 
-                            </li>
-                            <li class="nav-item">
-                                <h:link  class="nav-link text-white" value="Çıkış" outcome="/XHTML/panel/cikis.xhtml"></h:link>
-                            </li>
-                        </ul>
-                    </h:form>
-                </ul>
-            </div>
-        </nav><br /><br />
+        <div>
+            <ui:insert name="menu">
+                <ui:include src="/template/panelNAV.xhtml"/>               
+            </ui:insert> 
+        </div><br /><br />
         <div class="container " id ="content">  
             <div class="row">
                 <div class="col-md-6 bg-t">
@@ -67,7 +34,6 @@
                         <div>
                             <div>
                                 <br/>
-
                                 <h:inputText styleClass="form-control" id="txtAra" value="#{puanlarController.bul}" pl:placeholder="ARAMAK İÇİN FİLM NUMARASI GİRİNİZ ">
                                     <f:ajax event="keyup" execute="txtAra" render="puanlar_table"></f:ajax>
                                 </h:inputText> 
@@ -76,26 +42,11 @@
                     </h:form>
                     <br></br>
                     <h:form id = "puanlar-table">
-                        <h:dataTable styleClass="table table-striped table-hover" value = "#{puanlarController.plist}" var = "puan">
-                            <h:column rendered="#{sessionScope.valid_user.admin}">
-                                <f:facet name = "header">ID</f:facet>
-                                    #{puan.puan_id}
-                            </h:column>
-                            <h:column class="bg-s col-md-2">
-                                <f:facet name = "header">FİLM İSİM</f:facet>
-                                <h6 class="text-white">#{puan.film.film_isim}<p style="color: #bd2130" class="text-white">IMBD: #{puan.film.imbd}</p></h6>
-                            </h:column>
-                            <h:column class="bg-dark ">
-                                <f:facet name = "header">ÜYELERİN PUANLARI</f:facet>
-                                <p class="text-c">#{puan.puanDegeri}</p>
-                            </h:column>
-                            <h:column rendered="#{sessionScope.valid_user.admin}">
-                                <f:facet name ="header">SEÇ</f:facet>
-                                <h:commandButton styleClass="btn btn-sm btn-info" action="#{puanlarController.updateForm(puan)}" value = "SEÇ">
-                                    <f:ajax render = "puanlar-table puanlar-form" execute = "@this"/>
-                                </h:commandButton>    
-                            </h:column>
-                        </h:dataTable>
+                        <div>
+                            <ui:insert name="menu">
+                                <ui:include src="/XHTML/puan/dataTable.xhtml"/>               
+                            </ui:insert>
+                        </div>
                     </h:form>
                     <h:form>
                         <div class = "btn-group container">
@@ -108,33 +59,10 @@
                 <div class = "col-md-2 container">
                     <br /><br />
                     <h:form id = "puanlar-form">
-                        <h:messages styleClass="alert alert-danger alert" />
-                        <div class = "form-group">
-                            <div class = "form-group">
-                                <h:inputHidden value="#{puanlarController.puanlar.puan_id}"/>
-                                <label for = "inputPuan">1-10 ARASINDA PUAN GİRİNİZ (Örn. 7)</label>
-                                <h:inputText id="inputPuan" styleClass="form-control" value = "#{puanlarController.puanlar.puanDegeri}" validatorMessage="xhtm Validation : Puan Değeri 0' dan Büyük 11'den Küçük Olmalıdır.">
-                                    <f:validateDoubleRange minimum="1" maximum="10" for="inputPuan"/>
-                                </h:inputText>
-                                <br></br>
-                                <label>FİLM İSİM SEÇİNİZ </label>
-                                <h:selectOneMenu styleClass="custom-select" id="film" value="#{puanlarController.puanlar.film}" converter="filmlerConverter">
-                                    <f:selectItems value="#{puanlarController.filmlerController.flist}" var="film" itemValue="#{film}" itemLabel="#{film.film_isim}"/>
-                                </h:selectOneMenu> 
-                            </div>
-                            <div class = "form-group">
-                                <div class = "btn-group">
-                                    <h:commandButton rendered="#{puanlarController.puanlar.puan_id  ==0}" styleClass="btn btn-primary" value="Ekle" action="#{puanlarController.create}">
-                                        <f:ajax execute="puanlar-form" render="puanlar-table puanlar-form"/>
-                                    </h:commandButton>
-                                    <h:commandButton rendered="#{puanlarController.puanlar.puan_id != 0}" styleClass="btn btn-secondary" value="Formu Temizle" action="#{puanlarController.clearForm}">
-                                        <f:ajax execute="@this" render="puanlar-table puanlar-form"/>
-                                    </h:commandButton>
-                                    <h:commandButton onclick="return confirm('Silmek İstediğinizden Emin Misiniz?')" rendered="#{puanlarController.puanlar.puan_id != 0}" styleClass="btn btn-sm btn-danger" value="SİL" action="#{puanlarController.delete}">
-                                        <f:ajax render="puanlar-table puanlar-form" execute="@this" />
-                                    </h:commandButton>
-                                </div>
-                            </div>
+                        <div>
+                            <ui:insert name="menu">
+                                <ui:include src="/XHTML/puan/form.xhtml"/>               
+                            </ui:insert>
                         </div>
                     </h:form>    
                 </div>

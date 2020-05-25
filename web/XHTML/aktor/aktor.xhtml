@@ -20,45 +20,11 @@
         </style>
     </h:head>
     <h:body class="bg-s">
-        <nav  class="navbar navbar-transparent bg-transparents navbar-expand-lg text-success">
-            <h:graphicImage value="/media/sss.PNG" width="100" height="100" /> 
-            <div class="container">
-                <ul class="navbar-nav ml-auto">
-                    <h:form>
-                        <ul  class="navbar-nav ">
-                            <li class="nav-item active">
-                                <h:commandLink styleClass="nav-link text-white" action = "/XHTML/film/filmler.xhtml" value = "Filmler"/> 
-                            </li>
-                            <li  class="nav-item">
-                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/aktor/aktor.xhtml" value = "Aktörler"/> 
-                            </li>
-                            <li  class="nav-item">
-                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/kategori/kategoriler.xhtml" value = "Kategori"/> 
-                            </li>
-                            <li class="nav-item">
-                                <h:commandLink styleClass="nav-link text-white" action = "/XHTML/yorum/yorumlar.xhtml" value = "Yorumlar"/> 
-                            </li>
-                            <li class="nav-item">
-                                <h:commandLink styleClass="nav-link text-white" action = "/XHTML/puan/puanlar.xhtml" value = "Puanlar"/> 
-                            </li>
-                            <li  class="nav-item">
-                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/uyeler/uyeler.xhtml" value = "Uyeler"/> 
-                            </li>
-                            <li class="nav-item">
-                                <h:commandLink styleClass="nav-link text-white" action = "/XHTML/profil/profil.xhtml" value = "Profil"/> 
-                            </li>
-                            <li class="nav-item">
-                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/dosya/dosya.xhtml" value = "Upload Image"/> 
-                            </li>
-                            <li class="nav-item">
-                                <h:link  class="nav-link text-white" value="Çıkış" outcome="/XHTML/panel/cikis.xhtml"></h:link>
-                            </li>
-                        </ul>
-                    </h:form>
-                </ul>
-            </div>
-        </nav>
-        <br />
+        <div>
+            <ui:insert name="menu">
+                <ui:include src="/template/panelNAV.xhtml"/>               
+            </ui:insert> 
+        </div>
         <br />
         <br />
         <div id="content"> 
@@ -68,7 +34,6 @@
                         <div>
                             <div>
                                 <br/>
-
                                 <h:inputText styleClass="form-control" id="txtAra" value="#{aktorController.bul}" pl:placeholder= "ARAMAK İÇİN AKTOR İSMİ GİRİNİZ ">
                                     <f:ajax event="keyup" execute="txtAra" render="aktor_table"></f:ajax>
                                 </h:inputText> 
@@ -77,26 +42,11 @@
                     </h:form>
                     <br/>
                     <h:form  id = "aktor-table">
-                        <h:dataTable styleClass="table table-striped table-hover " value = "#{aktorController.alist}" var = "akt">
-                            <h:column>
-                                <f:facet name = "header">ID</f:facet>
-                                    #{akt.aktor_id}
-                            </h:column>
-                            <h:column>
-                                <f:facet name = "header">Aktor Adı</f:facet>
-                                    #{akt.aktor_ad}
-                            </h:column>
-                            <h:column>
-                                <f:facet name = "header">Aktor Soyadı</f:facet>
-                                    #{akt.aktor_soyad}
-                            </h:column>
-                            <h:column>
-                                <f:facet name ="header">SEÇ</f:facet>
-                                <h:commandButton styleClass="btn btn-sm btn-info" action="#{aktorController.updateForm(akt)}" value="SEÇ">
-                                    <f:ajax render="aktor-table aktor-form" execute="@this" />
-                                </h:commandButton>    
-                            </h:column>
-                        </h:dataTable>
+                        <div>
+                            <ui:insert name="menu">
+                                <ui:include src="/XHTML/aktor/dataTable.xhtml"/>               
+                            </ui:insert> 
+                        </div>
                     </h:form>
                     <h:form>
                         <div class = "btn-group container">
@@ -110,32 +60,10 @@
                     <br />
                     <br />
                     <h:form id = "aktor-form">
-                        <h:messages styleClass="alert alert-danger alert" />
-                        <div class = "form-group">
-                            <div class = "form-group">
-                                <h:inputHidden value="#{aktorController.aktor.aktor_id}"/> 
-                                <label for="inputName" >Aktör İsmi </label>
-                                <h:inputText styleClass="form-control" value = "#{aktorController.aktor.aktor_ad}"/>
-                                <br></br>
-                                <label for="inputName" >Aktör Soyadı </label>
-                                <h:inputText styleClass="form-control" value = "#{aktorController.aktor.aktor_soyad}"/>
-                            </div>
-                            <div class="form-group">
-                                <div class="btn-group">
-                                    <h:commandButton onclick="return confirm('Güncellemek İstediğinizden Emin Misiniz?')" rendered="#{aktorController.aktor.aktor_id != 0}" styleClass="btn btn-info" value="Güncelle" action="#{aktorController.update}">                       
-                                        <f:ajax execute="aktor-form" render="aktor-form aktor-table"/>
-                                    </h:commandButton>
-                                    <h:commandButton rendered="#{aktorController.aktor.aktor_id  ==0}" styleClass="btn btn-primary" value="Ekle" action="#{aktorController.create}">
-                                        <f:ajax execute="aktor-form" render="aktor-form aktor-table"/>
-                                    </h:commandButton>
-                                    <h:commandButton rendered="#{aktorController.aktor.aktor_id != 0}" styleClass="btn btn-secondary" value="Formu Temizle" action="#{aktorController.clearForm}">
-                                        <f:ajax execute="@this" render="aktor-form aktor-table"/>
-                                    </h:commandButton>
-                                    <h:commandButton onclick="return confirm('Silmek İstediğinizden Emin Misiniz?')" rendered="#{aktorController.aktor.aktor_id != 0}" styleClass="btn btn-sm btn-danger" value="SİL" action="#{aktorController.delete}">
-                                        <f:ajax render="aktor-form aktor-table" execute="@this" />
-                                    </h:commandButton>
-                                </div> 
-                            </div> 
+                        <div>
+                            <ui:insert name="menu">
+                                <ui:include src="/XHTML/aktor/form.xhtml"/>               
+                            </ui:insert>
                         </div>
                     </h:form>    
                 </div>

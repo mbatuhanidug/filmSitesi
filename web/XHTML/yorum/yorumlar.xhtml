@@ -4,7 +4,6 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:pl="http://xmlns.jcp.org/jsf/passthrough">
     <h:head>
         <title>YORUMLAR</title>
@@ -23,44 +22,11 @@
         </style>
     </h:head>
     <h:body class="bg-s">
-        <nav  class="navbar navbar-transparent bg-transparents navbar-expand-lg text-success">
-            <h:graphicImage value="/media/sss.PNG" width="100" height="100" /> 
-            <div class="container">
-                <ul class="navbar-nav ml-auto">
-                    <h:form>
-                        <ul  class="navbar-nav ">
-                            <li class="nav-item active">
-                                <h:commandLink styleClass="nav-link text-white" action = "/XHTML/film/filmler.xhtml" value = "Filmler"/> 
-                            </li>
-                            <li  class="nav-item">
-                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/aktor/aktor.xhtml" value = "Aktörler"/> 
-                            </li>
-                            <li  class="nav-item">
-                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/kategori/kategoriler.xhtml" value = "Kategori"/> 
-                            </li>
-                            <li class="nav-item">
-                                <h:commandLink styleClass="nav-link text-white" action = "/XHTML/yorum/yorumlar.xhtml" value = "Yorumlar"/> 
-                            </li>
-                            <li class="nav-item">
-                                <h:commandLink styleClass="nav-link text-white" action = "/XHTML/puan/puanlar.xhtml" value = "Puanlar"/> 
-                            </li>
-                            <li  class="nav-item">
-                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/uyeler/uyeler.xhtml" value = "Uyeler"/> 
-                            </li>
-                            <li class="nav-item">
-                                <h:commandLink styleClass="nav-link text-white" action = "/XHTML/profil/profil.xhtml" value = "Profil"/> 
-                            </li>
-                            <li class="nav-item">
-                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/dosya/dosya.xhtml" value = "Upload Image"/> 
-                            </li>
-                            <li class="nav-item">
-                                <h:link  class="nav-link text-white" value="Çıkış" outcome="/XHTML/panel/cikis.xhtml"></h:link>
-                            </li>
-                        </ul>
-                    </h:form>
-                </ul>
-            </div>
-        </nav>
+        <div>
+            <ui:insert name="menu">
+                <ui:include src="/template/panelNAV.xhtml"/>               
+            </ui:insert> 
+        </div>
         <br /><br />
         <div class="container " id ="content">  
             <div class="row">
@@ -69,7 +35,6 @@
                         <div>
                             <div>
                                 <br/>
-
                                 <h:inputText styleClass="form-control" id="txtAra" value="#{yorumlarController.bul}" pl:placeholder="ARAMAK İÇİN FİLM NUMARASI GİRİNİZ ">
                                     <f:ajax event="keyup" execute="txtAra" render="puanlar_table"></f:ajax>
                                 </h:inputText> 
@@ -78,27 +43,11 @@
                     </h:form>
                     <br></br>
                     <h:form id = "yorumlar-table">
-                        <h:dataTable styleClass="table table-striped table-hover" value="#{yorumlarController.ylist}" var="yorum">
-                            <h:column rendered="#{sessionScope.valid_user.admin}">
-                                <f:facet name = "header">ID</f:facet>
-                                    #{yorum.yorum_id}
-                            </h:column>
-                            <h:column class="bg-s">
-                                <f:facet name = "header">Film Isim</f:facet>
-                                <h6 class="text-white">#{yorum.film.film_isim}</h6>
-                            </h:column>
-                            <h:column>
-                                <f:facet name = "header">YORUM METNI</f:facet>
-                                <p class="text-success">(__anonim__)</p>
-                                #{yorum.yorumMetni}
-                            </h:column>
-                            <h:column rendered="#{sessionScope.valid_user.admin}">
-                                <f:facet name ="header">SEÇ</f:facet>
-                                <h:commandButton styleClass="btn btn-sm btn-info" action="#{yorumlarController.updateForm(yorum)}" value = "SEÇ">
-                                    <f:ajax render="yorumlar-table yorumlar-form" execute="@this" />
-                                </h:commandButton>
-                            </h:column>
-                        </h:dataTable>
+                        <div>
+                            <ui:insert name="menu">
+                                <ui:include src="/XHTML/yorum/dataTable.xhtml"/>               
+                            </ui:insert> 
+                        </div>
                     </h:form>
                     <h:form class="container">
                         <div class = "btn-group ">
@@ -111,31 +60,10 @@
                 <div class = "col-md-6 container">
                     <br /><br />
                     <h:form id = "yorumlar-form">
-                        <h:messages styleClass ="alert alert-primary alert" />
-                        <div class = "form-group">
-                            <div class = "form-group">
-                                <h:inputHidden value="#{yorumlarController.yorumlar.yorum_id}"/>
-                                <label >Yorum Metni </label>
-                                <h:inputTextarea styleClass="form-control" value = "#{yorumlarController.yorumlar.yorumMetni}" a:placeholder="Yorum Metni" validator="#{yorumvalidator.validateYorumMetni}"/>
-                                <br></br>
-                                <label >Film İsim </label>
-                                <h:selectOneMenu styleClass="custom-select" id="film" value="#{yorumlarController.yorumlar.film}" converter="filmlerConverter">
-                                    <f:selectItems value="#{yorumlarController.filmlerController.flist}" var="film" itemValue="#{film}" itemLabel="#{film.film_isim}" />
-                                </h:selectOneMenu>
-                            </div>
-                            <div class = "form-group">
-                                <div class="btn-group">
-                                    <h:commandButton rendered="#{yorumlarController.yorumlar.yorum_id ==0}" styleClass="btn btn-primary" value="Ekle" action="#{yorumlarController.create}">
-                                        <f:ajax execute="yorumlar-form" render="yorumlar-form yorumlar-table"/>
-                                    </h:commandButton>
-                                    <h:commandButton rendered="#{yorumlarController.yorumlar.yorum_id != 0}" styleClass="btn btn-secondary" value="Formu Temizle" action="#{yorumlarController.clearForm}">
-                                        <f:ajax execute="@this" render="yorumlar-form yorumlar-table"/>
-                                    </h:commandButton>
-                                    <h:commandButton onclick="return confirm('Silmek İstediğinizden Emin Misiniz?')" rendered="#{yorumlarController.yorumlar.yorum_id != 0}" styleClass="btn btn-sm btn-danger" value="SİL" action="#{yorumlarController.delete}">
-                                        <f:ajax render="yorumlar-form yorumlar-table" execute="@this" />
-                                    </h:commandButton>
-                                </div>
-                            </div>
+                        <div>
+                            <ui:insert name="menu">
+                                <ui:include src="/XHTML/yorum/form.xhtml"/>               
+                            </ui:insert> 
                         </div>
                     </h:form>    
                 </div> 

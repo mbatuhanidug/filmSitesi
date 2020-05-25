@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Filmler</title>
         <h:outputStylesheet library ="css" name="bootstrap.css"/>
@@ -21,68 +21,22 @@
         </style>
     </h:head>
     <h:body>
-        <nav  class="navbar navbar-transparent bg-transparents navbar-expand-lg text-success">
-            <h:graphicImage value="/media/sss.PNG" width="100" height="100" /> 
-            <div class="container">
-                <ul class="navbar-nav ml-auto">
-                    <h:form>
-                        <ul  class="navbar-nav ">
-                            <li class="nav-item active">
-                                <h:commandLink styleClass="nav-link text-white" action = "/XHTML/film/filmler.xhtml" value = "Filmler"/> 
-                            </li>
-                            <li  class="nav-item">
-                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/aktor/aktor.xhtml" value = "Aktörler"/> 
-                            </li>
-                            <li  class="nav-item">
-                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/kategori/kategoriler.xhtml" value = "Kategori"/> 
-                            </li>
-                            <li class="nav-item">
-                                <h:commandLink styleClass="nav-link text-white" action = "/XHTML/yorum/yorumlar.xhtml" value = "Yorumlar"/> 
-                            </li>
-                            <li class="nav-item">
-                                <h:commandLink styleClass="nav-link text-white" action = "/XHTML/puan/puanlar.xhtml" value = "Puanlar"/> 
-                            </li>
-                            <li  class="nav-item">
-                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/uyeler/uyeler.xhtml" value = "Uyeler"/> 
-                            </li>
-                            <li class="nav-item">
-                                <h:commandLink styleClass="nav-link text-white" action = "/XHTML/profil/profil.xhtml" value = "Profil"/> 
-                            </li>
-                            <li class="nav-item">
-                                <h:commandLink rendered="#{sessionScope.valid_user.admin}" styleClass="nav-link text-white" action = "/XHTML/dosya/dosya.xhtml" value = "Upload Image"/> 
-                            </li>
-                            <li class="nav-item">
-                                <h:link  class="nav-link text-white" value="Çıkış" outcome="/XHTML/panel/cikis.xhtml"></h:link>
-                            </li>
-                        </ul>
-                    </h:form>
-                </ul>
-            </div>
-        </nav>
+        <div>
+            <ui:insert name="menu">
+                <ui:include src="/template/panelNAV.xhtml"/>               
+            </ui:insert> 
+        </div>
         <br />
         <br />
         <div class="container " >
             <div class="row">
                 <div class="col-md-18 bg-t">
                     <h:form>
-                        <h:dataTable styleClass="table table-striped" value="#{dosyaController.dosyaList}" var="d">
-                            <h:column>
-                                <f:facet name="header">ID</f:facet>
-                                    #{d.id}
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Dosya Ismi</f:facet>
-                                    #{d.dosya_isim}
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Dosya Tipi</f:facet>
-                                    #{d.dosya_tipi}
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Dosya Konumu</f:facet>
-                                    #{d.dosya_path}
-                            </h:column>
-                        </h:dataTable>
+                        <div>
+                            <ui:insert name="menu">
+                                <ui:include src="/XHTML/dosya/dataTable.xhtml"/>               
+                            </ui:insert>
+                        </div>
                     </h:form>
                     <h:form>
                         <div class = "btn-group container">
@@ -95,12 +49,13 @@
                 <div class="col-md-2 container">
                     <br/>
                     <h:form enctype="multipart/form-data">
-                        <div class="form-group">
-                            <label>İndir</label>
-                            <h:inputFile class="custom-file-control" value="#{dosyaController.doc}"  />             
-                        </div>       
-                        <h:commandButton action="#{dosyaController.upload()}" value="Yukle" styleClass="btn btn-danger" />
+                        <div>
+                            <ui:insert name="menu">
+                                <ui:include src="/XHTML/dosya/form.xhtml"/>               
+                            </ui:insert>
+                        </div>
                     </h:form>
+
                 </div>
             </div>
         </div>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:dataTable  styleClass="table table-striped table-hover" value="#{filmlerController.flist}" var="film">
+        <h:column>
+            <f:facet name="header">FİLM NUMARASI</f:facet>
+            ##{film.film_id}
+        </h:column>
+        <h:column>
+            <f:facet name="header">FİLM</f:facet>
+            <div class="card ">
+                <div class="card-body bg-s">
+                    <h:graphicImage value="/upload/#{film.dosya.dosya_isim}" width="130"/>
+                    <h6 class="text-white">#{film.film_isim}</h6>
+                </div>
+            </div>
+        </h:column>
+        <h:column>
+            <f:facet name="header">FİLM HAKKINDA</f:facet>
+            <div class="btn-group">
+                <button class="btn btn-outline-dark dropdown-toggle" data-toggle="dropdown" data-display="static" >
+                    FİLM HAKKINDA EDİTÖRÜN KALEMİNDEN
+                </button>
+                <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left bg-dark">
+                    <div class="card bg-dark" style="width: 45rem; ">
+                        <div class=" col-md-3 container ">
+                            <h:graphicImage value="/media/sss.PNG" width="150" height="150" />
+                        </div>
+                        <div class="card-body bg-dark container">
+                            <h4 style="color: #bd2130" class="card-title">-#{film.film_isim}-</h4>
+                            <h6 class="card-subtitle mb-2 text-muted"><p style="color: #EF6C00">IMBD: #{film.imbd}</p></h6>
+                            <p class="card-text text-white">#{film.film_tanimi}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </h:column>
+        <h:column>
+            <f:facet name="header">YIL</f:facet>
+                #{film.cikis_yili}
+        </h:column>
+        <h:column>
+            <f:facet name="header">KATEGORİ</f:facet>
+            <p class="text-e">#{film.kategori.kategori_ad}</p> 
+        </h:column>
+        <h:column>
+            <f:facet name="header">YÖNETMEN</f:facet>
+                #{film.yonetmen}
+        </h:column>
+        <h:column>
+            <f:facet name="header">AKTÖRLER</f:facet>
+            <ul>
+                <ui:repeat value="#{film.filmAktor}" var="aktor">
+                    <li>#{aktor.aktor_ad} #{aktor.aktor_soyad}</li>
+                </ui:repeat>
+            </ul>
+        </h:column>
+        <h:column class="bg-s">
+            <div class="btn-group">
+                <button class="btn btn-outline-dark dropdown-toggle" data-toggle="dropdown" data-display="static" >
+                    <a style="color: crimson">FRAGMAN</a>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left bg-dark">
+                    <div class="card bg-dark" style="width: 45rem; ">
+                        <iframe width="720" height="450" src="https://www.youtube.com/embed/#{film.fragman} " frameborder="0"></iframe>
+                    </div>
+                </div>
+            </div>
+        </h:column>
+
+        <h:column class="bg-dark">
+            <f:facet name="header">IMBD</f:facet>
+            <p class="text-d">#{film.imbd}</p>
+        </h:column>
+        <h:column rendered="#{sessionScope.valid_user.admin}">
+            <f:facet name="header">SEÇ</f:facet>
+            <h:commandButton styleClass="btn btn-sm btn-info" value="SEÇ" action="#{filmlerController.updateForm(film)}">
+                <f:ajax render="film-table film-form" execute="@this" />
+            </h:commandButton>
+        </h:column>
+    </h:dataTable>
+
+</ui:composition>

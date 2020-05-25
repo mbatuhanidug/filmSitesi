@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:dataTable styleClass="table table-striped table-hover" value = "#{valid_user}" var = "uye">
+        <h:column rendered="#{sessionScope.valid_user.admin}">
+            <f:facet name ="header">ID</f:facet>
+                #{sessionScope.valid_user.uye_id}
+        </h:column>
+        <h:column>
+            <f:facet name ="header">AD</f:facet>
+                #{sessionScope.valid_user.uye_ad}
+        </h:column>
+        <h:column>
+            <f:facet name ="header">SOYAD</f:facet>
+                #{sessionScope.valid_user.uye_soyad}  
+        </h:column>
+        <h:column>
+            <f:facet name ="header">E-MAİL</f:facet>
+                #{sessionScope.valid_user.email}  
+        </h:column>
+        <h:column>
+            <f:facet name ="header">TELEFON</f:facet>
+                #{sessionScope.valid_user.telefon}  
+        </h:column>
+        <h:column>
+            <f:facet name ="header">SİFRE</f:facet>
+                #{sessionScope.valid_user.sifre}  
+        </h:column>
+        <h:column>
+            <f:facet name ="header">Üyeliği İptal Et</f:facet>
+            <h:commandButton onclick="return confirm('Üyeliği Silmek İstediğinizden Emin Misiniz?\nÜyelik Silinmesi Durumunda Çıkış İşlemi Gerçekleştirelecektir.')" styleClass="btn btn-sm btn-danger" value="Üyeliği Sil" action="#{uyelerController.deleteCik(uye)}"/>
+        </h:column>
+    </h:dataTable>
+</ui:composition>

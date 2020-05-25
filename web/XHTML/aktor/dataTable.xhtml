@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:dataTable styleClass="table table-striped table-hover " value = "#{aktorController.alist}" var = "akt">
+        <h:column>
+            <f:facet name = "header">ID</f:facet>
+                #{akt.aktor_id}
+        </h:column>
+        <h:column>
+            <f:facet name = "header">Aktor Adı</f:facet>
+                #{akt.aktor_ad}
+        </h:column>
+        <h:column>
+            <f:facet name = "header">Aktor Soyadı</f:facet>
+                #{akt.aktor_soyad}
+        </h:column>
+        <h:column>
+            <f:facet name ="header">SEÇ</f:facet>
+            <h:commandButton styleClass="btn btn-sm btn-info" action="#{aktorController.updateForm(akt)}" value="SEÇ">
+                <f:ajax render="aktor-table aktor-form" execute="@this" />
+            </h:commandButton>    
+        </h:column>
+    </h:dataTable>
+
+</ui:composition>

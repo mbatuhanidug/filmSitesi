@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:dataTable styleClass="table table-striped table-hover" value = "#{puanlarController.plist}" var = "puan">
+        <h:column rendered="#{sessionScope.valid_user.admin}">
+            <f:facet name = "header">ID</f:facet>
+                #{puan.puan_id}
+        </h:column>
+        <h:column class="bg-s col-md-2">
+            <f:facet name = "header">FİLM İSİM</f:facet>
+            <h6 class="text-white">#{puan.film.film_isim}<p style="color: #bd2130" class="text-white">IMBD: #{puan.film.imbd}</p></h6>
+        </h:column>
+        <h:column class="bg-dark ">
+            <f:facet name = "header">ÜYELERİN PUANLARI</f:facet>
+            <p class="text-c">#{puan.puanDegeri}</p>
+        </h:column>
+        <h:column rendered="#{sessionScope.valid_user.admin}">
+            <f:facet name ="header">SEÇ</f:facet>
+            <h:commandButton styleClass="btn btn-sm btn-info" action="#{puanlarController.updateForm(puan)}" value = "SEÇ">
+                <f:ajax render = "puanlar-table puanlar-form" execute = "@this"/>
+            </h:commandButton>    
+        </h:column>
+    </h:dataTable>
+
+</ui:composition>
