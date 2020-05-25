@@ -23,7 +23,7 @@ public class aktorController implements Serializable {
     private int pageSize = 5;
     private int pageCount;
 
-    public void next() {
+    public void next() {   // aktör kısmının sayfalama da ileri metodu.Sayfanın ileri gitmesi için.
         if (this.page == this.getPageCount()) {
             this.page = 1;
         } else {
@@ -31,7 +31,7 @@ public class aktorController implements Serializable {
         }
     }
 
-    public void previous() {
+    public void previous() {  // aktör kısmının sayfalamada geri metodu. Sayfanın geri dönmesi için.
         if (this.page == 1) {
             this.page = this.getPageCount();
         } else {
@@ -55,7 +55,7 @@ public class aktorController implements Serializable {
         this.pageSize = pageSize;
     }
 
-    public int getPageCount() {
+    public int getPageCount() { // sayfa sayısını tutan control metodu 
         this.pageCount = (int) Math.ceil(this.getAdao().count() / (double) pageSize);
         return pageCount;
     }
@@ -64,39 +64,39 @@ public class aktorController implements Serializable {
         this.pageCount = pageCount;
     }
 
-    public void updateForm(aktor akt) {
+    public void updateForm(aktor akt) { // güncelleştirme için butona basıldığında forma aktörn verilerini yollayan metod.
         this.aktor = akt;
 
     }
 
-    public void clearForm() {
+    public void clearForm() { // form içerisinde ki veriyi silmeye yarayan metod.
         this.aktor = new aktor();
     }
 
-    public void update()  {
+    public void update()  {  // dao sınıfında ki update metodunu çağıran metod. 
         this.getAdao().update(aktor);
-        this.clearForm();
+        this.clearForm();  // güncelleme yapıldıktan sonra form temilenir.
     }
 
-    public void delete()  {
+    public void delete()  {  // dao sınıfında ki delete metodunu çağıran metod.
         this.getAdao().delete(aktor);
     }
 
-    public void create()  {
+    public void create()  { // dao sınıfında ki create metodunu çağıran metod.
         this.getAdao().create(aktor);
         this.clearForm();
     }
 
-    public void deleteConfirm(aktor aktor) {
+    public void deleteConfirm(aktor aktor) { 
         this.aktor = aktor;
     }
 
-    public List<aktor> getAlist()   {
+    public List<aktor> getAlist()   {  // dao sınıfında ki aktör listesini çağıran metod.
         this.alist = this.getAdao().getAktor(this.bul ,this.page , this.pageSize);
         return alist;
     }
 
-    public List<aktor> getAFULLlist() {
+    public List<aktor> getAFULLlist() {   // eklemede ki sayfalama bug çözümü için çağırılan metod.
         this.aFULLlist = this.getAdao().getAktor();
         return aFULLlist;
     }
@@ -105,7 +105,7 @@ public class aktorController implements Serializable {
         this.alist = alist;
     }
 
-    public aktorDAO getAdao() {
+    public aktorDAO getAdao() {  
         if (this.adao == null) {
             this.adao = new aktorDAO();
         }

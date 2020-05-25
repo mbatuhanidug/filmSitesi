@@ -12,7 +12,7 @@ public class dosyaDAO extends superDAO {
     PreparedStatement pst;
     ResultSet rs;
 
-    public void insert(dosya dosya) {
+    public void insert(dosya dosya) {  // dosyaların eklendiği metod.
 
         try {
             pst = this.getConnection().prepareStatement("insert into dosya(dosya_isim, dosya_path, dosya_tipi) values(?,?,?)");
@@ -27,7 +27,7 @@ public class dosyaDAO extends superDAO {
         }
     }
 
-    public void delete(dosya dosya) {
+    public void delete(dosya dosya) {  // silme metodu.
 
         try {
             pst = this.getConnection().prepareStatement("delete from dosya where dosya_id=?");
@@ -39,7 +39,7 @@ public class dosyaDAO extends superDAO {
         }
     }
 
-    public List<dosya> findAll(int page, int pageSize) {
+    public List<dosya> findAll(int page, int pageSize) {  // dosyaları liste olarak döndüren metod.
         List<dosya> dlist = new ArrayList();
         int start = (page - 1) * pageSize;
         try {
@@ -57,7 +57,7 @@ public class dosyaDAO extends superDAO {
         return dlist;
     }
 
-    public dosya find(int id) {
+    public dosya find(int id) {   // dosya id e göre tek bir dosyayı döndüren metod.
         dosya d = null;
         try {
             pst = this.getConnection().prepareStatement("select * from dosya where dosya_id=?");
@@ -72,7 +72,7 @@ public class dosyaDAO extends superDAO {
         return d;
     }
 
-    public int count() {
+    public int count() {   // sayfalama tekniğinde sayfa sayısını döndüren metod.
 
         int count = 0;
         try {
@@ -88,7 +88,7 @@ public class dosyaDAO extends superDAO {
         return count;
     }
 
-    public void update(dosya dosya) {
+    public void update(dosya dosya) {  // güncellemenin yapıldığı metod.
 
         try {
             pst = this.getConnection().prepareStatement("update dosya set dosya_isim=?,dosya_path=?,dosya_tipi=? where dosya_id=?");

@@ -5,10 +5,10 @@ import java.sql.SQLException;
 import util.DBConnection;
 
 public class superDAO {
-    
+    // *********  superDAO ile bütün dao sınıflarına kalıtım sağlayarak tekrar tekrar aynı kodları yazmaktan ve kod tekrarından kurtarıyoruz.
     private DBConnection db;
     private Connection connection;
-
+ 
     public DBConnection getDb() {
         if (this.db == null) {
             this.db = new DBConnection();

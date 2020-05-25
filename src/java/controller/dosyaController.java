@@ -20,13 +20,13 @@ public class dosyaController implements Serializable {
     private List<dosya> dosyaList;
     private dosyaDAO dosyadao;
     private Part doc;
-    private final String uploadTo = "C:\\Users\\asus\\Desktop\\İNTERNET PROG\\05\\filmSitesi\\web\\upload\\";
+    private final String uploadTo = "C:\\Users\\asus\\Desktop\\İNTERNET PROG\\05\\filmSitesi\\web\\upload\\";  // Buraya proje için dosya yükeleyeceğiniz dosya yolunu giriniz.
 
     private int page = 1;
     private int pageSize = 5;
     private int pageCount;
 
-    public void next() {
+    public void next() {  // sayfalama tekniği için ileri gitme metodu.
         if (this.page == this.getPageCount()) {
             this.page = 1;
         } else {
@@ -34,7 +34,7 @@ public class dosyaController implements Serializable {
         }
     }
 
-    public void previous() {
+    public void previous() {  // sayfalama tekniği için geri gitme metodu.
         if (this.page == 1) {
             this.page = this.getPageCount();
         } else {
@@ -58,7 +58,7 @@ public class dosyaController implements Serializable {
         this.pageSize = pageSize;
     }
 
-    public int getPageCount() {
+    public int getPageCount() {  // sayfa sayısını döndüren metod.
         this.pageCount = (int) Math.ceil(this.getDosyadao().count() / (double) pageSize);
         return pageCount;
     }
@@ -67,28 +67,28 @@ public class dosyaController implements Serializable {
         this.pageCount = pageCount;
     }
 
-    public void clearForm() {
+    public void clearForm() {    // form u temizleme metodu.
         this.dosya = new dosya();
     }
 
-    public void deleteConfirm(dosya dosya) {
+    public void deleteConfirm(dosya dosya) { //silmek istediğimiz veri için arayüzde silme için onaylama gönderen metod.
         this.dosya = dosya;
     }
 
-    public void delete() {
+    public void delete() {   // dao sınıfında ki delete metodunu çağıran metod.
         this.getDosyadao().delete(this.dosya);
         this.dosya = new dosya();
     }
 
-    public dosyaController() {
+    public dosyaController() { 
     }
 
-    public void update() {
+    public void update() {   //dao sınıfındaki update çağıran metod.
         this.getDosyadao().update(dosya);
         this.clearForm();
     }
 
-    public void updateForm(dosya dosya) {
+    public void updateForm(dosya dosya) {  // update işlemi için veri yi form a aktaran metod.
         this.dosya = dosya;
     }
 
@@ -103,8 +103,8 @@ public class dosyaController implements Serializable {
         this.dosya = dosya;
     }
 
-    public List<dosya> getDosyaList() {
-        this.dosyaList = this.getDosyadao().findAll(page, pageSize);
+    public List<dosya> getDosyaList() {   // verileri, dao sınıfındaki metodu çağırarak döndüren metod.
+        this.dosyaList = this.getDosyadao().findAll(this.page, this.pageSize);
         return dosyaList;
     }
 
@@ -135,7 +135,7 @@ public class dosyaController implements Serializable {
         return uploadTo;
     }
 
-    public void upload() {
+    public void upload() {   
         try (InputStream input = doc.getInputStream()) {
             String file = doc.getSubmittedFileName();
             File f = new File(uploadTo,file);

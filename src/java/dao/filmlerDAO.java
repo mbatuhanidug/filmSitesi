@@ -17,7 +17,7 @@ public class filmlerDAO extends superDAO {
     private aktorDAO adao;
     private dosyaDAO ddao;
 
-    public void insert(filmler film) {
+    public void insert(filmler film) {  // filmler içerisine veri eklenen metod.
 
         try {
             pst = this.getConnection().prepareStatement("insert into filmler (film_isim,film_tanimi,cikis_yili,yonetmen, kategori_id,imbd,fragman,dosya_id)"
@@ -32,7 +32,7 @@ public class filmlerDAO extends superDAO {
             pst.setInt(8, film.getDosya().getId());
 
             pst.executeUpdate();
-//******************************************************Film_aktor tablosuna insert işlemi
+//******************************************************Veritabanındaki Film_aktor tablosuna insert işlemi  ************************
             int film_id = 0;
             ResultSet gk = pst.getGeneratedKeys();
 
@@ -71,7 +71,7 @@ public class filmlerDAO extends superDAO {
         try {
 
             pst = this.getConnection().prepareStatement("SELECT * FROM filmler where film_isim like ? order by imbd DESC limit "+start+","+pageSize);
-            pst.setString(1, "%" + deger + "%");
+            pst.setString(1, "%" + deger + "%"); // bul metodu için string değeri set ettiğimiz kod satırı.
 
             rs = pst.executeQuery();
             while (rs.next()) {

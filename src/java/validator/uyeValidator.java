@@ -15,8 +15,9 @@ import javax.inject.Named;
 public class uyeValidator implements Serializable {
 
     private Collection<FacesMessage> msgList = new ArrayList<>();
-
-    public boolean validateAd(FacesContext fc, UIComponent uı, Object v) {
+    
+    // *******  üyelerin isim için validatör yaptığımız kısımdır.  şartlara göre değer boolean dödürerek işlem yapar.
+    public boolean validateAd(FacesContext fc, UIComponent uı, Object v) {  
 
         boolean isValid = true;
         msgList.clear();
@@ -37,7 +38,7 @@ public class uyeValidator implements Serializable {
         }
 
     }
-
+ // *******  üyelerin soyisim için validatör yaptığımız kısımdır.  şartlara göre değer boolean dödürerek işlem yapar.
     public boolean validateSoyad(FacesContext fc, UIComponent uı, Object v) {
 
         boolean isValid = true;
@@ -59,7 +60,7 @@ public class uyeValidator implements Serializable {
         }
 
     }
-
+ // *******  üyelerin email için validatör yaptığımız kısımdır.  şartlara göre değer boolean dödürerek işlem yapar.
     public boolean validateEmail(FacesContext fc, UIComponent uı, Object v) {
         boolean isValid = true;
         msgList.clear();
@@ -84,7 +85,7 @@ public class uyeValidator implements Serializable {
             return true;
         }
     }
-
+ // *******  üyelerin telefon için validatör yaptığımız kısımdır.  şartlara göre değer boolean dödürerek işlem yapar.
     public boolean validateTelefon(FacesContext fc, UIComponent uı, Object v) {
         boolean isValid = true;
         msgList.clear();
@@ -105,7 +106,7 @@ public class uyeValidator implements Serializable {
         }
 
     }
-    
+     // *******  üyelerin şifre için validatör yaptığımız kısımdır.  şartlara göre değer boolean dödürerek işlem yapar.
      public boolean validateSifre(FacesContext fc, UIComponent uı, Object v) {
 
         boolean isValid = true;

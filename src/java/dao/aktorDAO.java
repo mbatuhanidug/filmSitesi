@@ -17,7 +17,7 @@ public class aktorDAO extends superDAO{
     PreparedStatement pst = null;
     ResultSet rs = null;
 
-    public aktor find(int id) {
+    public aktor find(int id) {       // aktörün id sini döndüren metod
         //System.out.println("Gelen id:"+id);
         aktor a = null;
 
@@ -39,7 +39,7 @@ public class aktorDAO extends superDAO{
         return a;
     }
 
-    public List<aktor> getAktor(String deger,int page, int pageSize) {
+    public List<aktor> getAktor(String deger,int page, int pageSize) {     // aktör listesini döndüren metod.
         List<aktor> alist = new ArrayList();
         int start = (page-1)*pageSize;
         try {           
@@ -56,7 +56,7 @@ public class aktorDAO extends superDAO{
         return alist;
     }
     
-    public List<aktor> getAktor() {
+    public List<aktor> getAktor() {                 // full list döndüren metod.
         List<aktor> alist = new ArrayList();
         try {           
             pst = this.getConnection().prepareStatement("SELECT * FROM aktor order by aktor_ad ASC");
@@ -88,7 +88,7 @@ public class aktorDAO extends superDAO{
         return count;
     }
 
-    public void create(aktor aktor) {
+    public void create(aktor aktor) {    // aktör sınıfı için aktör ekleme metodu.
 
         try {
            
@@ -103,7 +103,7 @@ public class aktorDAO extends superDAO{
         }
     }
 
-    public void delete(aktor akt) {
+    public void delete(aktor akt) {      //aktör sınıfı için silme metodu.
 
         try {
            
@@ -117,7 +117,7 @@ public class aktorDAO extends superDAO{
         }
     }
 
-    public void update(aktor akt) {
+    public void update(aktor akt) {    // aktörler için güncelleme yapan metod.
 
         try {
             
@@ -133,7 +133,7 @@ public class aktorDAO extends superDAO{
         }
     }
 
-    public List<aktor> getFilmAktor(int film_id) {
+    public List<aktor> getFilmAktor(int film_id) {  // film id sine göre göre arama yapıp o filmdeki oynayan aktörlerin listesini döndüren metod.
         List<aktor> filmAktor = new ArrayList<>();
         //System.out.println("*******************************FİLM İD:"+film_id);
         try {
