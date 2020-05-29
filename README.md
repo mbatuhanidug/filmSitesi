@@ -6,7 +6,7 @@ DP Film bir film tanıtım sitesidir. Bu site de üye olan kullanıcılarımız 
 
 # Not:
 
-Commitler içersinde bulunan Asus isimli comitter Zilan Turana ait, Dell isimli Comitter da Mert Batuhan İduğ a ait. Takım katkılarını öğrenmek için commitler bölümünden kimin ne yaptığını incelebilirsiniz.
+Commitler içersinde bulunan Asus isimli comitter Zilan Turana ait, Dell isimli Comitter da Mert Batuhan İduğ a ait. Takım katkılarını öğrenmek için [commitler](https://github.com/mbatuhanidug/filmSitesi/commits/master) bölümünden inceleme yapabilirsiniz.
 
 # Projeyi Nasıl Kullanabilirim?
 
@@ -16,11 +16,11 @@ Commitler içersinde bulunan Asus isimli comitter Zilan Turana ait, Dell isimli 
 
 3-HeidiSQL 10.4 kurulumu. (MariaDB or MySQL)
 
-4-Kurulumlar sağlandıktan sonra proje içerisinde bulunan SQL dosyasını HeidiSQL üzerinde açıp kaydediniz.
+4-Kurulumlar sağlandıktan sonra proje içerisinde bulunan [SQL](film.sql) dosyasını HeidiSQL üzerinde açıp kaydediniz.
 
-5-Projeyi IDE üzerinde açtıktan sonra DBConnection sınıfında bulunan veritabanını ayarlayınız ve dosyaController sınıfı içinde yazılmış olan "String uploadTo" path adresini dosya içinde bulunan upload klasörünün path adresiyle değişiniz.
+5-Projeyi IDE üzerinde açtıktan sonra [DBConnection](src/java/util/DBConnection.java) sınıfında bulunan veritabanını ayarlayınız ve [dosyaController](src/java/controller/dosyaController.java) sınıfı içinde yazılmış olan "String uploadTo" path adresini dosya içinde bulunan [upload](web) klasörünün path adresiyle değişiniz.
 
-6-Projeyi Run etmek için gerekli ayarlar yapıldıktan sonra projeyi Netbeans IDE'si üzerinde bulunan tarayıcı seçeneklerini GoogleChrome seçtikten sonra Run edebilirsiniz.
+6-Projeyi Run etmek için gerekli ayarlar yapıldıktan sonra projeyi Netbeans IDE'si üzerinde bulunan tarayıcı seçeneklerini [GoogleChrome](https://www.google.com.tr/chrome/) seçtikten sonra Run edebilirsiniz.
 
 7-Admin girişi için
 
