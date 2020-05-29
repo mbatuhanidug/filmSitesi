@@ -1,5 +1,5 @@
-
 package converter;
+
 import dao.filmlerDAO;
 import entity.filmler;
 import javax.faces.component.UIComponent;
@@ -9,8 +9,8 @@ import javax.faces.convert.FacesConverter;
 
 @FacesConverter(value = "filmlerConverter")
 public class filmlerConverter implements Converter {
-    
-     private filmlerDAO fdao;
+
+    private filmlerDAO fdao;
 
     @Override
     public Object getAsObject(FacesContext fc, UIComponent uic, String string) {

@@ -18,7 +18,6 @@ public class kategorilerController implements Serializable {
 
     private kategoriler kategoriler;
 
-     
     private int page = 1;
     private int pageSize = 5;
     private int pageCount;
@@ -64,7 +63,6 @@ public class kategorilerController implements Serializable {
         this.pageCount = pageCount;
     }
 
-    
     public void updateForm(kategoriler kat) {
         this.kategoriler = kat;
     }
@@ -73,12 +71,12 @@ public class kategorilerController implements Serializable {
         this.kategoriler = new kategoriler();
     }
 
-    public void update()  {
+    public void update() {
         this.getKdao().update(this.kategoriler);
         this.clearForm();
     }
 
-    public void delete()  {
+    public void delete() {
         this.getKdao().delete(this.kategoriler);
         this.clearForm();
     }
@@ -101,12 +99,10 @@ public class kategorilerController implements Serializable {
         this.kFULLlist = this.getKdao().getKategori();
         return kFULLlist;
     }
-    
+
     public void setkFULLlist(List<kategoriler> kFULLlist) {
         this.kFULLlist = kFULLlist;
     }
-    
-  
 
     public void setKlist(List<kategoriler> klist) {
         this.klist = klist;

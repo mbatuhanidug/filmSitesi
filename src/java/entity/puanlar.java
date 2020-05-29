@@ -1,17 +1,14 @@
-
 package entity;
 
 import java.util.Objects;
-
 
 public class puanlar {
 
     private int puanDegeri;
     private int puan_id;
-    
+
     private filmler film;
-   
-    
+
     public puanlar() {
     }
 
@@ -19,12 +16,9 @@ public class puanlar {
         this.puanDegeri = puanDegeri;
         this.puan_id = puan_id;
         this.film = film;
-      
+
     }
 
-   
-    
- 
     public int getPuanDegeri() {
         return puanDegeri;
     }
@@ -86,8 +80,5 @@ public class puanlar {
         }
         return true;
     }
-
-  
-  
 
 }

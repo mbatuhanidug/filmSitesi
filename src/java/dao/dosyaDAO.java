@@ -56,6 +56,24 @@ public class dosyaDAO extends superDAO {
         }
         return dlist;
     }
+    //filmler formunda listenin bütününün gözükmesi için kullanılan fonksiyon
+    public List<dosya> fullDosya() {  // dosyaları liste olarak döndüren metod.
+        List<dosya> dlist = new ArrayList();
+
+        try {
+            pst = this.getConnection().prepareStatement("select * from dosya order by dosya_id ASC");
+
+            rs = pst.executeQuery();
+
+            while (rs.next()) {
+                dosya temp = new dosya(rs.getInt("dosya_id"), rs.getString("dosya_isim"), rs.getString("dosya_path"), rs.getString("dosya_tipi"));
+                dlist.add(temp);
+            }
+        } catch (SQLException ex) {
+            System.out.println("DosyaDAO (FindAll):" + ex.getMessage());
+        }
+        return dlist;
+    }
 
     public dosya find(int id) {   // dosya id e göre tek bir dosyayı döndüren metod.
         dosya d = null;

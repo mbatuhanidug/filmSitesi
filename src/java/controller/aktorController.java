@@ -16,9 +16,9 @@ public class aktorController implements Serializable {
     private List<aktor> aFULLlist;
     private aktorDAO adao;
     private aktor aktor;
-   
-    private String bul="";
-    
+
+    private String bul = "";
+
     private int page = 1;
     private int pageSize = 5;
     private int pageCount;
@@ -73,26 +73,26 @@ public class aktorController implements Serializable {
         this.aktor = new aktor();
     }
 
-    public void update()  {  // dao sınıfında ki update metodunu çağıran metod. 
+    public void update() {  // dao sınıfında ki update metodunu çağıran metod. 
         this.getAdao().update(aktor);
         this.clearForm();  // güncelleme yapıldıktan sonra form temilenir.
     }
 
-    public void delete()  {  // dao sınıfında ki delete metodunu çağıran metod.
+    public void delete() {  // dao sınıfında ki delete metodunu çağıran metod.
         this.getAdao().delete(aktor);
     }
 
-    public void create()  { // dao sınıfında ki create metodunu çağıran metod.
+    public void create() { // dao sınıfında ki create metodunu çağıran metod.
         this.getAdao().create(aktor);
         this.clearForm();
     }
 
-    public void deleteConfirm(aktor aktor) { 
+    public void deleteConfirm(aktor aktor) {
         this.aktor = aktor;
     }
 
-    public List<aktor> getAlist()   {  // dao sınıfında ki aktör listesini çağıran metod.
-        this.alist = this.getAdao().getAktor(this.bul ,this.page , this.pageSize);
+    public List<aktor> getAlist() {  // dao sınıfında ki aktör listesini çağıran metod.
+        this.alist = this.getAdao().getAktor(this.bul, this.page, this.pageSize);
         return alist;
     }
 
@@ -105,7 +105,7 @@ public class aktorController implements Serializable {
         this.alist = alist;
     }
 
-    public aktorDAO getAdao() {  
+    public aktorDAO getAdao() {
         if (this.adao == null) {
             this.adao = new aktorDAO();
         }

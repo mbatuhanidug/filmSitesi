@@ -17,7 +17,7 @@ public class yorumlarController implements Serializable {
     private List<yorumlar> ylist;
     private yorumlarDAO ydao;
     private yorumlar yorumlar;
-    private String bul="";
+    private String bul = "";
     private int page = 1;
     private int pageSize = 5;
     private int pageCount;

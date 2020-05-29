@@ -9,21 +9,18 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
-
-public class puanlarDAO extends superDAO{
+public class puanlarDAO extends superDAO {
 
     PreparedStatement pst;
     ResultSet rs = null;
-    
+
     private filmlerDAO fdao;
-   
-    
-    public List<puanlar> getPuanlar(String deger, int page, int pageSize)  {
+
+    public List<puanlar> getPuanlar(String deger, int page, int pageSize) {
         List<puanlar> plist = new ArrayList();
-        int start = (page-1)*pageSize;
+        int start = (page - 1) * pageSize;
         try {
-            pst = this.getConnection().prepareStatement("select * from puanlar where film_id like ? ORDER BY film_id ASC limit "+start+","+pageSize);
+            pst = this.getConnection().prepareStatement("select * from puanlar where film_id like ? ORDER BY film_id ASC limit " + start + "," + pageSize);
             pst.setString(1, "%" + deger + "%");
             rs = pst.executeQuery();
             while (rs.next()) {
@@ -31,7 +28,7 @@ public class puanlarDAO extends superDAO{
                 tmp.setPuan_id(rs.getInt("puan_id"));
                 tmp.setPuanDegeri(rs.getInt("puan_degeri"));
                 tmp.setFilm(this.getFdao().find(rs.getInt("film_id")));
-               
+
                 plist.add(tmp);
             }
         } catch (SQLException ex) {
@@ -39,10 +36,10 @@ public class puanlarDAO extends superDAO{
         }
         return plist;
     }
-    
+
     public int count() {
-        
-        int count =0;
+
+        int count = 0;
         try {
 
             pst = this.getConnection().prepareStatement("SELECT count(puan_id) as puan_count from puanlar ");
@@ -50,16 +47,14 @@ public class puanlarDAO extends superDAO{
             rs.next();
             count = rs.getInt("puan_count");
 
-          
         } catch (SQLException ex) {
             System.out.println("puanlarDAO HATA(ReadAll):" + ex.getMessage());
         }
         return count;
     }
 
-    public puanlar find(int id)  {
+    public puanlar find(int id) {
 
-        
         puanlar p = null;
 
         try {
@@ -71,7 +66,7 @@ public class puanlarDAO extends superDAO{
                 p.setPuan_id(rs.getInt("puan_id"));
                 p.setPuanDegeri(rs.getInt("puan_degeri"));
                 p.setFilm(this.getFdao().find(rs.getInt("film_id")));
-                
+
             }
 
         } catch (SQLException ex) {
@@ -80,14 +75,14 @@ public class puanlarDAO extends superDAO{
         return p;
     }
 
-    public void create(puanlar puanlar)  {
-        
+    public void create(puanlar puanlar) {
+
         try {
-            
+
             pst = this.getConnection().prepareStatement("insert into puanlar (puan_degeri,film_id) values (?,?)");
             pst.setInt(1, puanlar.getPuanDegeri());
             pst.setInt(2, puanlar.getFilm().getFilm_id());
-            
+
             pst.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(puanlarDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -95,7 +90,7 @@ public class puanlarDAO extends superDAO{
     }
 
     public void delete(puanlar puanlar) {
-       
+
         try {
             pst = this.getConnection().prepareStatement("delete from puanlar where puan_id = ?");
             pst.setInt(1, puanlar.getPuan_id());
@@ -107,7 +102,7 @@ public class puanlarDAO extends superDAO{
     }
 
     public void update(puanlar puanlar) {
-        
+
         try {
             pst = this.getConnection().prepareStatement("update puanlar set puan_degeri = ? , film_id = ? where puan_id = ? ");
             pst.setInt(1, puanlar.getPuanDegeri());
@@ -120,12 +115,10 @@ public class puanlarDAO extends superDAO{
     }
 
     public filmlerDAO getFdao() {
-        if(this.fdao == null){
+        if (this.fdao == null) {
             this.fdao = new filmlerDAO();
         }
         return fdao;
     }
 
-   
-    
 }

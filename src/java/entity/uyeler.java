@@ -3,20 +3,18 @@ package entity;
 import java.util.Objects;
 
 public class uyeler {
-    
-   private int uye_id;
-   private String uye_ad;
-   private String uye_soyad;
-   private String email;
-   private String telefon;
-   private String sifre;
-   private boolean admin;
-   
-   
+
+    private int uye_id;
+    private String uye_ad;
+    private String uye_soyad;
+    private String email;
+    private String telefon;
+    private String sifre;
+    private boolean admin;
+
     public uyeler() {
     }
-    
- 
+
     public uyeler(int uye_id, String uye_ad, String uye_soyad, String email, String telefon, String sifre, boolean admin) {
         this.uye_id = uye_id;
         this.uye_ad = uye_ad;
@@ -136,8 +134,5 @@ public class uyeler {
         }
         return true;
     }
-
-    
-
 
 }

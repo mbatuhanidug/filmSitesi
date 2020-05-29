@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package yetkiFilter;
 
 import dao.uyelerDAO;
@@ -24,10 +19,10 @@ public class yetkiController implements Serializable {
         uyeler = this.getUyelerDao().giris(this.uyeler.getEmail(), this.uyeler.getSifre());
         if (uyeler != null) {
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("valid_user", this.uyeler);
-            return "/XHTML/film/filmler.xhtml";
+            return "/XHTML/film/filmler?faces-redirect=true";
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Hatalı kullanıcı adı ya da şifre."));
-            return "/XHTML/panel/giris.xhtml";
+            return "/panel/giris";
         }
 
     }

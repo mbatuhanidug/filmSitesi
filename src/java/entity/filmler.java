@@ -13,15 +13,13 @@ public class filmler {
     private String yonetmen;
     private double imbd;
     private String fragman;
- 
+
     private dosya dosya;
     private kategoriler kategori;
     private List<aktor> filmAktor;
-  
-    
 
     public filmler() {
-        
+
     }
 
     public filmler(int film_id, String film_isim, String film_tanimi, int cikis_yili, String yonetmen, double imbd, String fragman, kategoriler kategori) {
@@ -42,7 +40,7 @@ public class filmler {
     public void setDosya(dosya dosya) {
         this.dosya = dosya;
     }
-    
+
     public int getFilm_id() {
         return film_id;
     }
@@ -91,10 +89,8 @@ public class filmler {
         this.kategori = kategori;
     }
 
-  
-
     public List<aktor> getFilmAktor() {
-        if(this.filmAktor == null){
+        if (this.filmAktor == null) {
             this.filmAktor = new ArrayList<>();
         }
         return filmAktor;
@@ -119,8 +115,6 @@ public class filmler {
     public void setFragman(String fragman) {
         this.fragman = fragman;
     }
-    
-    
 
     @Override
     public int hashCode() {
@@ -188,7 +182,4 @@ public class filmler {
         return "filmler{" + "film_id=" + film_id + ", film_isim=" + film_isim + ", film_tanimi=" + film_tanimi + ", cikis_yili=" + cikis_yili + ", yonetmen=" + yonetmen + ", imbd=" + imbd + ", fragman=" + fragman + ", dosya=" + dosya + ", kategori=" + kategori + ", filmAktor=" + filmAktor + '}';
     }
 
-    
-
-    
 }

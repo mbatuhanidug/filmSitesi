@@ -2,14 +2,13 @@ package entity;
 
 import java.util.Objects;
 
-
 public class yorumlar {
 
     private int yorum_id;
     private String yorumMetni;
 
     private filmler film;
-    
+
     public yorumlar() {
     }
 
@@ -17,7 +16,7 @@ public class yorumlar {
         this.yorum_id = yorum_id;
         this.yorumMetni = yorumMetni;
     }
-    
+
     public int getYorum_id() {
         return yorum_id;
     }
@@ -41,7 +40,6 @@ public class yorumlar {
     public void setFilm(filmler film) {
         this.film = film;
     }
-
 
     @Override
     public String toString() {

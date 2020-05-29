@@ -41,7 +41,7 @@
 
             <label for="dosya">Film Fotoğraf</label>
             <h:selectOneMenu  styleClass="custom-select" id="dosya" value="#{filmlerController.filmler.dosya}" converter="dosyaConverter" >
-                <f:selectItems value="#{filmlerController.dosyaController.dosyaList}" var="dosya" itemValue="#{dosya}" itemLabel="#{dosya.dosya_isim}"/>
+                <f:selectItems value="#{filmlerController.dosyaController.fullList}" var="dosya" itemValue="#{dosya}" itemLabel="#{dosya.dosya_isim}"/>
             </h:selectOneMenu>  
         </div>
 

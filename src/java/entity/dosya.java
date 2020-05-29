@@ -18,7 +18,7 @@ public class dosya {
         this.dosya_isim = dosya_isim;
         this.dosya_tipi = dosya_tipi;
     }
-    
+
     public int getId() {
         return id;
     }
@@ -88,6 +88,4 @@ public class dosya {
         return true;
     }
 
-
-  
 }

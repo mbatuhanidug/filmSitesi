@@ -64,13 +64,13 @@ public class filmlerDAO extends superDAO {
         }
     }
 
-    public List<filmler> findAll(String deger ,int page, int pageSize) {
+    public List<filmler> findAll(String deger, int page, int pageSize) {
 
         List<filmler> flist = new ArrayList();
-        int start = (page-1)*pageSize;
+        int start = (page - 1) * pageSize;
         try {
 
-            pst = this.getConnection().prepareStatement("SELECT * FROM filmler where film_isim like ? order by imbd DESC limit "+start+","+pageSize);
+            pst = this.getConnection().prepareStatement("SELECT * FROM filmler where film_isim like ? order by imbd DESC limit " + start + "," + pageSize);
             pst.setString(1, "%" + deger + "%"); // bul metodu için string değeri set ettiğimiz kod satırı.
 
             rs = pst.executeQuery();
@@ -96,10 +96,39 @@ public class filmlerDAO extends superDAO {
         }
         return flist;
     }
+    //Yorumlar ve puanlar form kısmında full listeyi görebilmek için yazılmış kod
+    public List<filmler> fullFilm() {
+
+        List<filmler> flist = new ArrayList();
+
+        try {
+            pst = this.getConnection().prepareStatement("SELECT * FROM filmler order by film_isim DESC");
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                filmler temp = new filmler();
+
+                temp.setFilm_id(rs.getInt("film_id"));
+                temp.setFilm_isim(rs.getString("film_isim"));
+                temp.setFilm_tanimi(rs.getString("film_tanimi"));
+                temp.setCikis_yili(rs.getInt("cikis_yili"));
+                temp.setYonetmen(rs.getString("yonetmen"));
+                temp.setImbd(rs.getDouble("imbd"));
+                temp.setFragman(rs.getString("fragman"));
+                temp.setDosya(this.getDdao().find(rs.getInt("dosya_id")));
+                temp.setKategori(this.getKdao().find(rs.getInt("kategori_id")));
+                temp.setFilmAktor(this.getAdao().getFilmAktor(rs.getInt("film_id")));
+
+                flist.add(temp);
+            }
+        } catch (SQLException ex) {
+            System.out.println("filmlerDAO HATA(ReadAll):" + ex.getMessage());
+        }
+        return flist;
+    }
 
     public int count() {
-        
-        int count =0;
+
+        int count = 0;
         try {
 
             pst = this.getConnection().prepareStatement("SELECT count(film_id) as film_count from filmler ");
@@ -107,7 +136,6 @@ public class filmlerDAO extends superDAO {
             rs.next();
             count = rs.getInt("film_count");
 
-          
         } catch (SQLException ex) {
             System.out.println("filmlerDAO HATA(ReadAll):" + ex.getMessage());
         }
@@ -210,6 +238,5 @@ public class filmlerDAO extends superDAO {
     public void setDdao(dosyaDAO ddao) {
         this.ddao = ddao;
     }
-    
 
 }

@@ -16,7 +16,7 @@
             <br></br>
             <label>FİLM İSİM SEÇİNİZ </label>
             <h:selectOneMenu styleClass="custom-select" id="film" value="#{puanlarController.puanlar.film}" converter="filmlerConverter">
-                <f:selectItems value="#{puanlarController.filmlerController.flist}" var="film" itemValue="#{film}" itemLabel="#{film.film_isim}"/>
+                <f:selectItems value="#{puanlarController.filmlerController.fullList}" var="film" itemValue="#{film}" itemLabel="#{film.film_isim}"/>
             </h:selectOneMenu> 
         </div>
         <div class = "form-group">

@@ -9,16 +9,15 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class kategorilerDAO extends superDAO{
+public class kategorilerDAO extends superDAO {
 
     PreparedStatement pst;
     ResultSet rs = null;
 
-    public kategoriler find(int id)    {
-        
-       
+    public kategoriler find(int id) {
+
         kategoriler k = null;
-        try {      
+        try {
             pst = this.getConnection().prepareStatement("select * from kategoriler where kategori_id = ?");
             pst.setInt(1, id);
             rs = pst.executeQuery();
@@ -33,12 +32,12 @@ public class kategorilerDAO extends superDAO{
         return k;
     }
 
-    public List<kategoriler> getKategori(int page, int pageSize)   {
-        
+    public List<kategoriler> getKategori(int page, int pageSize) {
+
         List<kategoriler> klist = new ArrayList();
-        int start = (page-1)*pageSize;
-        try {  
-            pst = this.getConnection().prepareStatement("Select * from kategoriler ORDER BY kategori_ad ASC limit "+start+","+pageSize);
+        int start = (page - 1) * pageSize;
+        try {
+            pst = this.getConnection().prepareStatement("Select * from kategoriler ORDER BY kategori_ad ASC limit " + start + "," + pageSize);
             rs = pst.executeQuery();
             while (rs.next()) {
                 kategoriler tmp = new kategoriler();
@@ -51,12 +50,12 @@ public class kategorilerDAO extends superDAO{
         }
         return klist;
     }
-    
-    public List<kategoriler> getKategori()   {
-        
+
+    public List<kategoriler> getKategori() {
+
         List<kategoriler> klist = new ArrayList();
-    
-        try {  
+
+        try {
             pst = this.getConnection().prepareStatement("Select * from kategoriler ORDER BY kategori_ad ASC");
             rs = pst.executeQuery();
             while (rs.next()) {
@@ -70,10 +69,10 @@ public class kategorilerDAO extends superDAO{
         }
         return klist;
     }
-    
-     public int count() {
-        
-        int count =0;
+
+    public int count() {
+
+        int count = 0;
         try {
 
             pst = this.getConnection().prepareStatement("SELECT count(kategori_id) as kategori_count from kategoriler ");
@@ -81,7 +80,6 @@ public class kategorilerDAO extends superDAO{
             rs.next();
             count = rs.getInt("kategori_count");
 
-          
         } catch (SQLException ex) {
             System.out.println("kategorilerDAO HATA(ReadAll):" + ex.getMessage());
         }
@@ -89,7 +87,7 @@ public class kategorilerDAO extends superDAO{
     }
 
     public void create(kategoriler kategoriler) {
-        try {     
+        try {
             pst = this.getConnection().prepareStatement("insert into kategoriler (kategori_ad) values (?)");
             pst.setString(1, kategoriler.getKategori_ad());
             pst.executeQuery();
@@ -99,9 +97,9 @@ public class kategorilerDAO extends superDAO{
     }
 
     public void delete(kategoriler kat) {
-       
+
         try {
-           
+
             pst = this.getConnection().prepareStatement("delete from kategoriler where kategori_ad = ?");
             pst.setString(1, kat.getKategori_ad());
             pst.executeUpdate();
@@ -112,10 +110,10 @@ public class kategorilerDAO extends superDAO{
         }
     }
 
-    public void update(kategoriler kat)  {
-         
+    public void update(kategoriler kat) {
+
         try {
-          
+
             pst = this.getConnection().prepareStatement("update kategoriler set kategori_ad = ? where kategori_id = ?");
             pst.setString(1, kat.getKategori_ad());
             pst.setInt(2, kat.getKategori_id());

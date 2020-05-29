@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <h:outputStylesheet library ="css" name="bootstrap.css"/>
+        <style>
+            .bg-transparents{
+                background-color: #336699   !important;
+            }.bg-s{
+                background-color: #999999    !important;
+            }
+            .bg-t{
+                background-color: #e3e3e3     !important;
+            }
+        </style>
+        <title>Giriş</title>      
+    </h:head>
+    <h:body>
+        <h:form>
+            <ui:insert name="navbar">
+                <ui:include src="/template/include/navbar.xhtml"/> 
+            </ui:insert>
+        </h:form> 
+        <h:form><br /><br /><br />
+            <div class="container">
+                <div class="d-flex justify-content-center h-100">
+                    <h:link outcome="/index.xhtml">
+                        <h:graphicImage value="/media/a.jpg" width="800" /> 
+                    </h:link>
+                    <div class="card ">
+                        <div class="card-header bg-transparents">
+                            <h4 class="text-white">OTURUM AÇ</h4>
+                        </div>
+                        <div class="card-body bg-dark">
+                            <h:form>
+                                <h6 class="text-white">Email</h6>
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        <h:inputText styleClass="form-control" value="#{yetkiController.uyeler.email}" /><br />
+                                    </div>
+                                </div>
+                                <h6 class="text-white">Sifre</h6>
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                        <h:inputSecret styleClass="form-control" value="#{yetkiController.uyeler.sifre}" /><br />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <h:commandButton styleClass="btn btn-sm btn-info" action="#{yetkiController.giris()}" value="Giris" />
+                                </div>
+                                <h:messages styleClass ="alert alert-primary alert" />
+                            </h:form>
+                        </div>
+                        <div class="card-footer bg-transparents">
+                            <div class="d-flex justify-content-center links text-white">
+                                <b>Hesabin yok mu! Hemen </b> <h:link value="KAYIT OL" class="text-white" outcome="kayit.xhtml" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </h:body>
+</html>
+

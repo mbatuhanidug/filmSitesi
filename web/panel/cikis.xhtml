@@ -5,27 +5,18 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <h:outputStylesheet library ="css" name="bootstrap.css"/>
-
-        <title></title>
         <style>
-            .bg-primarys{
-                background-color: #336699  !important;
-            }
             .bg-transparents{
-                background-color: #336699  !important;
-            }
-            .bg-successa{
                 background-color: #336699  !important;
             }
         </style>
     </h:head>
     <h:body>
-        <ui:insert name="navbar">
-            <ui:include src="/template/include/navbar.xhtml"/> 
-        </ui:insert>
-
-        <h:graphicImage value="/media/dd.jpg" width="100%" height="100%" /> 
-
+        <form action="#{yorumlarController.clearForm()}">
+            <ui:insert name="navbar">
+                <ui:include src="/template/template.xhtml"/> 
+            </ui:insert>
+        </form>
     </h:body>
 </html>
 

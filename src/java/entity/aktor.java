@@ -2,14 +2,12 @@ package entity;
 
 import java.util.Objects;
 
-
-
 public class aktor {
+
     private int aktor_id;
     private String aktor_ad;
     private String aktor_soyad;
 
-   
     public aktor() {
     }
 
@@ -81,6 +79,4 @@ public class aktor {
         return true;
     }
 
-    
-    
 }

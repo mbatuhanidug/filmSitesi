@@ -15,13 +15,13 @@ import javax.inject.Named;
 public class filmlerController implements Serializable {
 
     private List<filmler> flist;
+    private List<filmler> fullList;
     private filmler filmler;
     private filmlerDAO filmDAO;
 
-    private String bul="";
+    private String bul = "";
 
     private dosyaDAO ddao;
-
 
     private int page = 1;
     private int pageSize = 5;
@@ -105,13 +105,24 @@ public class filmlerController implements Serializable {
     }
 
     public List<filmler> getFlist() {
-        this.flist = this.getFilmDAO().findAll(this.bul,this.page, this.pageSize);
+        this.flist = this.getFilmDAO().findAll(this.bul, this.page, this.pageSize);
         return flist;
     }
 
     public void setFlist(List<filmler> flist) {
         this.flist = flist;
     }
+
+    public List<filmler> getFullList() {
+        this.fullList = this.getFilmDAO().fullFilm();
+        return fullList;
+    }
+
+    public void setFullList(List<filmler> fullList) {
+        this.fullList = fullList;
+    }
+    
+    
 
     public filmler getFilmler() {
         if (this.filmler == null) {
@@ -143,7 +154,6 @@ public class filmlerController implements Serializable {
         return kategorilerController;
     }
 
-
     public String getBul() {
         return bul;
     }
@@ -162,7 +172,7 @@ public class filmlerController implements Serializable {
 
     public dosyaDAO getDdao() {
         if (this.ddao == null) {
-            this.ddao = new dosyaDAO();    
+            this.ddao = new dosyaDAO();
         }
         return ddao;
     }
@@ -170,7 +180,5 @@ public class filmlerController implements Serializable {
     public void setDdao(dosyaDAO ddao) {
         this.ddao = ddao;
     }
-    
 
-    
 }

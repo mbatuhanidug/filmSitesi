@@ -1,4 +1,5 @@
 package controller;
+
 import dao.uyelerDAO;
 import entity.uyeler;
 import java.io.Serializable;
@@ -8,17 +9,16 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
-
-
 @Named
 @SessionScoped
 public class uyelerController implements Serializable {
+
     private List<uyeler> uyelist;
     private uyelerDAO uyedao;
     private uyeler uye;
-    
+
     private String bul = "";
-    
+
     private int page = 1;
     private int pageSize = 5;
     private int pageCount;
@@ -82,20 +82,20 @@ public class uyelerController implements Serializable {
         this.getUyedao().delete(this.uye);
         this.clearForm();
     }
-    
-    public String deleteCik(uyeler uye){
+
+    public String deleteCik(uyeler uye) {
         this.getUyedao().delete(uye);
         this.clearForm();
         return "/XHTML/panel/cikis.xhtml";
     }
-    
+
     public void update() {
         this.getUyedao().update(this.uye);
         this.clearForm();
     }
 
     public List<uyeler> getUyelist() {
-        this.uyelist = this.getUyedao().findAll(this.bul,this.page, this.pageSize);
+        this.uyelist = this.getUyedao().findAll(this.bul, this.page, this.pageSize);
         return uyelist;
     }
 
@@ -134,6 +134,5 @@ public class uyelerController implements Serializable {
     public void setBul(String bul) {
         this.bul = bul;
     }
-    
-    
+
 }

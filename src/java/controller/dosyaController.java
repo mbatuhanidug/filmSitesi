@@ -18,9 +18,10 @@ public class dosyaController implements Serializable {
 
     private dosya dosya;
     private List<dosya> dosyaList;
+    private List<dosya> fullList;
     private dosyaDAO dosyadao;
     private Part doc;
-    private final String uploadTo = "C:\\Users\\asus\\Desktop\\İNTERNET PROG\\05\\filmSitesi\\web\\upload\\";  // Buraya proje için dosya yükeleyeceğiniz dosya yolunu giriniz.
+    private final String uploadTo = "C:\\Users\\asus\\Desktop\\İNTERNET PROG\\Film Sitesi\\filmSitesi\\web\\upload\\";  // Buraya proje için dosya yükeleyeceğiniz dosya yolunu giriniz.
 
     private int page = 1;
     private int pageSize = 5;
@@ -80,7 +81,7 @@ public class dosyaController implements Serializable {
         this.dosya = new dosya();
     }
 
-    public dosyaController() { 
+    public dosyaController() {
     }
 
     public void update() {   //dao sınıfındaki update çağıran metod.
@@ -135,11 +136,20 @@ public class dosyaController implements Serializable {
         return uploadTo;
     }
 
-    public void upload() {   
+    public List<dosya> getFullList() {
+        this.fullList = this.getDosyadao().fullDosya();
+        return fullList;
+    }
+
+    public void setFullList(List<dosya> fullList) {
+        this.fullList = fullList;
+    }
+
+    public void upload() {
         try (InputStream input = doc.getInputStream()) {
             String file = doc.getSubmittedFileName();
-            File f = new File(uploadTo,file);
-            Files.copy(input,f.toPath());
+            File f = new File(uploadTo, file);
+            Files.copy(input, f.toPath());
 
             dosya = this.getDosya();
             dosya.setDosya_path(f.getParent());
@@ -147,7 +157,6 @@ public class dosyaController implements Serializable {
             dosya.setDosya_tipi(doc.getContentType());
 
             this.getDosyadao().insert(dosya);
-        
 
         } catch (IOException e) {
             System.out.println("DosyaController UPLOAD):" + e.getMessage());

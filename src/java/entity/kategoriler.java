@@ -2,8 +2,8 @@ package entity;
 
 import java.util.Objects;
 
-
 public class kategoriler {
+
     private int kategori_id;
     private String kategori_ad;
 
@@ -64,5 +64,5 @@ public class kategoriler {
         }
         return true;
     }
-    
+
 }

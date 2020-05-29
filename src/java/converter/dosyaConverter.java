@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package converter;
 
 import dao.dosyaDAO;
@@ -11,7 +6,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-
 
 @FacesConverter("dosyaConverter")
 public class dosyaConverter implements Converter {
@@ -27,7 +21,7 @@ public class dosyaConverter implements Converter {
     public String getAsString(FacesContext context, UIComponent component, Object arg2) {
         dosya y = (dosya) arg2;
         return String.valueOf(y.getId());
-        
+
     }
 
     public dosyaDAO getDocumentDAO() {
